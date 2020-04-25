@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CannaMaster Grow Assistant</string>
+    <string name="tab_text_1">Basics</string>
+    <string name="tab_text_2">Tips And Tricks</string>
+    <string name="tab_text_3">Advanced Techniques</string>
+    <string name="tab_text_4">Sick Plants</string>
+    <string name="tab_text_5">Grow Assistant</string>>
+</resources>
