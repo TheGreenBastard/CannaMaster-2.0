@@ -51,7 +51,7 @@ public abstract class SectionsCardviewFragment extends Fragment {
     }
 
     protected void bindViews(View v) {
-        recyclerView = (RecyclerView) v.findViewById(R.id.fragment_container);
+        recyclerView = v.findViewById(R.id.fragment_container);
     }
 
     protected void prepareViews(View v) {

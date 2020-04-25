@@ -55,7 +55,7 @@ public class EndpageActivity extends AppCompatActivity {
 
         // sets toolbar and page title
 
-        CollapsingToolbarLayout collapsingToolbar =(CollapsingToolbarLayout) findViewById(R.id.endpage_header);
+        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.endpage_header);
         collapsingToolbar.setTitle(sTitle);
         Toolbar toolbar = findViewById(R.id.endpage_toolbar);
         setSupportActionBar(toolbar);

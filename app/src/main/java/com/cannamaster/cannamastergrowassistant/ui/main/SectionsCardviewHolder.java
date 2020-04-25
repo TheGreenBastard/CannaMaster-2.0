@@ -37,9 +37,9 @@ public abstract class SectionsCardviewHolder extends RecyclerView.ViewHolder{
         this.adapter = adapter;
 
         // declare the views
-        imgImage = (ImageView) v.findViewById(R.id.cardview_image);
-        txtTitle = (TextView) v.findViewById(R.id.cardview_title);
-        txtDescription = (TextView) v.findViewById(R.id.cardview_description);
+        imgImage = v.findViewById(R.id.cardview_image);
+        txtTitle = v.findViewById(R.id.cardview_title);
+        txtDescription = v.findViewById(R.id.cardview_description);
         view = v.findViewById(R.id.sections_card_view);
     }
 

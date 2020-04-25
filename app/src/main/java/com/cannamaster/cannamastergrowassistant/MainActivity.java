@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(mViewPager);
         // End Viewpager setup
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
