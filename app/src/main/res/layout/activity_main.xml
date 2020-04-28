@@ -49,6 +49,8 @@
 
 </com.google.android.material.appbar.CollapsingToolbarLayout>
        <!-- The Tabs -->
+        <!-- Pager Sliding Tabs -->
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="wrap_content"

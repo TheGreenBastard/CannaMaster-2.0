@@ -1,10 +1,15 @@
 package com.cannamaster.cannamastergrowassistant;
 
+import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -18,28 +23,35 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.astuetz.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
+
+import com.bumptech.glide.Glide;
 
 import com.cannamaster.cannamastergrowassistant.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    // ViewPager Variables
-    private ViewPager mViewpager;
+
     private static String[] TAB_TITLE = {"Basics","Grow Assistant","Tips And Tricks","Advanced Techniques", "Sick Plants/Problems"};
-    // Drawer Variables
+    /****************************
+     * double back press to exit
+     ****************************/
+    boolean doubleBackToExitPressedOnce = false;
     private DrawerLayout mDrawer;
-    private NavigationView mNavigationView;
     private ActionBarDrawerToggle mDrawerToggle;
-   // private PagerSlidingTabStrip mTabStrip;
+    private NavigationView mNavigationView;
+    private TabLayout mTabStrip;
 
 
     @Override
@@ -54,10 +66,14 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(mViewPager);
         // End Viewpager setup
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        //Find toolbar to set drawer
+        Toolbar toolbar = (Toolbar) findViewById(R.id.sections_toolbar);
         setSupportActionBar(toolbar);
+        //Set the drawer icon
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         /** Navigation Drawer */
 
@@ -65,34 +81,22 @@ public class MainActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // Find our navigation view
-        mNavigationView = (NavigationView)findViewById(R.id.nvView);
+        mNavigationView = (NavigationView) findViewById(R.id.nvView);
 
         // Add navigation icons
         setupNavigationIcons(mNavigationView);
 
         // Tie the DrawerLayout and Toolbar together
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.
-                drawer_close);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
 
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(mDrawerToggle);
 
         // Set up drawer item
-        setupDrawerContent(mNavigationView);
+        setupNavigationIcons(mNavigationView);
 
         // Set up view pager listener
-       // setupViewPagerListener();
-
-
-        // TODO: 4/25/2020 - make an image randomizer for header 
-        /** This loads the main view header image that scrolls into oblivion "backdrop.jpg"
-        private void loadBackdrop() {
-            final ImageView imageView = findViewById(R.id.main_activity_header_image);
-
-            Glide.with(this).load(HeaderImage.getRandomHeaderImage()).centerCrop().into(imageView);
-        }
-         */
-
+        //setupViewPagerListener();
         /** Viewpager Tabs Adapter */
         // How many tabs do we want?
         class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -102,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
                 super(fm, behavior);
             }
 
-           
 
 
-                // Returns total number of pages
+
+            // Returns total number of pages
             @Override
             public int getCount() {
                 return NUM_ITEMS;
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new SickPlantsFragment();
                         break;
                     case 4:
-                        fragment = new GrowAssistantActivity();
+                        fragment = new TipsAndTricksFragment();
                         break;
 
                 }
@@ -148,25 +152,71 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
-
-        //FloatingActionButton fab = findViewById(R.id.fab);
-
-        /**fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
     }
 
+    /*********************
+     * Dark Mode Menu
+     *********************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_right_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (AppCompatDelegate.getDefaultNightMode()) {
+            case AppCompatDelegate.MODE_NIGHT_AUTO:
+                menu.findItem(R.id.menu_night_mode_auto).setChecked(true);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                menu.findItem(R.id.menu_night_mode_night).setChecked(true);
+                break;
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                menu.findItem(R.id.menu_night_mode_day).setChecked(true);
+                break;
+        }
+        return true;
+    }
+
+    @SuppressLint("WrongConstant")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.menu_night_mode_day:
+                setNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            case R.id.menu_night_mode_night:
+                setNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case R.id.menu_night_mode_auto:
+                setNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Dark Mode Menu
+    private void setNightMode(@AppCompatDelegate.NightMode int nightMode) {
+        AppCompatDelegate.setDefaultNightMode(nightMode);
+        if (Build.VERSION.SDK_INT >= 11) {
+            recreate();
+        }
+    }
+
+    // This loads the main view header image that scrolls into oblivion "backdrop.jpg"
+    private void loadBackdrop() {
+        final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
+        Glide.with(this).load(HeaderImage.getRandomHeaderImage()).centerCrop().into(imageView);
+    }
 
     /** ViewPager Tabs Listener
     public void setupViewPagerListener(){
         // (Optional) If you use an OnPageChangeListener with your view pager you should set it in the widget rather than on the pager directly.
-        mDrawerToggle.setToolbarNavigationClickListener(new ViewPager.OnPageChangeListener() {
+        mTabStrip.(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 setTitle(TAB_TITLE[position]);
@@ -181,9 +231,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
-    }
-*/
-
+    }*/
 
     // Make sure this is the method with just `Bundle` as the signature
     @Override
@@ -215,125 +263,9 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information);
     }
 
-    /** Nav Drawer */
-    private void setupDrawerContent(NavigationView mNavigationView) {
-        mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
-    }
 
-    public void selectDrawerItem(MenuItem menuItem) {
-        switch(menuItem.getItemId()) {
 
-            case R.id.nav_basics:
-
-                mViewpager.setCurrentItem(0);
-                break;
-            case R.id.nav_growassistant:
-                mViewpager.setCurrentItem(1);
-                break;
-            case R.id.nav_tipsandtricks:
-                mViewpager.setCurrentItem(2);
-                break;
-            case R.id.nav_advancedtechniques:
-                mViewpager.setCurrentItem(3);
-                break;
-            case R.id.nav_sickplants:
-                mViewpager.setCurrentItem(4);
-                break;
-
-            case R.id.nav_favorites:
-                Intent favoritesIntent = new Intent(this, FavoritesListActivity.class);
-                startActivity(favoritesIntent);
-                break;
-            case R.id.nav_settings:
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                break;
-            case R.id.nav_help:
-                Intent helpIntent = new Intent(this, HelpPage.class);
-                startActivity(helpIntent);
-                break;
-            case R.id.nav_about:
-                Intent aboutIntent = new Intent(this, AboutPage.class);
-                startActivity(aboutIntent);
-            default:
-                return;
-        }
-
-        // Highlight the selected item, update the title, and close the drawer
-        menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
-        mDrawer.closeDrawers();
-    }
-
-    /** Viewpager Tabs Adapter */
-    public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 5;
-
-        public MyPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        // Returns total number of pages
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;
-        }
-
-        // Returns the fragment to display for that page
-        @Override
-        public Fragment getItem(int position) {
-            // Create a new fragment and specify the planet to show based on
-            // position
-            Fragment fragment = null;
-
-            Class fragmentClass;
-            switch(position) {
-                case 0:
-                    fragmentClass = BasicsFragment.class;
-                    break;
-                case 1:
-                    fragmentClass = SickPlantsFragment.class;
-                    break;
-                case 2:
-                    fragmentClass = TipsAndTricksFragment.class;
-                    break;
-                case 3:
-                    fragmentClass = AdvancedTechniquesFragment.class;
-                    break;
-                case 4:
-                    fragmentClass = SickPlantsFragment.class;
-                    break;
-                default:
-                    return null;
-            }
-
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return fragment;
-        }
-
-        // Returns the page title for the top indicator
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return TAB_TITLE[position];
-        }
-
-    }
-
-    /****************************
-     * double back press to exit
-     ****************************/
-    boolean doubleBackToExitPressedOnce = false;
+    // TODO: 4/25/2020 - make an image randomizer for header
 
     @Override
     public void onBackPressed() {
@@ -354,4 +286,15 @@ public class MainActivity extends AppCompatActivity {
         }, 2000);  // 2 second pause
     }
 
-}
+
+
+        //FloatingActionButton fab = findViewById(R.id.fab);
+
+        /**fab.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show();
+        }
+        });*/
+    }
