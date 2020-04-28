@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is the menu in the top right corner of the endpage that controls text size of article
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/textSize"
+        android:title="@string/menu_font_size_title"
+        app:showAsAction="never">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_font_size_small"
+                    android:title="@string/menu_font_size_small" />
+                <item
+                    android:id="@+id/menu_font_size_medium"
+                    android:title="@string/menu_font_size_medium" />
+                <item
+                    android:id="@+id/menu_font_size_large"
+                    android:title="@string/menu_font_size_large" />
+            </group>
+        </menu>
+    </item>
+
+
+
+</menu>

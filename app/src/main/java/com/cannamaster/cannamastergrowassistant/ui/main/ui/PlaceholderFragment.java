@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main;
+package com.cannamaster.cannamastergrowassistant.ui.main.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.PageViewModel;
 
 /**
  * A placeholder fragment containing a simple view.

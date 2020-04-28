@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_basics"
+            android:title="Basics" />
+        <item
+            android:id="@+id/nav_growassistant"
+            android:title="Grow Assistant" />
+        <item
+            android:id="@+id/nav_tipsandtricks"
+            android:title="Tips And Tricks" />
+        <item
+            android:id="@+id/nav_advancedtechniques"
+            android:title="Advanced Techniques" />
+        <item
+            android:id="@+id/nav_sickplants"
+            android:title="Sick Plants/Problems" />
+
+
+        <item
+            android:id="@+id/nav_favorites"
+            android:title="Favorites" />
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_help"
+            android:title="Help And Feedback" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="About" />
+
+    </group>
+
+</menu>

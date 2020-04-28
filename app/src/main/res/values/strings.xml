@@ -4,5 +4,19 @@
     <string name="tab_text_2">Tips And Tricks</string>
     <string name="tab_text_3">Advanced Techniques</string>
     <string name="tab_text_4">Sick Plants</string>
-    <string name="tab_text_5">Grow Assistant</string>>
+    <string name="tab_text_5">Grow Assistant</string>
+    <string name="drawer_open">drawer_open</string>
+    <string name="drawer_close">drawer_closed</string>
+    <string name="str_cnt_mnu_delete" />
+    <string name="menu_font_size_title" />
+    <string name="menu_font_size_small" />
+    <string name="menu_font_size_medium" />
+    <string name="menu_font_size_large" />
+    <string name="action_discard_reminder" />
+    <string name="action_save_reminder" />
+    <string name="action_settings" />
+    <string name="menu_night_mode" />
+    <string name="menu_night_mode_day" />
+    <string name="menu_night_mode_night" />
+    <string name="menu_night_mode_auto" />>
 </resources>
