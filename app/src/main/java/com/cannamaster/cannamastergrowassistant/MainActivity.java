@@ -92,11 +92,13 @@ public class MainActivity extends AppCompatActivity {
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(mDrawerToggle);
 
+        loadBackdrop();
+
         // Set up drawer item
         setupNavigationIcons(mNavigationView);
 
         // Set up view pager listener
-        //setupViewPagerListener();
+        // setupViewPagerListener();
         /** Viewpager Tabs Adapter */
         // How many tabs do we want?
         class SectionsPagerAdapter extends FragmentPagerAdapter {

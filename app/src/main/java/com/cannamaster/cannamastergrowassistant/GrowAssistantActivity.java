@@ -1,4 +1,8 @@
 package com.cannamaster.cannamastergrowassistant;
 
-class GrowAssistantActivity extends androidx.fragment.app.Fragment {
+import androidx.fragment.app.FragmentManager;
+
+class GrowAssistantActivity extends FragmentManager {
+
+
 }

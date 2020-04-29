@@ -36,13 +36,7 @@
                 app:expandedTitleMarginEnd="5dp"
                 app:contentScrim="@color/green_A700">
 
-                <!-- The actual header image holder -->
-                <ImageView
-                    android:id="@+id/backdrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    app:layout_collapseMode="parallax" />
+
 
                 <!-- As our statusBar is transparent below and content is moved behind our toolbar has to include the padding on top so we use this area -->
                 <androidx.appcompat.widget.Toolbar
@@ -51,7 +45,14 @@
                     android:layout_height="?attr/actionBarSize"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:layout_collapseMode="pin" />
-
+                <!-- The actual header image holder -->
+                <!--ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="TODO"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" /-->
                 <!-- This ends the collapsing toolbar and header -->
             </android.support.design.widget.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
