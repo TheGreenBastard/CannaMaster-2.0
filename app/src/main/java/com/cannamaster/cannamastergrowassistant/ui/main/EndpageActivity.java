@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.cannamaster.cannamastergrowassistant.R;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Objects;
 
@@ -81,13 +83,10 @@ public class EndpageActivity extends AppCompatActivity {
         article = findViewById(R.id.tv_endpage_article);
         article.setText(sArticle);
 
-        // create the database
-        // db.execSQL(EndpageActivity.createDB);
-
 
         /***************************************
          * FAB Button click to add to favorites
-         **************************************
+         **************************************/
 
         final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
 
@@ -112,7 +111,7 @@ public class EndpageActivity extends AppCompatActivity {
                         + sTitle + "' Added To Favorite Articles",
                         Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
     }
 
 

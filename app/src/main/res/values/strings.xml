@@ -20,6 +20,7 @@
     <string name="menu_night_mode_night" />
     <string name="menu_night_mode_auto" />
     <string name="title_activity_settings">Settings</string>
+    <string name="cannamaster">CannaMaster</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

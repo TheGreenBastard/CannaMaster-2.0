@@ -8,19 +8,24 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_basics"
-            android:title="Basics" />
+            android:title="Basics"
+            android:onClick="selectDrawerItem"/>
         <item
             android:id="@+id/nav_growassistant"
-            android:title="Grow Assistant" />
+            android:title="Grow Assistant"
+            android:onClick="selectDrawerItem"/>
         <item
             android:id="@+id/nav_tipsandtricks"
-            android:title="Tips And Tricks" />
+            android:title="Tips And Tricks"
+            android:onClick="selectDrawerItem"/>
         <item
             android:id="@+id/nav_advancedtechniques"
-            android:title="Advanced Techniques" />
+            android:title="Advanced Techniques"
+            android:onClick="selectDrawerItem"/>
         <item
             android:id="@+id/nav_sickplants"
-            android:title="Sick Plants/Problems" />
+            android:title="Sick Plants/Problems"
+            android:onClick="selectDrawerItem"/>
 
 
         <item

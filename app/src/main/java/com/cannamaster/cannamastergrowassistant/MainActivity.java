@@ -34,8 +34,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.astuetz.PagerSlidingTabStrip;
-
 import com.bumptech.glide.Glide;
 
 import com.cannamaster.cannamastergrowassistant.ui.main.SectionsPagerAdapter;
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
-    private TabLayout mTabStrip;
+    private ViewPager mViewPager;
 
 
     @Override
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         /** Associate The ViewPager with new instance of adapter (ie link the viewpager with the adapter (SectionsPagerAdapter) */
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        ViewPager mViewPager = findViewById(R.id.vpPager);
+        mViewPager = findViewById(R.id.vpPager);
         mViewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(mViewPager);
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         // Find our navigation view
-        mNavigationView = (NavigationView) findViewById(R.id.nvView);
+        mNavigationView = findViewById(R.id.nvView);
 
         // Add navigation icons
         setupNavigationIcons(mNavigationView);
@@ -265,6 +263,64 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information);
     }
 
+
+
+    /** Nav Drawer */
+    private void setupDrawerContent(NavigationView mNavigationView) {
+        mNavigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        switch(menuItem.getItemId()) {
+
+            case R.id.nav_basics:
+                mViewPager.setCurrentItem(0);
+                break;
+
+            case R.id.nav_tipsandtricks:
+                mViewPager.setCurrentItem(1);
+                break;
+            case R.id.nav_advancedtechniques:
+                mViewPager.setCurrentItem(2);
+                break;
+            case R.id.nav_sickplants:
+                mViewPager.setCurrentItem(3);
+                break;
+            case R.id.nav_growassistant:
+                mViewPager.setCurrentItem(4);
+                break;
+
+            case R.id.nav_favorites:
+                Intent favoritesIntent = new Intent(this, FavoritesListActivity.class);
+                startActivity(favoritesIntent);
+                break;
+            case R.id.nav_settings:
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case R.id.nav_help:
+                Intent helpIntent = new Intent(this, HelpPage.class);
+                startActivity(helpIntent);
+                break;
+            case R.id.nav_about:
+                Intent aboutIntent = new Intent(this, AboutPage.class);
+                startActivity(aboutIntent);
+            default:
+                return;
+        }
+
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawer.closeDrawers();
+    }
 
 
     @Override
