@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,7 +62,18 @@ public class EndpageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // this adds the back button arrow to the header
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_close));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(View v) {
+                                                     //what to do when clicked
+                                                     onSupportNavigateUp();
+                                                     getSupportActionBar().setDisplayShowHomeEnabled(true);
+                                                 }
+                                             });
+
 
         // set view contents on Endpage
         image = findViewById(R.id.endpage_header_image);

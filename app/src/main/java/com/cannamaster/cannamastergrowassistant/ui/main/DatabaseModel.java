@@ -3,7 +3,7 @@ package com.cannamaster.cannamastergrowassistant.ui.main;
 /***************************
  * Favorites Database Model
  ***************************/
-class DatabaseModel {
+public class DatabaseModel {
     private String _id;
     private String title;
     private String description;

@@ -76,7 +76,11 @@
                 android:id="@+id/tabs"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
-                android:background="?attr/colorPrimary" />
+                android:background="?attr/colorPrimary"
+                app:tabTextColor="@color/white"
+                app:tabIndicator="@color/white"
+                app:tabInlineLabel="true"
+                app:tabMode="auto"/>
 
 
             <androidx.viewpager.widget.ViewPager

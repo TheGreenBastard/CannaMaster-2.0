@@ -267,7 +267,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // TODO: 4/25/2020 - make an image randomizer for header
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
     @Override
     public void onBackPressed() {
