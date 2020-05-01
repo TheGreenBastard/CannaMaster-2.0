@@ -64,13 +64,12 @@ public class EndpageActivity extends AppCompatActivity {
         // this adds the back button arrow to the header
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_close));
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_left));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                                                  @Override
                                                  public void onClick(View v) {
                                                      //what to do when clicked
-                                                     onSupportNavigateUp();
-                                                     getSupportActionBar().setDisplayShowHomeEnabled(true);
+                                                     onBackPressed();
                                                  }
                                              });
 
