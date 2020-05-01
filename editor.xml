@@ -6,7 +6,15 @@
   <component name="EditorSettings">
     <option name="languageBreadcrumbsMap">
       <map>
+        <entry key="Groovy" value="false" />
+        <entry key="HTML" value="false" />
         <entry key="JAVA" value="true" />
+        <entry key="JSON" value="false" />
+        <entry key="ObjectiveC" value="false" />
+        <entry key="XHTML" value="false" />
+        <entry key="XML" value="true" />
+        <entry key="kotlin" value="false" />
+        <entry key="yaml" value="false" />
       </map>
     </option>
     <option name="ARE_GUTTER_ICONS_SHOWN" value="false" />
