@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Notification Settings">
+
+        <!-- A 'parent' preference, which enables/disables child preferences (below)
+     when checked/unchecked. -->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="notifications_new_message"
+            android:title="@string/pref_title_new_message_notifications"
+            android:summaryOn="Receive Notifications From App"
+            android:summaryOff="Notifications Are Off"/>
+
+        <!-- Allows the user to choose a ringtone in the 'notification' category. -->
+        <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+        <!-- NOTE: RingtonePreference's summary should be set to its value by the activity code. -->
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:dependency="notifications_new_message"
+            android:key="notifications_new_message_ringtone"
+            android:ringtoneType="notification"
+            android:title="Notification Sound"
+            android:summary="Choose Alert Sound"/>
+
+        <!-- Vibrate Notifications -->
+        <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="notifications_new_message"
+            android:key="notifications_new_message_vibrate"
+            android:title="@string/pref_title_vibrate"
+            android:summaryOn="Vibrate On"
+            android:summaryOff="Vibrate Off"/>
+
+        <!-- LED Notifications -->
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="led_switch"
+            android:dependency="notifications_new_message"
+            android:summaryOn="Notifications On"
+            android:title="LED Notifications"
+            android:summaryOff="Notifications Off"/>
+
+    </PreferenceCategory>
+
+
+
+    <PreferenceCategory
+        android:title="Look And Feel">
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="Font Size"
+            android:summary="Change App Font Size"
+            android:entries="@array/pref_font_size"
+            android:entryValues="@array/pref_font_size"
+            android:dialogTitle="Font Size" />
+
+        <ListPreference
+            android:key="list_preference"
+            android:title="Application Theme"
+            android:summary="Click To Set Theme"
+            android:entries="@array/pref_dark_mode"
+            android:entryValues="@array/pref_dark_mode"
+            android:dialogTitle="Dark Mode" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="User Data">
+
+        <!-- This preference simply launches an intent when selected. Use this UI sparingly, per
+         design guidelines. -->
+        <Preference android:title="Clear All Application Data">
+            <intent android:action="android.settings.CLEAR_DATA" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

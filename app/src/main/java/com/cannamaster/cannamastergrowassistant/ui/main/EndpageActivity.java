@@ -5,12 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 
@@ -112,8 +115,57 @@ public class EndpageActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
     }
 
 
+    /*************************
+     * Top Right Endpage Menu
+     *************************/
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.endpage_zoom_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        switch (AppCompatDelegate.getDefaultNightMode()) {
+            case R.id.menu_font_size_small:
+                menu.findItem(R.id.menu_font_size_small)
+                        .setChecked(true);
+                break;
+            case R.id.menu_font_size_medium:
+                menu.findItem(R.id.menu_font_size_medium)
+                        .setChecked(true);
+                break;
+            case R.id.menu_font_size_large:
+                menu.findItem(R.id.menu_font_size_small)
+                        .setChecked(true);
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.menu_font_size_small:
+                article.setTextSize(14);
+                break;
+            case R.id.menu_font_size_medium:
+                article.setTextSize(18);
+                break;
+            case R.id.menu_font_size_large:
+                article.setTextSize(22);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

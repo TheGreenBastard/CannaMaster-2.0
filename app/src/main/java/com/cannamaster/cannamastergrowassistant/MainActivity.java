@@ -17,6 +17,7 @@ import com.cannamaster.cannamastergrowassistant.ui.main.AdvancedTechniquesFragme
 import com.cannamaster.cannamastergrowassistant.ui.main.BasicsFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.SickPlantsFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.TipsAndTricksFragment;
+import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesEndpageActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -106,9 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 super(fm, behavior);
             }
 
-
-
-
             // Returns total number of pages
             @Override
             public int getCount() {
@@ -179,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("WrongConstant")
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -212,26 +210,6 @@ public class MainActivity extends AppCompatActivity {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(HeaderImage.getRandomHeaderImage()).centerCrop().into(imageView);
     }
-
-    /** ViewPager Tabs Listener
-    public void setupViewPagerListener(){
-        // (Optional) If you use an OnPageChangeListener with your view pager you should set it in the widget rather than on the pager directly.
-        mTabStrip.(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                setTitle(TAB_TITLE[position]);
-                mNavigationView.getMenu().getItem(position).setChecked(true);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-    }*/
 
     // Make sure this is the method with just `Bundle` as the signature
     @Override
@@ -268,12 +246,9 @@ public class MainActivity extends AppCompatActivity {
     /** Nav Drawer */
     private void setupDrawerContent(NavigationView mNavigationView) {
         mNavigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 
@@ -298,12 +273,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_favorites:
-                Intent favoritesIntent = new Intent(this, FavoritesListActivity.class);
-                startActivity(favoritesIntent);
+                Intent favoritesIntent = new Intent(this, FavoritesEndpageActivity.class);
+                startActivity(favoritesIntent);;
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
+                new SettingsActivity();
                 break;
             case R.id.nav_help:
                 Intent helpIntent = new Intent(this, HelpPage.class);
@@ -312,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_about:
                 Intent aboutIntent = new Intent(this, AboutPage.class);
                 startActivity(aboutIntent);
+
             default:
                 return;
         }

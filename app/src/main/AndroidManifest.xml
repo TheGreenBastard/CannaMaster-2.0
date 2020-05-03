@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".AboutPage" />
+        <activity android:name=".HelpPage" />
+        <activity android:name=".GrowAssistantActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/cannamaster"
