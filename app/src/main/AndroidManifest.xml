@@ -21,9 +21,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".AboutPage" />
-        <activity android:name=".HelpPage" />
+        <activity android:name=".SettingsActivity"
+            android:layout="@layout/settings_activity"
+            android:label="@string/settings"/>
+        <activity android:name=".AboutPage"
+            android:layout="@layout/about_page_layout"
+            android:label="@string/title_activity_about_page"/>
+        <activity android:name=".HelpPage"
+            android:layout="@layout/help_page_layout"
+            android:label="@string/help_page"/>
         <activity android:name=".GrowAssistantActivity" />
         <activity
             android:name=".MainActivity"

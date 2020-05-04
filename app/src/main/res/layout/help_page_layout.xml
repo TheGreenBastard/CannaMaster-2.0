@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.cannamaster.growassistant.mmj.other_pages.HelpPage">
+    tools:context="com.cannamaster.cannamastergrowassistant.HelpPage">
 
     <LinearLayout
         android:orientation="vertical"

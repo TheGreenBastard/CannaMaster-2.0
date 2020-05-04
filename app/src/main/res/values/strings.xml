@@ -669,5 +669,7 @@
     <string name="str_cnt_mnu_delete" />
     <string name="action_discard_reminder">discard</string>
     <string name="action_save_reminder">save</string>
+    <string name="settings">settings</string>
+    <string name="help_page">Help</string>
     >
 </resources>
