@@ -26,19 +26,25 @@
             android:id="@+id/nav_sickplants"
             android:title="Sick Plants/Problems"
             android:onClick="selectDrawerItem"/>
-
-
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_favorites"
-            android:title="Favorites" />
+            android:title="Favorites"
+            android:onClick="selectDrawerItem"
+            />
         <item
             android:id="@+id/nav_settings"
-            android:title="Settings" />
+            android:title="Settings"
+            android:onClick="selectDrawerItem"
+            />
         <item
             android:id="@+id/nav_help"
             android:title="Help And Feedback"
             android:onClick="selectDrawerItem"
-            android:actionLayout="@layout/help_page_layout"/>
+            />
         <item
             android:id="@+id/nav_about"
             android:title="About"

@@ -671,5 +671,7 @@
     <string name="action_save_reminder">save</string>
     <string name="settings">settings</string>
     <string name="help_page">Help</string>
+    <string name="favorites_endpage_activity" />
+    <string name="favorites_list_activity" />
     >
 </resources>

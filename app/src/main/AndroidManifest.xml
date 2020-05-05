@@ -30,6 +30,12 @@
         <activity android:name=".HelpPage"
             android:layout="@layout/help_page_layout"
             android:label="@string/help_page"/>
+        <activity android:name="ui.main.ui.FavoritesEndpageActivity"
+            android:layout="@layout/favorites_endpage_activity"
+            android:label="@string/favorites_endpage_activity" />
+        <activity android:name=".ui.main.ui.FavoritesListActivity"
+            android:layout="@layout/favorites_list_activity"
+            android:label="@string/favorites_list_activity" />
         <activity android:name=".GrowAssistantActivity" />
         <activity
             android:name=".MainActivity"
