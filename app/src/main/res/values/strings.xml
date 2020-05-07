@@ -673,5 +673,6 @@
     <string name="help_page">Help</string>
     <string name="favorites_endpage_activity" />
     <string name="favorites_list_activity" />
+    <string name="copyright_2020_gb_industries">Copyright 2020 GB Industries</string>
     >
 </resources>

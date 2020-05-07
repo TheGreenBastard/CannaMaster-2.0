@@ -14,7 +14,7 @@ public class HelpPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help_page_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.help_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Help And Feedback");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
