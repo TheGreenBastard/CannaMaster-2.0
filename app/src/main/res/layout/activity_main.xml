@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            >
 
             <!-- this is the header that disappears and the text for the paralax title
                - contentScrim is the toolbar color
@@ -55,7 +56,7 @@
                     android:id="@+id/sections_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:titleTextColor="@color/white"
                     app:layout_collapseMode="pin" />
 
                 <!-- This ends the collapsing toolbar and header -->
@@ -66,8 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:showIn="@layout/activity_main" tools:context=".MainActivity">
-
+            tools:showIn="@layout/activity_main" tools:context=".MainActivity"
+            >
             <!-- This LinearLayout represents the contents of the screen
               below the collapsing toolbar -->
 
@@ -88,6 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tabs"
+                android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
                 >
 
                 </androidx.viewpager.widget.ViewPager>
