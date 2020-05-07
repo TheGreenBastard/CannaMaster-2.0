@@ -674,5 +674,8 @@
     <string name="favorites_endpage_activity" />
     <string name="favorites_list_activity" />
     <string name="copyright_2020_gb_industries">Copyright 2020 GB Industries</string>
+    <string name="clear_all_grow_data">Clear All Grow Data</string>
+    <string name="edit_grow_information">Edit Grow Information</string>
+    <string name="start_grow_assistant">Start Grow Assistant</string>
     >
 </resources>

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.cannamaster.cannamastergrowassistant.GrowAssistantFragment;
 import com.cannamaster.cannamastergrowassistant.R;
 
 /**
@@ -45,7 +46,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = new SickPlantsFragment();
                 break;
             case 4:
-                fragment = new TipsAndTricksFragment();
+                fragment = new GrowAssistantFragment();
                 break;
 
         }

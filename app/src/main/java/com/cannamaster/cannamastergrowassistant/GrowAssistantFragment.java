@@ -38,7 +38,7 @@ public class GrowAssistantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // return inflater.inflate(R.layout.grow_assistant_viewpager_tab_layout, container, false);
+        inflater.inflate(R.layout.grow_assistant_layout, container, false);
 
         //   get the view
         View view = inflater.inflate(R.layout.grow_assistant_layout, container, false);

@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new SickPlantsFragment();
                         break;
                     case 4:
-                        fragment = new TipsAndTricksFragment();
+                        fragment = new GrowAssistantFragment();
                         break;
 
                 }
