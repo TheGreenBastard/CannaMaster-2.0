@@ -58,8 +58,8 @@ public class GrowAssistantFragment extends Fragment {
                 // Toast.makeText(getActivity(), "Start Grow Assistant Button Clicked", Toast.LENGTH_LONG).show();
 
                 // this starts the grow assistant
-               // Intent intent = new Intent(thisContext, GrowAssistantActivity.class);
-               // startActivity(intent);
+                Intent intent = new Intent(thisContext, GrowAssistantActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -1,6 +1,472 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    tools:context="com.cannamaster.cannamastergrowassistant.GrowAssistantActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/grow_assistant_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/green_A700"
+                android:titleTextColor="@color/white"
+                app:popupTheme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        </android.support.design.widget.AppBarLayout>
+        <!-- End Header -->
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--  Title On Page TextView -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Select Your Grow Details"
+                    android:id="@+id/set_notifications_title"
+                    android:layout_gravity="center"
+                    android:padding="10dp"/>
+                <!-- blurb on how to setup -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Take a few minutes to set some variables about your grow operation. By answering a handful of multiple choice questions our grow Assistant will look over your data and set reminders for important events so you can give your girls all the attention they deserve. Never miss or forget a crucial cultivation event again!."
+                    android:id="@+id/textView2"
+                    android:layout_gravity="start"
+                    android:padding="16dp"/>
+                <!-- notify user that we do not collect data -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textColor="@color/red_600"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="*We will never collect personal information about your grow operation.  All data is stored locally on your device and accessible only by you"
+                    android:id="@+id/textView3"
+                    android:textSize="12sp"/>
+
+                <!-- Date Layout -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <!-- Set Date Layout -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:onClick="setDate"
+                        android:id="@+id/date"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:layout_height="72dp">
+                        <!-- Date Icon -->
+                        <ImageView
+                            android:id="@+id/date_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:src="@drawable/ic_view_day_grey600_24dp"
+                            android:layout_centerVertical="true" />
+                        <!-- Date Icon -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/date_icon"
+                            android:layout_toEndOf="@+id/date_icon"
+                            android:layout_height="wrap_content">
+                            <!-- Date TextView -->
+                            <TextView
+                                android:id="@+id/date_text"
+                                android:layout_width="wrap_content"
+                                android:textSize="15sp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/flowering_date"
+                                android:textColor="@color/blue_800"/>
+                            <!-- the selected date textview -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/set_date"
+                                android:textSize="15sp"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <!-- Set Time Layout -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:clickable="true"
+                        android:onClick="setTime"
+                        android:id="@+id/time"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:layout_height="72dp">
+                        <!-- Time Icon -->
+                        <ImageView
+                            android:id="@+id/time_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginEnd="32dp"
+                            android:src="@drawable/ic_access_time_grey600_24dp"
+                            android:layout_centerVertical="true" />
+                        <!-- Time Layout -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/time_icon"
+                            android:layout_toEndOf="@id/time_icon"
+                            android:layout_height="wrap_content">
+                            <!-- Time TextView -->
+                            <TextView
+                                android:id="@+id/time_text"
+                                android:layout_width="wrap_content"
+                                android:textSize="15sp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time"
+                                android:textColor="@color/blue_800"/>
+                            <!-- The Time That Is Set TextView -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/set_time"
+                                android:textSize="15sp"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <!-- Select Your Grow Details -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Select Your Grow Details"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:textStyle="bold"
+                    android:id="@+id/textView477" />
+
+                <!-- Grow Medium -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Grow Medium"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="10dp"
+                    android:textStyle="bold"
+                    android:id="@+id/textView4" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:paddingLeft="65dp"
+                    android:paddingStart="65dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/rgGrowMedium">
+
+                    <!-- Indoor Soil -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indoor Soil"
+                        android:id="@+id/radioSoil"
+                        android:checked="true"
+                        android:layout_gravity="start" />
+
+                    <!-- Outdoor Grow -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Outdoor Grow"
+                        android:id="@+id/radioOutdoor"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <!-- Hydroponic -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Indoor Hydroponic"
+                        android:id="@+id/radioHydro"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                </RadioGroup>
+
+                <!-- Fertilizier  -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Fertilizer"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:id="@+id/textView5" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:paddingLeft="65dp"
+                    android:paddingStart="65dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/rgFertilizerOptions">
+
+                    <!--  Chemical -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chemical"
+                        android:id="@+id/radioChemical"
+                        android:checked="true"
+                        android:layout_gravity="start" />
+
+                    <!-- Organic -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Organic"
+                        android:id="@+id/radioOrganic"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+                </RadioGroup>
+
+                <!-- How Often Do You Water? -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="How Often Do You Water?"
+                    android:textStyle="bold"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:id="@+id/textView115" />
+                <!-- Watering Notifications Group -->
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:paddingLeft="65dp"
+                    android:paddingStart="65dp"
+                    android:id="@+id/rgWaterOptions"
+                    android:paddingBottom="10dp">
+                    <!-- Every Day -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Day"
+                        android:id="@+id/radioButtonWaterDaily"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- Every Other Day -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Other Day"
+                        android:id="@+id/radioButtonWater2Days"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- Every 3 Days -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Every Three Days"
+                        android:id="@+id/radioButtonWater3Days"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- Weekly Watering Notification -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Once A Week"
+                        android:id="@+id/radioButtonWaterWeekly"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+                    <!-- Do Not Set Water Notification -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Do Not Set Watering Notification"
+                        android:id="@+id/radioButtonWaterNoNotify"
+                        android:layout_gravity="start"
+                        android:checked="true" />
+
+                </RadioGroup>
+                <!-- Indica/Sativa Ratio TextView -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Is Your Strain Indica Or Sativa?"
+                    android:paddingLeft="16dp"
+                    android:paddingStart="16dp"
+                    android:id="@+id/textView15" />
+                <!-- Indica/Sativa Ratio -->
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:paddingLeft="65dp"
+                    android:paddingStart="65dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/rgIndicaSativa">
+                    <!-- 100% -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100% Indica"
+                        android:id="@+id/radioButtonIndicaSativa1000"
+                        android:onClick="indicaSativaRatio"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- 100% Sativa -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100% Sativa"
+                        android:id="@+id/radioButtonIndicaSativa0100"
+                        android:onClick="indicaSativaRatio"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- 50/50 -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50/50 Indica/Sativa Hybrid"
+                        android:id="@+id/radioButtonIndicaSativa5050"
+                        android:onClick="indicaSativaRatio"
+                        android:checked="false"
+                        android:layout_gravity="start" />
+                    <!-- 60/40 -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="60/40 Indica/Sativa Hybrid"
+                        android:id="@+id/radioButtonIndicaSativa6040"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+                    <!-- 60/40 -->
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="40/60 Indica/Sativa Hybrid"
+                        android:id="@+id/radioButtonIndicaSativa4060"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="70/30 Indica/Sativa Hybrid"
+                        android:id="@+id/radioButtonIndicaSativa7030"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30/70 Indica/Sativa Hybrid"
+                        android:id="@+id/radioButtonIndicaSativa3070"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mostly Sativa"
+                        android:id="@+id/radioButtonIndicaSativa9010"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mostly Indica"
+                        android:id="@+id/radioButtonIndicaSativa1090"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="false" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unknown"
+                        android:id="@+id/radioButtonIndicaSativaUnknown"
+                        android:onClick="indicaSativaRatio"
+                        android:layout_gravity="start"
+                        android:checked="true" />
+
+                </RadioGroup>
+
+                <Button
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/button_set_notifications"
+                    android:text="Set Your Notifications"
+                    android:background="@color/green_A700"
+                    android:textColor="@color/white"
+                    android:padding="10dp"
+                    android:textStyle="bold"
+                    android:paddingBottom="16dp"
+                    android:onClick="SetNotificationsButton"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/click_button_text"
+                    android:text="Click Here To Set Your Notifications"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:id="@+id/empty_space"
+                    android:text=" "
+                    android:layout_gravity="center_horizontal"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
