@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
                 // Create a new fragment and specify the planet to show based on
-                // position
+                // position of the viewpager tabs
                 Fragment fragment = null;
 
                 switch (position) {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-            // Returns the page title for the top indicator
+            // Returns the page title for the top tab indicator
             @Override
             public CharSequence getPageTitle(int position) {
                 return TAB_TITLE[position];
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
     // Dark Mode Menu
     private void setNightMode(@AppCompatDelegate.NightMode int nightMode) {
         AppCompatDelegate.setDefaultNightMode(nightMode);
-        if (Build.VERSION.SDK_INT >= 11) {
+        if (Build.VERSION.SDK_INT >= 21) {
             recreate();
         }
     }

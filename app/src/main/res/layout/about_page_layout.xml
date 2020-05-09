@@ -33,115 +33,113 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/ic_launcher"
-        />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CannaMaster v1.0.1"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
-
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/copyright_2020_gb_industries"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="All Rights Reserved"
-        android:textSize="10sp"
-        />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CannaMaster v1.0.1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Have something to say?"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/copyright_2020_gb_industries"
+                android:textSize="12sp" />
 
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-New Grow Assistant Method" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All Rights Reserved"
+                android:textSize="10sp" />
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="- Updated Item Number 3" />
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mr. Silly From Silly Farms" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Have something to say?"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Purp / StickyB / LilJ86" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-New Grow Assistant Method" />
 
-    <TextView
-        android:id="@+id/textView31"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Garrila Grower / MX Grower"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="- Updated Item Number 3" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp" />
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mr. Silly From Silly Farms" />
 
-    <TextView
-        android:id="@+id/textView421"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="39dp"
-        android:text="- Software Licences -"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Purp / StickyB / LilJ86" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="- Special Thanks -"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Garrila Grower / MX Grower"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView411"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="- What&apos;s New -"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <TextView
+                android:id="@+id/textView421"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="39dp"
+                android:text="- Software Licences -"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="- Special Thanks -"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView411"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="- What&apos;s New -"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
