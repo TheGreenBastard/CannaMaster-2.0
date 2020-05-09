@@ -46,12 +46,12 @@ public class FavoritesEndpageActivity extends AppCompatActivity {
         // 5. get status value from bundle
         position = bundle.getInt("position");
 
-        ivImage = (ImageView)findViewById(R.id.fav_endpage_header_image);
-        tvarticle = (TextView)findViewById(R.id.fav_endpage_article);
-        tvTitle = (CollapsingToolbarLayout)findViewById(R.id.fav_endpage_header);
+        ivImage = (ImageView) findViewById(R.id.fav_endpage_header_image);
+        tvarticle = (TextView) findViewById(R.id.fav_endpage_article);
+        tvTitle = (CollapsingToolbarLayout) findViewById(R.id.fav_endpage_header);
 
         helper = new DatabaseHelper(this);
-        dbList= new ArrayList<DatabaseModel>();
+        dbList = new ArrayList<DatabaseModel>();
         dbList = helper.getDataFromDB();
 
         String _id = dbList.get(position).get_id();

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /***********************************************************
  * Click Listener Class for OnItemClick and OnItemLongClick
  ***********************************************************/
-public class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener{
+public class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetector gestureDetector;
     private RecyclerViewClickListener clickListener;

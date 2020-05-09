@@ -32,7 +32,6 @@ public class FavoritesListActivity extends AppCompatActivity {
     RecyclerView.LayoutManager mLayoutManager;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +67,11 @@ public class FavoritesListActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-               // Method must be overridden for onLongClick
-               // do not put code here, put it in RecyclerAdapter
+                // Method must be overridden for onLongClick
+                // do not put code here, put it in RecyclerAdapter
             }
         }));
     }
-
 
 
     @Override
