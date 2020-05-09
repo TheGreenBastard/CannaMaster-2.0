@@ -14,9 +14,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-    /**
-     * This is the Grow Assistant Fragment visible in the View Pager Tabs
-     * */
+/**
+ * This is the Grow Assistant Fragment visible in the View Pager Tabs
+ */
 
 public class GrowAssistantFragment extends Fragment {
 
@@ -71,8 +71,8 @@ public class GrowAssistantFragment extends Fragment {
                 //        .show();
 
                 // this starts the grow assistant
-               // Intent intent = new Intent(thisContext, ReminderNotificationList.class);
-              //  startActivity(intent);
+                // Intent intent = new Intent(thisContext, ReminderNotificationList.class);
+                //  startActivity(intent);
             }
         });
 

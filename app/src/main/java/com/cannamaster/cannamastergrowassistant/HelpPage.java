@@ -32,21 +32,22 @@ public class HelpPage extends AppCompatActivity {
         setContentView(R.layout.help_page_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // set page title in appbar
         Objects.requireNonNull(getSupportActionBar()).setTitle("CannaMaster Help");
+        // set up back press arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // get the views from layout
 
-
-        //might not need these as the onClicked statement may take care of them ??
+        // todo : subject is not working when sending mail
+        // get the radio button views
         rbQuestion = findViewById(R.id.radio_question);
         rbError = findViewById(R.id.radio_error);
         rbSuggestion = findViewById(R.id.radio_suggestion);
-
+        // get the edit text view
         editTextForIssue = findViewById(R.id.edit_text_for_issue);
 
         // set up send button
-
         mSendEmailButton = findViewById(R.id.help_page_send_button);
         mSendEmailButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,9 +69,6 @@ public class HelpPage extends AppCompatActivity {
 
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
                 // set page title
-                //Objects.requireNonNull(getSupportActionBar()).setTitle("Help And Feedback");
-                // this is for the back arrow to be placed and linked up
-
             }
         });
     }

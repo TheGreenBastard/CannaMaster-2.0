@@ -21,7 +21,7 @@ import static android.provider.MediaStore.Images.Thumbnails.IMAGE_ID;
  * Database Helper Class
  ************************/
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME="favorites.db";
+    private static final String DATABASE_NAME = "favorites.db";
     private static final int DATABASE_VERSION = 1;
     private static final String ARTICLES_TABLE = "TABLE_ARTICLES";
     private static final String MAKE_TABLE = "CREATE TABLE" +
@@ -49,6 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String imageId;
     private byte[] imageByteArray;
+
     // public String getImageId() {
     //    return imageId;}
     // public void setImageId(String imageId) {
@@ -57,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public byte[] getImageByteArray() {
         return imageByteArray;
     }
+
     public void setImageByteArray(byte[] imageByteArray) {
         this.imageByteArray = imageByteArray;
     }
@@ -74,8 +76,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
     }
-/* Insert into database*/
-    public void insertIntoDB(String name,String title,String article,String description, String image_id, int image){
+
+    /* Insert into database*/
+    public void insertIntoDB(String name, String title, String article, String description, String image_id, int image) {
         Log.d("insert", "before insert");
 
         // 1. get reference to writable DB
@@ -96,15 +99,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
-/* Retrive  data from database */
-    public List<DatabaseModel> getDataFromDB(){
+
+    /* Retrive  data from database */
+    public List<DatabaseModel> getDataFromDB() {
         List<DatabaseModel> modelList = new ArrayList<DatabaseModel>();
         String query = "SELECT * FROM TABLE_ARTICLES";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query,null);
+        Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 DatabaseModel model = new DatabaseModel();
                 model.set_id(cursor.getString(0));
@@ -115,7 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 model.setImage(cursor.getInt(5));
 
                 modelList.add(model);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         Log.d("favorites data", modelList.toString());
@@ -124,11 +128,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return modelList;
     }
 
-    public ImageHelper getImage(String imageId)  {
+    public ImageHelper getImage(String imageId) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor2 = db.query(ARTICLES_TABLE,
-                new String[] {_id, TITLE, DESCRIPTION, ARTICLE, IMAGE_ID, IMAGE_BITMAP},IMAGE_ID
-                        +" LIKE '"+ imageId + "%'", null, null, null, null);
+                new String[]{_id, TITLE, DESCRIPTION, ARTICLE, IMAGE_ID, IMAGE_BITMAP}, IMAGE_ID
+                        + " LIKE '" + imageId + "%'", null, null, null, null);
         ImageHelper imageHelper = new ImageHelper();
         if (cursor2.moveToFirst()) {
             do {
@@ -142,9 +146,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /*delete a row from database*/
-    public void deleteARow(String title){
+    public void deleteARow(String title) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(ARTICLES_TABLE, "title" + " = ?", new String[] { title });
+        db.delete(ARTICLES_TABLE, "title" + " = ?", new String[]{title});
         db.close();
     }
 

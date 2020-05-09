@@ -8,16 +8,15 @@ import android.preference.PreferenceFragment;
 import android.util.Log;
 
 
-
 /*********************
  * Settings Fragment
  *********************/
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
-    String KEY_PREF_EDITTEXT= "empty_string_edittext_preference";
-    String KEY_PREF_LIST= "empty_string_list_preference";
-    String KEY_PREF_DARKMODE= "empty_string_darkmode_preference";
-    String KEY_PREF_FONT_SIZE= "empty_string_font_size";
+    String KEY_PREF_EDITTEXT = "empty_string_edittext_preference";
+    String KEY_PREF_LIST = "empty_string_list_preference";
+    String KEY_PREF_DARKMODE = "empty_string_darkmode_preference";
+    String KEY_PREF_FONT_SIZE = "empty_string_font_size";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

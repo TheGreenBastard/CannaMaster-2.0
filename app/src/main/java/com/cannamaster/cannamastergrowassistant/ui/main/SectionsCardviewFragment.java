@@ -68,7 +68,7 @@ public abstract class SectionsCardviewFragment extends Fragment {
         }
         recyclerView.setLayoutManager(layoutManager);
     }
-    
+
     private void setupAdapter() {
         adapter = new SectionsCardviewAdapter(activity);
         adapter.addAll(articles);

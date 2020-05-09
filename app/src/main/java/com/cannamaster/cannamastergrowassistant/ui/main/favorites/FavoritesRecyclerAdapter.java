@@ -67,7 +67,6 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
         public CardView cardview;
 
 
-
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
 
@@ -90,10 +89,10 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
         public void onClick(View v) {
             // This opens the endpage activity and populates the views
 
-            Intent intent = new Intent(context,FavoritesEndpageActivity.class);
+            Intent intent = new Intent(context, FavoritesEndpageActivity.class);
 
             Bundle extras = new Bundle();
-            extras.putInt("position",getAdapterPosition());
+            extras.putInt("position", getAdapterPosition());
             intent.putExtras(extras);
 
             context.startActivity(intent);
@@ -135,12 +134,12 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
 
 
         // delete a row from database
-        public void deleteRow(int _id){
+        public void deleteRow(int _id) {
 
             helper = new DatabaseHelper(itemView.getContext());
             SQLiteDatabase db = helper.getWritableDatabase();
             String id = Integer.toString(_id);
-            db.delete("TABLE_ARTICLES", "_id =? ",new String[] {id});
+            db.delete("TABLE_ARTICLES", "_id =? ", new String[]{id});
             db.close();
         }
 

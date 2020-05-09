@@ -39,7 +39,7 @@ public class EndpageActivity extends AppCompatActivity {
     String createDB = "CREATE TABLE IF NOT EXISTS TABLE_ARTICLES(_id TEXT PRIMARY KEY, title TEXT, description TEXT, article TEXT, image_id TEXT, image INTEGER)";
 
     public void onCreate(SQLiteDatabase db) {
-                    db.execSQL(createDB);
+        db.execSQL(createDB);
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +71,12 @@ public class EndpageActivity extends AppCompatActivity {
         //
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_left));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(View v) {
-                                                     //what to do when clicked
-                                                     onBackPressed();
-                                                 }
-                                             });
+            @Override
+            public void onClick(View v) {
+                //what to do when clicked
+                onBackPressed();
+            }
+        });
 
 
         // set view contents on Endpage
@@ -91,10 +91,11 @@ public class EndpageActivity extends AppCompatActivity {
          * FAB Button click to add to favorites
          **************************************/
 
-        final FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v){
+            @Override
+            public void onClick(View v) {
 
                 // Insert Record to SQLite Database for Favorites List
 
@@ -111,11 +112,10 @@ public class EndpageActivity extends AppCompatActivity {
                 helper.insertIntoDB(name, title, article, description, image_id, image);
 
                 Toast.makeText(EndpageActivity.this, "'"
-                        + sTitle + "' Added To Favorite Articles",
+                                + sTitle + "' Added To Favorite Articles",
                         Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
     }

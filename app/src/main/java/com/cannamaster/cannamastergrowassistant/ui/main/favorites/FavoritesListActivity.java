@@ -2,6 +2,7 @@ package com.cannamaster.cannamastergrowassistant.ui.main.favorites;
 
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;

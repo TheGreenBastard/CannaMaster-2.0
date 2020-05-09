@@ -42,7 +42,7 @@ import com.cannamaster.cannamastergrowassistant.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
 
-    private static String[] TAB_TITLE = {"Basics","Grow Assistant","Tips And Tricks","Advanced Techniques", "Sick Plants/Problems"};
+    private static String[] TAB_TITLE = {"Basics", "Grow Assistant", "Tips And Tricks", "Advanced Techniques", "Sick Plants/Problems"};
     /****************************
      * double back press to exit
      ****************************/
@@ -226,7 +226,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /** Icons for Drawer Menu */
+    /**
+     * Icons for Drawer Menu
+     */
     private void setupNavigationIcons(NavigationView mNavigationView) {
 
         mNavigationView.getMenu().findItem(R.id.nav_basics).setIcon(R.drawable.ic_launcher);
@@ -242,8 +244,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    /** Nav Drawer */
+    /**
+     * Nav Drawer
+     */
     private void setupDrawerContent(NavigationView mNavigationView) {
         mNavigationView.setNavigationItemSelectedListener(
                 menuItem -> {
@@ -253,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
 
             case R.id.nav_basics:
                 mViewPager.setCurrentItem(0);
@@ -274,7 +277,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.nav_favorites:
                 Intent favoritesIntent = new Intent(this, FavoritesEndpageActivity.class);
-                startActivity(favoritesIntent);;
+                startActivity(favoritesIntent);
+                ;
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
@@ -320,10 +324,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);  // 2 second pause
     }
 
 
-    }
+}
