@@ -1,212 +1,192 @@
 package com.cannamaster.cannamastergrowassistant;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
+import android.net.ParseException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import java.util.Calendar;
+import androidx.core.app.ActivityCompat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 
 public class GrowAssistantActivity extends AppCompatActivity {
 
-    TextView mDateText, mTimeText;
-    Calendar mCalendar;
-    Calendar mIndoorHarvestCalendar;
-    Calendar mOutdoorHarvestCalendar;
-    Calendar mWaterCalendar;
-    Calendar mFertilizeCalendar;
-    Calendar mFlushCalendar;
-    Calendar mTakeClonesCalendar;
-    Calendar mHydroHarvestCalendar;
-    Calendar mHydroResCalendar;
-    Calendar mDefoliateCalendar;
-    int mYear, mMonth, mHour, mMinute, mDay;
-    long mRepeatTime;
-    String mTitleText;
-    String mTitle;
-    String mTime;
-    String mDate;
-    String mRepeat;
-    String mIsOutdoor;
-    String mRepeatType;
-    String mActive;
-
-    // private RelativeLayout mHowOftenRepeat;
-
-    // Radio Groups
-    RadioGroup rgGrowMediumOptions;
-    RadioGroup rgFertilizerOptions;
-    RadioGroup rgWaterOptions;
-    RadioGroup rgIndicaSativaOptions;
-
-    // Values for Button
-    Button buttonSetNotifications;
-
-    // Initialize the RadioButtons
-    RadioButton radioWateringSchedule;
-    RadioButton radioFertilizerChoice;
-    RadioButton radioGrowMediumChoice;
-
-    // Flowering Days Variable
-    private int mFloweringDays;
-    int mFlush2WeeksBefore;
-
-    // Values for orientation change
-    private static final String KEY_TITLE = "title_key";
-    private static final String KEY_TIME = "time_key";
-    private static final String KEY_DATE = "date_key";
-    private static final String KEY_REPEAT = "repeat_key";
-    private static final String KEY_REPEAT_NO = "repeat_no_key";
-    private static final String KEY_REPEAT_TYPE = "repeat_type_key";
-    private static final String KEY_ACTIVE = "active_key";
-
-    // Constant values in milliseconds
-    private static final long milMinute = 60000L;
-    private static final long milHour = 3600000L;
-    private static final long milDay = 86400000L;
-    private static final long milWeek = 604800000L;
-    private static final long milMonth = 2592000000L;
-    private static final long mil2weeks = 1209600000L;
-
-    private Toolbar mToolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grow_assistant_activity_layout);
-
+        setContentView(R.layout.grow_assistant_activity_layout;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Grow Assistant");
+        //Set the back arrow
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Grow Assistant");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
-        // Initialize Views
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        //mDateText = (TextView) findViewById(R.id.set_date);
-        //mTimeText = (TextView) findViewById(R.id.set_time);
+        // find some layout features that will become important once the user starts interacting with them
+        ImageView ivCal = findViewById(R.id.date_icon);
+        ivCal.setOnClickListener(new View.OnClickListener() {
+                                     @Override
+                                     public void onClick(View v) {
 
-        // Initialize default values
-        mActive = "true";
-        mRepeat = "false";
-        mIsOutdoor = "false";
-        mRepeatType = "Select Repeat Interval";
-        mTitle = "Default Title";
-        mTitleText = mTitle;
-        mFloweringDays = 70;
+                                     //    todo : code to open the date picker
 
-        // sets default values if the date/time picker isnt clicked
-        mCalendar = Calendar.getInstance();
-        mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = mCalendar.get(Calendar.MINUTE);
-        mYear = mCalendar.get(Calendar.YEAR);
-        mMonth = mCalendar.get(Calendar.MONTH) + 1;
-        mDay = mCalendar.get(Calendar.DATE);
-        mDate = mMonth + "/" + mDay + "/" + mYear;
-        mTime = mHour + ":" + mMinute;
+                                     }
+                                 });
 
-        // Setup TextViews using reminder values
-        mDateText.setText(mDate);
-        mTimeText.setText(mTime);
-
-        // To save state on device rotation
-        if (savedInstanceState != null) {
-            String savedTitle = savedInstanceState.getString(KEY_TITLE);
-            mTitle = savedTitle;
-
-            String savedTime = savedInstanceState.getString(KEY_TIME);
-            mTimeText.setText(savedTime);
-            mTime = savedTime;
-
-            String savedDate = savedInstanceState.getString(KEY_DATE);
-            mDateText.setText(savedDate);
-            mDate = savedDate;
-
-            String saveRepeat = savedInstanceState.getString(KEY_REPEAT);
-            mRepeat = saveRepeat;
-
-            String savedRepeatType = savedInstanceState.getString(KEY_REPEAT_TYPE);
-            mRepeatType = savedRepeatType;
-
-            mActive = savedInstanceState.getString(KEY_ACTIVE);
+        // This is how we request the user for Calendar write and read permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // Ask the user for permission and then re-run
+            Log.i("No Permission", "No Permission");
+            int requestCode = 1;
+            // Re-request to ask for permission
+            requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
         }
-        // addListenerOnButtonClick();
     }
 
-    // To save state on device rotation
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    private void addToDeviceCalendar(String startDate,String endDate, String title,String description, String location, int reminder) {
 
-        outState.putCharSequence(KEY_TITLE, mTitle);
-        outState.putCharSequence(KEY_TIME, mTimeText.getText());
-        outState.putCharSequence(KEY_DATE, mDateText.getText());
-        outState.putCharSequence(KEY_REPEAT, mRepeat);
-        outState.putCharSequence(KEY_REPEAT_TYPE, mRepeatType);
-        outState.putCharSequence(KEY_ACTIVE, mActive);
+        // Make the strings for the formatted times
+        String startDateFormatted = "";
+        String endDateFormatted = "";
+
+        // Get a calendar instance
+        GregorianCalendar calDate = new GregorianCalendar();
+
+        // Formats used to format the date into the correct format
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm");
+
+        /** Convert the dates given to the correct format **/
+        try {
+            // Convert date to the first format
+            Date date = originalFormat.parse(startDate);
+            Date eDate = originalFormat.parse(endDate);
+            // Convert it into the second format
+            startDateFormatted = targetFormat.format(date);
+            endDateFormatted = targetFormat.format(eDate);
+        }
+        catch (ParseException ex) {} catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Makes an ArrayList of the date split into different sections
+        ArrayList<String> startDateList = new ArrayList<String>(Arrays.asList(startDateFormatted.split(",")));
+        ArrayList<String> endDateList = new ArrayList<String>(Arrays.asList(endDateFormatted.split(",")));
+
+        // Converts the strings of the start list into ints
+        int startYear = Integer.parseInt(startDateList.get(0));
+        int startMonth = Integer.parseInt(startDateList.get(1));
+        int startDay = Integer.parseInt(startDateList.get(2));
+        int startHour = Integer.parseInt(startDateList.get(3));
+        int startMinute = Integer.parseInt(startDateList.get(4));
+        // Converts the strings of the end list into ints
+        int endYear = Integer.parseInt(endDateList.get(0));
+        int endMonth = Integer.parseInt(endDateList.get(1));
+        int endDay = Integer.parseInt(endDateList.get(2));
+        int endHour = Integer.parseInt(endDateList.get(3));
+        int endMinute = Integer.parseInt(endDateList.get(4));
+
+        // Sets the date and gets the time in milliseconds into startMillis
+        calDate.set(startYear, startMonth-1, startDay, startHour, startMinute);
+        long startMillis = calDate.getTimeInMillis();
+
+        // Sets the date and gets the time in milliseconds
+        calDate.set(endYear, endMonth-1, endDay, endHour, endMinute);
+        long endMillis = calDate.getTimeInMillis();
+
+        try {
+            /** Puts the values into an event for the calendar  **/
+            ContentResolver cr = this.getContentResolver();
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
+            values.put(CalendarContract.Events.TITLE, title);
+            values.put(CalendarContract.Events.DESCRIPTION, description);
+            values.put(CalendarContract.Events.EVENT_LOCATION,location);
+            values.put(CalendarContract.Events.HAS_ALARM,1);
+            values.put(CalendarContract.Events.CALENDAR_ID, 1);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, android.icu.util.Calendar.getInstance()
+                    .getTimeZone().getID());
+            System.out.println(Calendar.getInstance().getTimeZone().getID());
+
+            // If the user still hasn't given permission, then re-ask
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                // Ask the user for permission and then re-run
+                Log.i("No Permission", "No Permission");
+                Toast.makeText(this, "Failed to give permission, try again", Toast.LENGTH_SHORT).show();
+                int requestCode = 1;
+                requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
+                return;
+            }
+            /** Add the event to the calendar **/
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
+            // The Event ID
+            long eventId = Long.parseLong(uri.getLastPathSegment());
+            Log.i("Event_Id", String.valueOf(eventId));
+
+            // We add the reminder time to the new event
+            try {
+                values.clear();
+                values.put(CalendarContract.Reminders.EVENT_ID, eventId);
+                values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+                values.put(CalendarContract.Reminders.MINUTES, reminder);
+                getContentResolver().insert(CalendarContract.Reminders.CONTENT_URI, values);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "Now check Google Calendar, you may need to refresh it, it takes time", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    /** On clicking Time picker
-     public void setTime(View v){
-     Calendar now = Calendar.getInstance();
-     TimePickerDialog tpd = TimePickerDialog.newInstance(
-     this,
-     now.get(Calendar.HOUR_OF_DAY),
-     now.get(Calendar.MINUTE),
-     false
-     );
-     tpd.setThemeDark(false);
-     tpd.show(getFragmentManager(), "Timepickerdialog");
-     }
+    /**  This takes the values from the text inputs and puts them into a calendar array for insertion
+     *   into a calendar.  todo : edit this to set events in app based on radio and date picker choices.
+     * */
+    public void onMakeEvent (View view) {
+        // Get the EditText views by ID
+        EditText startText = (EditText) findViewById(R.id.startText);
+        EditText endText = (EditText) findViewById(R.id.endText);
+        EditText titleText = (EditText) findViewById(R.id.titleText);
+        EditText descText = (EditText) findViewById(R.id.descText);
+        EditText locText = (EditText) findViewById(R.id.locText);
+        EditText reminderText = (EditText) findViewById(R.id.reminderText);
+        // Converts the EditTexts to Strings
+        String startDate = startText.getText().toString();
+        String endDate = endText.getText().toString();
+        String titleString = titleText.getText().toString();
+        String descString = descText.getText().toString();
+        String locString = locText.getText().toString();
+        String reminderString = reminderText.getText().toString();
+        int reminderInt = Integer.parseInt(reminderString);
+        // Calls the function to add the event to the calender
+        addToDeviceCalendar(startDate, endDate, titleString, descString, locString, reminderInt);
+    }
 
-     // On clicking Date picker
-     public void setDate(View v){
-     Calendar now = Calendar.getInstance();
-     DatePickerDialog dpd = DatePickerDialog.newInstance(
-     this,
-     now.get(Calendar.YEAR),
-     now.get(Calendar.MONTH),
-     now.get(Calendar.DAY_OF_MONTH)
-     );
-     dpd.show(getFragmentManager(), "Datepickerdialog");
-     }
 
-     // Obtain time from time picker
-     @Override public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-     mHour = hourOfDay;
-     mMinute = minute;
-     if (minute < 10) {
-     mTime = hourOfDay + ":0" + minute;
-     } else {
-     mTime = hourOfDay + ":" + minute;
-     }
-     mTimeText.setText(mTime);
-     }
 
-     // Obtain date from date picker
-     @Override public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-     mYear = year;
-     mMonth = monthOfYear;
-     mDay = dayOfMonth;
-     mDate = mMonth + "/" + mDay + "/" + mYear;
-     mDateText.setText(mDate);
 
-     }
-
-     /****************************************
-      * OnCheckChanged Listener for Indica/Sativa Ratio - it sets mFloweringDays
+    /****************************************
+     * OnCheckChanged Listener for Indica/Sativa Ratio - it sets mFloweringDays
      ****************************************/
 
     /** This changes the value of mFloweringDays every time a button in the group is selected.

@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 /**
  * This is the Grow Assistant Fragment visible in the View Pager Tabs
@@ -38,10 +37,10 @@ public class GrowAssistantFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        inflater.inflate(R.layout.grow_assistant_layout, container, false);
+        inflater.inflate(R.layout.grow_assistant_fragment_layout, container, false);
 
         //   get the view
-        View view = inflater.inflate(R.layout.grow_assistant_layout, container, false);
+        View view = inflater.inflate(R.layout.grow_assistant_fragment_layout, container, false);
 
         Button btn = (Button) view.findViewById(R.id.button_start_growassistant);
         Button btn2 = (Button) view.findViewById(R.id.button_edit_grow_information);

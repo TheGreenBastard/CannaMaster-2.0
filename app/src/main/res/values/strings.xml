@@ -684,5 +684,34 @@
     <string name="i_have_a_suggestion">I Have A Suggestion</string>
     <string name="use_this_space_to_explain_your_issue_or_suggestion">Use This Space To Explain Your Issue Or Suggestion</string>
     <string name="send_to_developers">Send To Developers</string>
+    <string name="select_your_grow_details">Select Your Grow Details</string>
+    <string name="we_will_never_collect_personal_information_about_your_grow_operation_all_data_is_stored_locally_on_your_device_and_accessible_only_by_you">*We will never collect personal information about your grow operation. All data is stored locally on your device and accessible only by you</string>
+    <string name="take_a_few_minutes_to_set_some_variables_about_your_grow_operation_by_answering_a_handful_of_multiple_choice_questions_our_grow_assistant_will_look_over_your_data_and_set_reminders_for_important_events_so_you_can_give_your_girls_all_the_attention_they_deserve_never_miss_or_forget_a_crucial_cultivation_event_again">Take a few minutes to set some variables about your grow operation. By answering a handful of multiple choice questions our grow Assistant will look over your data and set reminders for important events so you can give your girls all the attention they deserve. Never miss or forget a crucial cultivation event again!.</string>
+    <string name="grow_medium">Grow Medium</string>
+    <string name="indoor_soil">Indoor Soil</string>
+    <string name="outdoor_grow">Outdoor Grow</string>
+    <string name="indoor_hydroponic">Indoor Hydroponic</string>
+    <string name="fertilizer">Fertilizer</string>
+    <string name="chemical">Chemical</string>
+    <string name="organic">Organic</string>
+    <string name="how_often_do_you_water">How Often Do You Water?</string>
+    <string name="every_day">Every Day</string>
+    <string name="every_other_day">Every Other Day</string>
+    <string name="every_three_days">Every Three Days</string>
+    <string name="once_a_week">Once A Week</string>
+    <string name="do_not_set_watering_notification">Do Not Set Watering Notification</string>
+    <string name="is_your_strain_indica_or_sativa">Is Your Strain Indica Or Sativa?</string>
+    <string name="_100_indica">100% Indica</string>
+    <string name="_100_sativa">100% Sativa</string>
+    <string name="_50_50_indica_sativa_hybrid">50/50 Indica/Sativa Hybrid</string>
+    <string name="_60_40_indica_sativa_hybrid">60/40 Indica/Sativa Hybrid</string>
+    <string name="_40_60_indica_sativa_hybrid">40/60 Indica/Sativa Hybrid</string>
+    <string name="_70_30_indica_sativa_hybrid">70/30 Indica/Sativa Hybrid</string>
+    <string name="_30_70_indica_sativa_hybrid">30/70 Indica/Sativa Hybrid</string>
+    <string name="mostly_sativa">Mostly Sativa</string>
+    <string name="mostly_indica">Mostly Indica</string>
+    <string name="unknown">Unknown</string>
+    <string name="set_your_notifications">Set Your Notifications</string>
+    <string name="click_here_to_set_your_notifications">Click Here To Set Your Notifications</string>
     >
 </resources>

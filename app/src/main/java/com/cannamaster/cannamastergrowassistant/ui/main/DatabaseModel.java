@@ -3,6 +3,8 @@ package com.cannamaster.cannamastergrowassistant.ui.main;
 /***************************
  * Favorites Database Model
  ***************************/
+
+// This is what is in every row of the DB
 public class DatabaseModel {
     private String _id;
     private String title;
@@ -11,7 +13,8 @@ public class DatabaseModel {
     private String imageId;
     private int image;
 
-    public String get_id() {
+    // These are functions to interact with the DB
+        public String get_id() {
         return _id;
     }
 
