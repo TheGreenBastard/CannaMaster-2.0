@@ -1,0 +1,152 @@
+   /**************************************************************************************
+             * OnClickListener for radio group selection results
+             * these are the results selected after filling out the grow details form
+             * todo : these need edited to work with new calendar method
+             **************************************************************************************/
+            public void addListenerOnButtonClick() {
+                // Find Radio Groups By _id
+
+                // Button that gets things going
+                buttonSetNotifications = (Button) findViewById(R.id.button_set_notifications);
+                buttonSetNotifications.setOnClickListener(new View.OnClickListener() {
+
+                    @Override public void onClick(View v) {
+
+                        // get selected radio buttons from each radioGroup
+                        int selectedWaterScheduleID = radioWateringSchedule.getCheckedRadioButtonId();
+                        int selectedFertilzierScheduleID = radioFertilizerChoice.getCheckedRadioButtonId();
+                        int selectedGrowMediumID = radioGrowMediumChoice.getCheckedRadioButtonId();
+                        int selectedIndicaSativaRatioID = radioIndicaSativaOptions.getCheckedRadioButtonId();
+
+                        // find the RadioButton by returned id
+                        radioGrowMediumChoice = (RadioGroup) findViewById(selectedGrowMediumID);
+                        radioFertilizerChoice = (RadioGroup) findViewById(selectedFertilzierScheduleID);
+                        radioWateringSchedule = (RadioGroup) findViewById(selectedWaterScheduleID);
+                        radioIndicaSativaOptions = (RadioGroup) findViewById(selectedIndicaSativaRatioID);
+
+
+                        // Grow Medium
+
+                        /****************************************************
+                         * Indoor Soil Grow Medium Radio Button Selection
+                         ****************************************************/
+                        if (radioSoil == radioGrowMediumChoice) {
+                            // Indoor Harvest Reminder
+                            SetNotificationsButtonIndoorHarvestDay(v);
+                            // Flush Reminder - Soil 2 weeks before harvest
+                            SetNotificationsButtonFlush(v);
+                            // Clone Reminder - 2 Weeks After Flower
+                            SetNotificationsButtonTakeClones(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Soil Harvest Selected" +
+                                    mDate, Toast.LENGTH_SHORT).show();
+                        }
+
+                        /***************************************************
+                         * Outdoor Grow Medium Radio Button Selection
+                         ***************************************************/
+                        else  if (radioOutdoor == radioGrowMediumChoice) {
+                            // Outdoor Harvest Reminder
+                            SetNotificationsButtonOutdoorHarvestDay(v);
+                            // Flush Reminder - 2 weeks before harvest;
+                            SetNotificationsButtonFlush(v);
+                            // Clone Reminder - mid August
+                            SetNotificationsButtonTakeClones(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Outdoor Harvest Selected", Toast
+                                    .LENGTH_SHORT).show();
+                        }
+
+                        /****************************************************
+                         * Hydro Grow Medium Radio Button Selection
+                         ****************************************************/
+                        else if (radioHydroponic == radioGrowMediumChoice) {
+                            // Harvest Notification - Hydro
+                            SetNotificationsButtonHydroHarvestDay(v);
+                            // Reservoir change reminder
+                            SetNotificationsButtonHydroResChange(v);
+                            // Clone Reminder - 2 Weeks Into Flower
+                            SetNotificationsButtonTakeClones(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Hydro Harvest Selected", Toast
+                                    .LENGTH_SHORT).show();
+                        }
+
+                        // Type Of Nutes
+
+                        /****************************************************
+                         * Chemical Fertilizer Radio Button Selection
+                         ****************************************************/
+                        if (radioChemical == radioFertilizerChoice) {
+                            // Chemical Fert Reminder
+                            mTitle = "It's time to feed the girls.  Be careful not to burn them with your" +
+                                    " fertilizer.";
+                            SetNotificationsButtonFert(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Chemical Fertilizer selected",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        /****************************************************
+                         * Organic Fertilizer Radio Button Selection
+                         ****************************************************/
+                        else if (radioOrganic == radioFertilizerChoice) {
+                            mTitle = "This would be a good time to amend with some organic compost tea,                            top dressing or unsulfured molasses.";
+                            SetNotificationsButtonFert(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Organic Fertilizer Selected",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // Frequency Of Watering
+
+                        /****************************************************
+                         * Water Every Day Radio Button Selection
+                         ****************************************************/
+                        if (radioWaterDaily == radioWateringSchedule) {
+                            mTitle = "Have you watered your plants today?";
+                            mWaterCalendar = (Calendar)mCalendar.clone();
+                            mWaterCalendar.add(Calendar.DAY_OF_YEAR, 1);
+                            mRepeatType = "Repeats Daily";
+                            mRepeatTime = milDay;
+                            SetNotificationsButtonWater(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Watering Reminder Set",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        /****************************************************
+                         * Water Every Other Day Radio Button Selection
+                         ****************************************************/
+                        else if (radioWater2Days == radioWateringSchedule) {
+                            mTitle = "Don't forget to water the girls every other day.";
+                            mWaterCalendar = (Calendar)mCalendar.clone();
+                            mWaterCalendar.add(Calendar.DAY_OF_YEAR, 2);
+                            mRepeatType = "Repeats Every Other Day";
+                            mRepeatTime = (2 * milDay);
+                            SetNotificationsButtonWater(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Watering Reminder Set",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        /****************************************************
+                         * Water Every 3 Days Radio Button Selection
+                         ****************************************************/
+                        else if (radioWater3Days == radioWateringSchedule) {
+                            mTitle = "Don't forget to water the girls every 3 days.";
+                            mWaterCalendar = (Calendar)mCalendar.clone();
+                            mWaterCalendar.add(Calendar.DAY_OF_YEAR, 3);
+                            mRepeatType = "Repeats Every 3 Days";
+                            mRepeatTime = (3 * milDay);
+                            SetNotificationsButtonWater(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Watering Reminder Set", Toast
+                                    .LENGTH_SHORT).show();
+                        }
+
+                        /****************************************************
+                         * Weekly Watering Radio Button Selection
+                         ****************************************************/
+                        else if (radioWaterWeekly == radioWateringSchedule) {
+                            mTitle = "Don't forget about your weekly watering schedule.";
+                            mWaterCalendar = (Calendar)mCalendar.clone();
+                            mWaterCalendar.add(Calendar.DAY_OF_YEAR, 7);
+                            mRepeatType = "Repeats Once Weekly";
+                            mRepeatTime = milWeek;
+                            SetNotificationsButtonWater(v);
+                            Toast.makeText(GrowAssistantActivity.this, "Watering Reminder Set", Toast
+                                    .LENGTH_SHORT).show();
+                        }
