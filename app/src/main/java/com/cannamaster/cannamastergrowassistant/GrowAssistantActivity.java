@@ -6,8 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.icu.text.SimpleDateFormat;
@@ -18,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,42 +24,23 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerDialogFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerDialogFragment;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-
 public class GrowAssistantActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     TextView mDateText, mTimeText;
-    Calendar mCalendar;
-    Calendar mIndoorHarvestCalendar;
-    Calendar mOutdoorHarvestCalendar;
-    Calendar mWaterCalendar;
-    Calendar mFertilizeCalendar;
-    Calendar mFlushCalendar;
-    Calendar mTakeClonesCalendar;
-    Calendar mHydroHarvestCalendar;
-    Calendar mHydroResCalendar;
-    Calendar mDefoliateCalendar;
-    int mYear, mMonth, mHour, mMinute, mDay;
-    long mRepeatTime;
-    String mTitleText;
+
     String mTitle;
-    String mTime;
-    String mDate;
     String mRepeat = "false";
-    String mIsOutdoor = "false";
     String mRepeatType = "Select Repeat Interval";
     String mActive = "true";
 
@@ -136,12 +114,12 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
         setContentView(R.layout.grow_assistant_activity_layout;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Set the back arrow
+        //Set the page title
         Objects.requireNonNull(getSupportActionBar()).setTitle("Grow Assistant");
         // set the back navigation arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Set the Onclick listeners for the icons for time pick
+        // Set the Onclick listeners for the icons for time picker
         mTimeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +127,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
                 timePickerDialogFragment.show(getSupportFragmentManager(),"timepicker");
             }
         });
-        // Set the Onclick listeners for the icons for date pick
+        // Set the Onclick listeners for the icons for date picker
         mDateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -292,7 +270,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
         addToDeviceCalendar(startDate, endDate, titleString, descString, locString, reminderInt, recurrenceRule, recurrenceDate);
     }
 
-/**   Set Reminder Method   **/
+    /**   Set Reminder Method   **/
     private void setReminder(int minutes, String eventID) {
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
@@ -312,7 +290,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
     }
 
 
-// I dont think this is actually being used right now
+    // I dont think this is actually being used right now
     private void getValuesFromUserCalendar ((String startDate,String endDate, String title,String description, String location, int reminder) {
         Cursor cursor;  /**  this may all move to a switch statement (button) **/
         // Before reading the users calendar get their permission
@@ -449,29 +427,18 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
                 });
             }
 
-
-            @Override
-            public boolean onOptionsItemSelected (MenuItem item){
-                switch (item.getItemId()) {
-                    case android.R.id.home:
-                        // app icon in action bar clicked; go home
-                        finish();
-                    default:
-                        return super.onOptionsItemSelected(item);
-                }
-            }
-
-            // On pressing the back button
-            @Override
-            public void onBackPressed () {
-                super.onBackPressed();
-            }
-
         }
+    }
+    // On pressing the back button
+    @Override
+    public void onBackPressed () {
+        super.onBackPressed();
+    }
 
-        @Override
-        public void onDateSet (DatePicker view,int year, int month, int dayOfMonth){
 
-        }
+
+    @Override
+    public void onDateSet (DatePicker view,int year, int month, int dayOfMonth){
+
     }
 }
