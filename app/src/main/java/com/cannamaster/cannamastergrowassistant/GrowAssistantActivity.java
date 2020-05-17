@@ -24,12 +24,15 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerDialogFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerDialogFragment;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -37,7 +40,10 @@ import java.util.Objects;
 
 public class GrowAssistantActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
-    TextView mDateText, mTimeText;
+
+
+    TextView mDateText;
+    TextView mTimeText;
 
     String mTitle;
     String mRepeat = "false";
@@ -45,35 +51,35 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
     String mActive = "true";
 
     // Layout components for time and date picker
-    ImageView mDateDialog = findViewById(R.id.date_icon);
-    ImageView mTimeDialog = findViewById(R.id.time_icon);
-    TextView mSetTime = findViewById(R.id.set_time);
-    TextView mSetDate = findViewById(R.id.set_date);
+    ImageView mDateDialog;
+    ImageView mTimeDialog;
+    TextView mSetTime;
+    TextView mSetDate;
 
     // Values for Button
-    Button buttonSetNotifications = findViewById(R.id.button_set_notifications);
+    Button buttonSetNotifications;
 
     // Initialize the RadioButtons
-    RadioGroup radioWateringSchedule = findViewById(R.id.rgWaterOptions);
-    RadioGroup radioFertilizerChoice = findViewById(R.id.rgFertilizerOptions);
-    RadioGroup radioGrowMediumChoice = findViewById(R.id.rgGrowMedium);
-    RadioGroup radioIndicaSativaOptions = findViewById(R.id.rgIndicaSativa);
+    RadioGroup radioWateringSchedule;
+    RadioGroup radioFertilizerChoice;
+    RadioGroup radioGrowMediumChoice;
+    RadioGroup radioIndicaSativaOptions;
 
-    // Declare Radio Buttons
-    final RadioButton radioOutdoor = (RadioButton) findViewById(R.id.radioOutdoor);
-    final RadioButton radioSoil = (RadioButton) findViewById(R.id.radioSoil);
-    final RadioButton radioHydroponic = (RadioButton) findViewById(R.id.radioHydro);
-    final RadioButton radioChemical = (RadioButton) findViewById(R.id.radioChemical);
-    final RadioButton radioOrganic = (RadioButton) findViewById(R.id.radioOrganic);
-    final RadioButton radioWaterDaily = (RadioButton) findViewById(R.id.radioButtonWaterDaily);
-    final RadioButton radioWater2Days = (RadioButton) findViewById(R.id.radioButtonWater2Days);
-    final RadioButton radioWater3Days = (RadioButton) findViewById(R.id.radioButtonWater3Days);
-    final RadioButton radioWaterWeekly = (RadioButton) findViewById(R.id.radioButtonWaterWeekly);
-    final RadioButton radioWaterNoNotify = (RadioButton) findViewById(R.id.radioButtonWaterNoNotify);
-
+    /** Declare Radio Buttons
+    //final RadioButton radioOutdoor = findViewById(ra);
+    final RadioButton radioSoil = findViewById(So);
+    final RadioButton radioHydroponic;
+    final RadioButton radioChemical = findViewById(R.id.radioChemical);
+    final RadioButton radioOrganic = findViewById(R.id.radioOrganic);
+    final RadioButton radioWaterDaily = findViewById(R.id.radioButtonWaterDaily);
+    final RadioButton radioWater2Days = findViewById(R.id.radioButtonWater2Days);
+    final RadioButton radioWater3Days = findViewById(R.id.radioButtonWater3Days);
+    final RadioButton radioWaterWeekly = findViewById(R.id.radioButtonWaterWeekly);
+    final RadioButton radioWaterNoNotify = findViewById(R.id.radioButtonWaterNoNotify);
+**/
 
     // Flowering Days Variable
-    private int mFloweringDays;
+    int mFloweringDays;
     int mFlush2WeeksBefore;
 
     // Values for orientation change
@@ -94,6 +100,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
     private static final long mil2weeks = 1209600000L;
 
 
+
     // To save state on device rotation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -111,13 +118,16 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grow_assistant_activity_layout;
+        setContentView(R.layout.grow_assistant_activity_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Set the page title
         Objects.requireNonNull(getSupportActionBar()).setTitle("Grow Assistant");
         // set the back navigation arrow
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mTimeDialog = findViewById(R.id.time_icon);
+        mDateDialog = findViewById(R.id.date_icon);
 
         // Set the Onclick listeners for the icons for time picker
         mTimeDialog.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +148,16 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
 
     }
 
+
+
+    // On clicking Time picker
+
+
+    // Obtain time from time picker
+
+
     // This is the working add to device calendar method - try not to fuck with it
+
     private void addToDeviceCalendar(String startDate, String endDate, String title, String description, String location, int reminder,
                                      String recurrenceRule, String recurrenceDate) {
 
@@ -262,12 +281,12 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
         String descString = descText.getText().toString();
         String locString = locText.getText().toString();
         String reminderString = reminderText.getText().toString();
-        String recurrenceRule = recurrenceRule.getText().toString();
-        String recurrenceDate = recurrenceDate.getText().toString();
+        String mRecurrenceRule = recurrenceRule.getText().toString();
+        String mRecurrenceDate = recurrenceDate.getText().toString();
 
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, locString, reminderInt, recurrenceRule, recurrenceDate);
+        addToDeviceCalendar(startDate, endDate, titleString, descString, locString, reminderInt, mRecurrenceRule, mRecurrenceDate);
     }
 
     /**   Set Reminder Method   **/
@@ -291,7 +310,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
 
 
     // I dont think this is actually being used right now
-    private void getValuesFromUserCalendar ((String startDate,String endDate, String title,String description, String location, int reminder) {
+    private void getValuesFromUserCalendar(String startDate,String endDate, String title,String description, String location, int reminder) {
         Cursor cursor;  /**  this may all move to a switch statement (button) **/
         // Before reading the users calendar get their permission
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -358,8 +377,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
                 accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
                 ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
                 // Do something with the values...
-                private static final String DEBUG_TAG = "MyActivity";
-                long calID = 2;
+                final String DEBUG_TAG = "MyActivity";
+                calID = 2;
                 ContentValues values = new ContentValues();
 // The new display name for the calendar
                 values.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "Trevor's Calendar");
@@ -369,76 +388,82 @@ public class GrowAssistantActivity extends AppCompatActivity implements TimePick
 
 
             }
-
-            /****************************************
-             * OnCheckChanged Listener for Indica/Sativa Ratio - this sets mFloweringDays
-             ****************************************/
-
-            // This changes the value of mFloweringDays every time a button in the group is selected.
-            public void indicaSativaRatio (String mFloweringDays){
-
-
-                radioIndicaSativaOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        // Get Index Of Radio Button
-                        int pos = radioIndicaSativaOptions.indexOfChild(findViewById(radioIndicaSativaOptions.getCheckedRadioButtonId()));
-
-                        switch (pos) {
-                            case 0:
-                                // 100% Indica
-                                mFloweringDays = 56;
-                                break;
-                            case 1:
-                                // 100% Sativa
-                                mFloweringDays = 84;
-                                break;
-                            case 2:
-                            case 9:
-                                // Unknown Genetics
-                                // 50/50 Indica Sativa
-                                mFloweringDays = 70;
-                                break;
-                            case 3:
-                                // 60/40 Indica Sativa
-                                mFloweringDays = 63;
-                                break;
-                            case 4:
-                            case 6:
-                                // 30/70 Indica Sativa
-                                // 40/60 Indica Sativa
-                                mFloweringDays = 77;
-                                break;
-                            case 5:
-                            case 8:
-                                // Mostly Indica
-                                // 70/30 Indica Sativa
-                                mFloweringDays = 60;
-                                break;
-                            case 7:
-                                // Mostly Sativa
-                                mFloweringDays = 80;
-                                break;
-                        }
-
-                        Toast.makeText(GrowAssistantActivity.this, "Flowering Days = " + mFloweringDays,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
         }
     }
+    /****************************************
+     * OnCheckChanged Listener for Indica/Sativa Ratio - this sets mFloweringDays
+     ****************************************/
+
+
+
+    // This changes the value of mFloweringDays every time a button in the group is selected.
+    public void indicaSativaRatio(View view) {
+
+        radioIndicaSativaOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Get Index Of Radio Button
+                int pos = radioIndicaSativaOptions.indexOfChild(findViewById(radioIndicaSativaOptions.getCheckedRadioButtonId()));
+
+                mFloweringDays = 0;
+                switch (pos) {
+                    case 0:
+                        // 100% Indica
+                        mFloweringDays = 56;
+                        break;
+                    case 1:
+                        // 100% Sativa
+                        mFloweringDays = 84;
+                        break;
+                    case 2:
+                    case 9:
+                        // Unknown Genetics
+                        // 50/50 Indica Sativa
+                        mFloweringDays = 70;
+                        break;
+                    case 3:
+                        // 60/40 Indica Sativa
+                        mFloweringDays = 63;
+                        break;
+                    case 4:
+                    case 6:
+                        // 30/70 Indica Sativa
+                        // 40/60 Indica Sativa
+                        mFloweringDays = 77;
+                        break;
+                    case 5:
+                    case 8:
+                        // Mostly Indica
+                        // 70/30 Indica Sativa
+                        mFloweringDays = 60;
+                        break;
+                    case 7:
+                        // Mostly Sativa
+                        mFloweringDays = 80;
+                        break;
+                }
+
+                Toast.makeText(GrowAssistantActivity.this, "Flowering Days = " + mFloweringDays,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
     // On pressing the back button
     @Override
     public void onBackPressed () {
         super.onBackPressed();
     }
 
-
-
     @Override
     public void onDateSet (DatePicker view,int year, int month, int dayOfMonth){
+
+    }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
     }
 }

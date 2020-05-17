@@ -103,7 +103,7 @@
                                 android:textSize="15sp" />
                             <!-- the selected date textview -->
                             <TextView
-                                android:id="@+id/set_date"
+                                android:id="@+id/mDateText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp" />
@@ -147,7 +147,7 @@
                                 android:textSize="15sp" />
                             <!-- The Time That Is Set TextView -->
                             <TextView
-                                android:id="@+id/set_time"
+                                android:id="@+id/mTimeText"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp" />
@@ -165,7 +165,7 @@
                     android:text="@string/select_your_grow_details"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
+                    />
 
                 <!-- Grow Medium -->
                 <TextView
@@ -177,7 +177,7 @@
                     android:text="@string/grow_medium"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold"
-                    tools:ignore="RtlSymmetry" />
+                    />
 
                 <RadioGroup
                     android:id="@+id/rgGrowMedium"
@@ -186,7 +186,7 @@
                     android:layout_gravity="start"
                     android:paddingStart="65dp"
                     android:paddingBottom="10dp"
-                    tools:ignore="RtlSymmetry">
+                    >
 
                     <!-- Indoor Soil -->
                     <RadioButton
@@ -421,6 +421,18 @@
                         android:text="@string/unknown" />
 
                 </RadioGroup>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recurrenceRule"
+                    />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recurrenceDate"
+                    />
 
                 <Button
                     android:id="@+id/button_set_notifications"

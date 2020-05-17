@@ -10,12 +10,12 @@ public class GrowAssistantPage2Activity extends GrowAssistantActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.grow_assistant_page_2_layout;
+        setContentView(R.layout.grow_assistant_page_2_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Set the back arrow
         Objects.requireNonNull(getSupportActionBar()).setTitle("Grow Assistant : Variables");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+    }
 }
