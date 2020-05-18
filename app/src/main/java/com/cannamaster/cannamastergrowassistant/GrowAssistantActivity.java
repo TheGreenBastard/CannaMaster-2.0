@@ -224,8 +224,14 @@ public class GrowAssistantActivity extends AppCompatActivity {
         EditText reminderText = (EditText) findViewById(R.id.reminderText);
         // Converts the EditTexts to Strings
         // start and end dates for the event
-        String startDate = startText.getText().toString();
-        String endDate = endText.getText().toString();
+        String mDate = startText.getText().toString();
+        String startTime = endText.getText().toString();
+
+        String startDate = mDate + " " + startTime;
+
+        String endDate = startDate;
+
+        //String endDate = mDate + " " + (startInt + 1);
         // this is the event title
         String titleString = titleText.getText().toString();
         // this is the event description
