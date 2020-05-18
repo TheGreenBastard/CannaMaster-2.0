@@ -70,7 +70,7 @@
                     <RelativeLayout
                         android:id="@+id/date"
                         android:layout_width="match_parent"
-                        android:layout_height="72dp"
+                        android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
@@ -99,22 +99,24 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/flowering_date"
-                                android:textColor="@color/blue_800"
+                                                                android:textColor="@color/blue_800"
                                 android:textSize="15sp" />
                             <!-- the selected date textview -->
-                            <TextView
-                                android:id="@+id/mDateText"
+                            <EditText
+                                android:id="@+id/date_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="2020-02-27"
                                 android:textSize="15sp" />
 
                         </LinearLayout>
                     </RelativeLayout>
                     <!-- Set Time Layout -->
+
                     <RelativeLayout
                         android:id="@+id/time"
                         android:layout_width="match_parent"
-                        android:layout_height="72dp"
+                        android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
                         android:focusable="true"
@@ -146,14 +148,39 @@
                                 android:textColor="@color/blue_800"
                                 android:textSize="15sp" />
                             <!-- The Time That Is Set TextView -->
-                            <TextView
-                                android:id="@+id/mTimeText"
+                            <EditText
+                                android:id="@+id/time_edit_text"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:hint="19:30"
                                 android:textSize="15sp" />
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
+
+                <EditText
+                    android:id="@+id/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="title"
+                    android:inputType="textPersonName"
+                    />
+
+                <EditText
+                    android:id="@+id/descText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="description"
+                    android:inputType="textPersonName" />
+
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <!-- Select Your Grow Details -->
                 <TextView
@@ -429,6 +456,16 @@
                     />
 
                 <EditText
+                    android:id="@+id/reminderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="reminder"
+                    android:inputType="number" />
+
+
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/recurrenceDate"
@@ -440,7 +477,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:background="@color/green_A700"
-                    android:onClick="SetNotificationsButton"
+                    android:onClick="onMakeEvent"
                     android:padding="10dp"
                     android:paddingBottom="16dp"
                     android:text="@string/set_your_notifications"
