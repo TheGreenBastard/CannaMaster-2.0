@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 public class GrowAssistantActivity extends AppCompatActivity {
 
@@ -73,6 +76,41 @@ public class GrowAssistantActivity extends AppCompatActivity {
     private static final long milMonth = 2592000000L;
     private static final long mil2weeks = 1209600000L;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.grow_assistant_activity_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        // set page title in appbar
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CannaMaster Grow Assistant");
+        // set up back press arrow
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        // This is how we request the user for Calendar write and read permissions
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // Ask the user for permission and then re-run
+            Log.i("No Permission", "No Permission");
+            int requestCode = 1;
+            // Re-request to ask for permission
+            requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
+        }
+    }
+
+    // This sets the back arrow on the toolbar to work
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void addToDeviceCalendar(String startDate,String endDate, String title,String description, int reminder) {
 
         // Make the strings for the formatted times
@@ -111,11 +149,11 @@ public class GrowAssistantActivity extends AppCompatActivity {
         int startHour = Integer.parseInt(startDateList.get(3));
         int startMinute = Integer.parseInt(startDateList.get(4));
 
-        int endYear = Integer.parseInt(endDateList.get(0));
-        int endMonth = Integer.parseInt(endDateList.get(1));
-        int endDay = Integer.parseInt(endDateList.get(2));
-        int endHour = Integer.parseInt(endDateList.get(3));
-        int endMinute = Integer.parseInt(endDateList.get(4));
+        int endYear = startYear;
+        int endMonth = startMonth;
+        int endDay = startDay;
+        int endHour = startHour + 1;
+        int endMinute = startMinute;
 
         // Sets the date and gets the time in milliseconds
         calDate.set(startYear, startMonth-1, startDay, startHour, startMinute);
@@ -133,7 +171,6 @@ public class GrowAssistantActivity extends AppCompatActivity {
             values.put(CalendarContract.Events.DTEND, endMillis);
             values.put(CalendarContract.Events.TITLE, title);
             values.put(CalendarContract.Events.DESCRIPTION, description);
-            // values.put(CalendarContract.Events.EVENT_LOCATION,location);
             values.put(CalendarContract.Events.HAS_ALARM,1);
             values.put(CalendarContract.Events.CALENDAR_ID, 1);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
@@ -181,36 +218,24 @@ public class GrowAssistantActivity extends AppCompatActivity {
         // the date is selected with the first one and the time is added from the second one
         // then automatically adds an hour to the start time to complete the endtime.
         EditText startText = (EditText) findViewById(R.id.date_edit_text);
-
         EditText endText = (EditText) findViewById(R.id.time_edit_text);
         EditText titleText = (EditText) findViewById(R.id.titleText);
         EditText descText = (EditText) findViewById(R.id.descText);
-        //EditText locText = (EditText) findViewById(R.id.locText);
         EditText reminderText = (EditText) findViewById(R.id.reminderText);
         // Converts the EditTexts to Strings
+        // start and end dates for the event
         String startDate = startText.getText().toString();
         String endDate = endText.getText().toString();
+        // this is the event title
         String titleString = titleText.getText().toString();
+        // this is the event description
         String descString = descText.getText().toString();
-        // String locString = locText.getText().toString();
+        // this is the time before the event that the reminder will fire
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
         addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.grow_assistant_activity_layout);
 
-        // This is how we request the user for Calendar write and read permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            // Ask the user for permission and then re-run
-            Log.i("No Permission", "No Permission");
-            int requestCode = 1;
-            // Re-request to ask for permission
-            requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
-        }
-    }
 }

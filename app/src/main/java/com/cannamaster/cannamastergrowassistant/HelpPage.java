@@ -74,7 +74,7 @@ public class HelpPage extends AppCompatActivity {
     }
 
 
-    // This is for the back button
+    // This is for the back button on the toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
