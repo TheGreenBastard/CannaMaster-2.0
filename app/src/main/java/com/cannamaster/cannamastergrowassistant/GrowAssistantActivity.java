@@ -35,6 +35,12 @@ public class GrowAssistantActivity extends AppCompatActivity {
     TextView mDateText;
     TextView mTimeText;
 
+    EditText dateText;
+    EditText hourNotifyText;
+    EditText titleText;
+    EditText descText;
+    EditText reminderText;
+
     String mTitle;
     String mRepeat = "false";
     String mRepeatType = "Select Repeat Interval";
@@ -54,6 +60,9 @@ public class GrowAssistantActivity extends AppCompatActivity {
     RadioGroup radioFertilizerChoice;
     RadioGroup radioGrowMediumChoice;
     RadioGroup radioIndicaSativaOptions;
+
+
+
 
     // Flowering Days Variable
     int mFloweringDays;
@@ -84,12 +93,18 @@ public class GrowAssistantActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // set page title in appbar
         Objects.requireNonNull(getSupportActionBar()).setTitle("CannaMaster Grow Assistant");
-        // set up back press arrow
+        // this places the back press arrow on the toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        dateText = (EditText) findViewById(R.id.date_edit_text);
+        hourNotifyText = (EditText) findViewById(R.id.time_edit_text);
+        titleText = (EditText) findViewById(R.id.titleText);
+        descText = (EditText) findViewById(R.id.descText);
+        reminderText = (EditText) findViewById(R.id.reminderText);
 
 
-        // This is how we request the user for Calendar write and read permissions
+
+        /** This is how we request the user for Calendar write and read permissions **/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // Ask the user for permission and then re-run
             Log.i("No Permission", "No Permission");
@@ -98,6 +113,8 @@ public class GrowAssistantActivity extends AppCompatActivity {
             requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
         }
     }
+
+
 
     // This sets the back arrow on the toolbar to work
     @Override
@@ -111,7 +128,12 @@ public class GrowAssistantActivity extends AppCompatActivity {
         }
     }
 
+
+
+    /** Method to add the grow to the users on device calendar **/
     private void addToDeviceCalendar(String startDate,String endDate, String title,String description, int reminder) {
+
+
 
         // Make the strings for the formatted times
         String startDateFormatted = "";
@@ -211,37 +233,57 @@ public class GrowAssistantActivity extends AppCompatActivity {
     }
 
     /**  This takes the data from the textviews and turns it into an event to pass to calendar **/
-
     public void onMakeEvent (View view) {
         // Get the EditText views by ID
-        // currently uses start and end text to grab start and end times, need to change this so
-        // the date is selected with the first one and the time is added from the second one
-        // then automatically adds an hour to the start time to complete the endtime.
-        EditText startText = (EditText) findViewById(R.id.date_edit_text);
-        EditText endText = (EditText) findViewById(R.id.time_edit_text);
-        EditText titleText = (EditText) findViewById(R.id.titleText);
-        EditText descText = (EditText) findViewById(R.id.descText);
-        EditText reminderText = (EditText) findViewById(R.id.reminderText);
-        // Converts the EditTexts to Strings
-        // start and end dates for the event
-        String mDate = startText.getText().toString();
-        String startTime = endText.getText().toString();
+        // set some values into variables from user input
 
-        String startDate = mDate + " " + startTime;
+        /**  This checks the edit text fields to ensure there is some kind of data entered **/
+        int yourDesiredLength = 2;
+        if (titleText.getText().length() < yourDesiredLength) {
+            titleText.setError("You must provide a title for the event");
+        }else if (descText.getText().length() < yourDesiredLength) {
+            descText.setError("You must provide a short description");
+        }
+        else if (dateText.getText().length() < 10) {
+            dateText.setError("please provide a start date 'YYYY-MM-DD'");
+        }
+        else if (dateText.getText().length() > 10) {
+            dateText.setError("please provide a start date 'YYYY-MM-DD'");
+        }
+        else if (hourNotifyText.getText().length() < 5) {
+            hourNotifyText.setError("please provide a time for events 'hh:mm'");
+        }
+        else if (hourNotifyText.getText().length() > 5) {
+            hourNotifyText.setError("please provide a time for events 'hh:mm'");
+        }
+        else if (reminderText.getText().length() < 2) {
+            descText.setError("Enter a time to alert before the event");
+        }
+        else
+        {
 
-        String endDate = startDate;
 
-        //String endDate = mDate + " " + (startInt + 1);
-        // this is the event title
-        String titleString = titleText.getText().toString();
-        // this is the event description
-        String descString = descText.getText().toString();
-        // this is the time before the event that the reminder will fire
-        String reminderString = reminderText.getText().toString();
-        int reminderInt = Integer.parseInt(reminderString);
-        // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+
+            // Converts the EditTexts to Strings
+            String mDate = dateText.getText().toString();
+            String startTime = hourNotifyText.getText().toString();
+
+
+
+            // takes the 2 EditText fields and combines them to set the date and time of notification
+            String startDate = mDate + " " + startTime;
+            // sets the end date the same as the start date so the rest of the hard code still works
+            String endDate = startDate;
+            // this is the event title
+            String titleString = titleText.getText().toString();
+            // this is the event description
+            String descString = descText.getText().toString();
+            // this is the time before the event that the reminder will fire
+            String reminderString = reminderText.getText().toString();
+            int reminderInt = Integer.parseInt(reminderString);
+            // Calls the function to add the event to the calender
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        }
+
     }
-
-
 }

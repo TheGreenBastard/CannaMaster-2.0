@@ -73,26 +73,19 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
         /** Navigation Drawer */
-
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         // Find our navigation view
         mNavigationView = findViewById(R.id.nvView);
-
         // Add navigation icons
         setupNavigationIcons(mNavigationView);
-
         // Tie the DrawerLayout and Toolbar together
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
-
         // Tie DrawerLayout events to the ActionBarToggle
         mDrawer.addDrawerListener(mDrawerToggle);
-
+        // load the random header image
         loadBackdrop();
-
         // Set up drawer item
         setupNavigationIcons(mNavigationView);
 
@@ -164,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (AppCompatDelegate.getDefaultNightMode()) {
-            case AppCompatDelegate.MODE_NIGHT_AUTO:
+            case AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY:
                 menu.findItem(R.id.menu_night_mode_auto).setChecked(true);
                 break;
             case AppCompatDelegate.MODE_NIGHT_YES:
@@ -191,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 setNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 break;
             case R.id.menu_night_mode_auto:
-                setNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+                setNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -316,12 +309,9 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, "Please press BACK again to exit", Toast.LENGTH_SHORT).show();
-
         new Handler().postDelayed(new Runnable() {
-
             @Override
             public void run() {
                 doubleBackToExitPressedOnce = false;
