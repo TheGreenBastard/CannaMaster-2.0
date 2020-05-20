@@ -511,7 +511,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="30dp"
-                        android:text="Number of minutes before event to set reminder" />
+                        android:text="Number of minutes before event to set reminder"
+                        android:textColor="@color/red_A100" />
 
                     <Button
                         android:id="@+id/button_set_notifications"

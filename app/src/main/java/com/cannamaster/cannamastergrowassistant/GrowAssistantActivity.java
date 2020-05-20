@@ -32,9 +32,6 @@ import java.util.Objects;
 
 public class GrowAssistantActivity extends AppCompatActivity {
 
-    TextView mDateText;
-    TextView mTimeText;
-
     EditText dateText;
     EditText hourNotifyText;
     EditText titleText;
@@ -61,11 +58,8 @@ public class GrowAssistantActivity extends AppCompatActivity {
     RadioGroup radioGrowMediumChoice;
     RadioGroup radioIndicaSativaOptions;
 
-
-
-
     // Flowering Days Variable
-    int mFloweringDays;
+    int mFloweringDays = 70;
     int mFlush2WeeksBefore;
 
     // Values for orientation change
@@ -102,8 +96,6 @@ public class GrowAssistantActivity extends AppCompatActivity {
         descText = (EditText) findViewById(R.id.descText);
         reminderText = (EditText) findViewById(R.id.reminderText);
 
-
-
         /** This is how we request the user for Calendar write and read permissions **/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // Ask the user for permission and then re-run
@@ -113,8 +105,6 @@ public class GrowAssistantActivity extends AppCompatActivity {
             requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
         }
     }
-
-
 
     // This sets the back arrow on the toolbar to work
     @Override
@@ -128,12 +118,8 @@ public class GrowAssistantActivity extends AppCompatActivity {
         }
     }
 
-
-
     /** Method to add the grow to the users on device calendar **/
     private void addToDeviceCalendar(String startDate,String endDate, String title,String description, int reminder) {
-
-
 
         // Make the strings for the formatted times
         String startDateFormatted = "";
@@ -233,43 +219,32 @@ public class GrowAssistantActivity extends AppCompatActivity {
     }
 
     /**  This takes the data from the textviews and turns it into an event to pass to calendar **/
-    public void onMakeEvent (View view) {
+    public void onMakeEvent (View view) throws java.text.ParseException {
         // Get the EditText views by ID
         // set some values into variables from user input
 
         /**  This checks the edit text fields to ensure there is some kind of data entered **/
         int yourDesiredLength = 2;
         if (titleText.getText().length() < yourDesiredLength) {
-            titleText.setError("You must provide a title for the event");
-        }else if (descText.getText().length() < yourDesiredLength) {
-            descText.setError("You must provide a short description");
-        }
+            titleText.setError("You must provide a title for the event"); }
+        else if (descText.getText().length() < yourDesiredLength) {
+            descText.setError("You must provide a short description"); }
         else if (dateText.getText().length() < 10) {
-            dateText.setError("please provide a start date 'YYYY-MM-DD'");
-        }
+            dateText.setError("please provide a start date 'YYYY-MM-DD'"); }
         else if (dateText.getText().length() > 10) {
-            dateText.setError("please provide a start date 'YYYY-MM-DD'");
-        }
+            dateText.setError("please provide a start date 'YYYY-MM-DD'"); }
         else if (hourNotifyText.getText().length() < 5) {
-            hourNotifyText.setError("please provide a time for events 'hh:mm'");
-        }
+            hourNotifyText.setError("please provide a time for events 'hh:mm'"); }
         else if (hourNotifyText.getText().length() > 5) {
-            hourNotifyText.setError("please provide a time for events 'hh:mm'");
-        }
+            hourNotifyText.setError("please provide a time for events 'hh:mm'"); }
         else if (reminderText.getText().length() < 2) {
-            descText.setError("Enter a time to alert before the event");
-        }
-        else
-        {
+            descText.setError("Enter a time to alert before the event"); }
+        else {
 
-
-
+            /**  as long as the EditTexts are filled out run the following code **/
             // Converts the EditTexts to Strings
             String mDate = dateText.getText().toString();
             String startTime = hourNotifyText.getText().toString();
-
-
-
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = mDate + " " + startTime;
             // sets the end date the same as the start date so the rest of the hard code still works
@@ -283,7 +258,100 @@ public class GrowAssistantActivity extends AppCompatActivity {
             int reminderInt = Integer.parseInt(reminderString);
             // Calls the function to add the event to the calender
             addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            FlushReminder();
         }
 
     }
+
+    /*******************************************************************************
+     * OnCheckChanged Listener for Indica/Sativa Ratio - (it sets mFloweringDays)
+     *******************************************************************************/
+
+    // This changes the value of mFloweringDays every time a button in the group is selected.
+    public void indicaSativaRatio(View view) {
+
+        RadioGroup rgIndicaSativaOptions = findViewById(R.id.rgIndicaSativa);
+        rgIndicaSativaOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Get Index Of Radio Button
+                int pos = rgIndicaSativaOptions.indexOfChild(findViewById(rgIndicaSativaOptions.getCheckedRadioButtonId()));
+                mFloweringDays = 70;
+                switch (pos) {
+                    case 0:
+                        // 100% Indica
+                        mFloweringDays = 56;
+                        break;
+                    case 1:
+                        // 100% Sativa
+                        mFloweringDays = 84;
+                        break;
+                    case 2:
+                        // 50/50 Indica Sativa
+                        mFloweringDays = 70;
+                        break;
+                    case 3:
+                        // 60/40 Indica Sativa
+                        mFloweringDays = 63;
+                        break;
+                    case 4:
+                        // 40/60 Indica Sativa
+                        mFloweringDays = 77;
+                        break;
+                    case 5:
+                        // 70/30 Indica Sativa
+                        mFloweringDays = 60;
+                        break;
+                    case 6:
+                        // 30/70 Indica Sativa
+                        mFloweringDays = 77;
+                        break;
+                    case 7:
+                        // Mostly Sativa
+                        mFloweringDays = 80;
+                        break;
+                    case 8:
+                        // Mostly Indica
+                        mFloweringDays = 60;
+                        break;
+                    case 9:
+                        // Unknown Genetics
+                        mFloweringDays = 70;
+                        break;
+                }
+
+                Toast.makeText(GrowAssistantActivity.this, "Flowering Days = " + mFloweringDays,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void FlushReminder() throws java.text.ParseException {
+
+        // Converts the EditTexts to Strings
+        String mDate = dateText.getText().toString();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        Calendar cal = Calendar.getInstance();
+        cal.setTime( dateFormat.parse(mDate));
+        cal.add( Calendar.DATE, mFloweringDays -14);
+        String convertedDate=dateFormat.format(cal.getTime());
+        System.out.println("Flush date set to "+convertedDate);
+
+        String startTime = hourNotifyText.getText().toString();
+        // takes the 2 EditText fields and combines them to set the date and time of notification
+        String startDate = convertedDate + " " + startTime;
+        // sets the end date the same as the start date so the rest of the hard code still works
+        String endDate = startDate;
+        // this is the event title
+        String titleString = "Time To Start Flushing";
+        // this is the event description
+        String descString = "From now until harvest use only water to quench your plants.  No fertilizer or supliments.  This will wash out any undissolved salts in your grow medium which in turn will make your final product taste better.";
+        // this is the time before the event that the reminder will fire
+        String reminderString = reminderText.getText().toString();
+        int reminderInt = Integer.parseInt(reminderString);
+        // Calls the function to add the event to the calender
+        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+    }
+
 }
