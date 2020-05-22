@@ -156,10 +156,11 @@
                             <!-- the selected date textview -->
                             <EditText
                                 android:id="@+id/date_edit_text"
-                                android:layout_width="94dp"
+                                android:layout_width="100dp"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
-                                android:hint="2020-02-27"
+                                android:onClick="showDatePickerDialog"
+                                android:hint="YYYY-MM-DD"
                                 android:layout_gravity="center_horizontal"
                                 android:textSize="15sp" />
 
@@ -204,11 +205,12 @@
                             <!-- The Time That Is Set TextView -->
                             <EditText
                                 android:id="@+id/time_edit_text"
-                                android:layout_width="95dp"
+                                android:layout_width="100dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:textAlignment="center"
-                                android:hint="19:30"
+                                android:hint="12:30"
+                                android:onClick="showTimePickerDialog"
                                 android:textSize="15sp" />
                         </LinearLayout>
                     </RelativeLayout>

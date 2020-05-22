@@ -401,9 +401,11 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 Toast.LENGTH_SHORT).show();
     }
 
+    /** date picker dialog rules **/
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         // Do something with the date chosen by the user
+        // This sets the date picker dialog to work properly
         if (month <10 && dayOfMonth <10) {
             dateText.setText(year + "-0" + month + "-0" + dayOfMonth);
         }
@@ -416,10 +418,22 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         else if (month >9 && dayOfMonth >9) {
             dateText.setText(year + "-" + month + "-" + dayOfMonth);
         }
-        }
+
+    }
+
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
+        if (hourOfDay <10 && minute <10) {  // conditions so date is filled out correctly
+            timeText.setText("0" + hourOfDay + ":0" + minute);
+        }
+        else if (hourOfDay <10) {
+            timeText.setText("0" + hourOfDay + ":" + minute);
+        }
+        else if (minute <10) {
+            timeText.setText(hourOfDay + ":0" + minute);
+        }
+        else if (hourOfDay >9 && minute >9)
+            timeText.setText(hourOfDay + ":" + minute);
     }
 }
