@@ -1,8 +1,11 @@
 package com.cannamaster.cannamastergrowassistant;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
@@ -11,34 +14,43 @@ import android.net.ParseException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
 
+import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerFragment;
+import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-public class GrowAssistantActivity extends AppCompatActivity {
+public class GrowAssistantActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     EditText dateText;
-    EditText hourNotifyText;
+    EditText timeText;
     EditText titleText;
     EditText descText;
     EditText reminderText;
+    Button runButton;
 
-    String mTitle;
     String mRepeat = "false";
     String mRepeatType = "Select Repeat Interval";
     String mActive = "true";
@@ -46,6 +58,7 @@ public class GrowAssistantActivity extends AppCompatActivity {
     // Layout components for time and date picker
     ImageView mDateDialog;
     ImageView mTimeDialog;
+    DatePicker datePicker;
     TextView mSetTime;
     TextView mSetDate;
 
@@ -61,6 +74,8 @@ public class GrowAssistantActivity extends AppCompatActivity {
     // Flowering Days Variable
     int mFloweringDays = 70;
     int mFlush2WeeksBefore;
+
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
@@ -90,12 +105,34 @@ public class GrowAssistantActivity extends AppCompatActivity {
         // this places the back press arrow on the toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mDateDialog = (ImageView) findViewById(R.id.date_icon);
+        mTimeDialog = (ImageView) findViewById(R.id.time_icon);
         dateText = (EditText) findViewById(R.id.date_edit_text);
-        hourNotifyText = (EditText) findViewById(R.id.time_edit_text);
+        timeText = (EditText) findViewById(R.id.time_edit_text);
         titleText = (EditText) findViewById(R.id.titleText);
         descText = (EditText) findViewById(R.id.descText);
         reminderText = (EditText) findViewById(R.id.reminderText);
+        runButton = (Button) findViewById(R.id.button_set_notifications);
 
+        mDateDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerFragment datePickerFragment = new DatePickerFragment(GrowAssistantActivity.this);
+                datePickerFragment.show(getSupportFragmentManager(),"datepicker");
+            }
+        });
+
+        mTimeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TimePickerFragment timePickerFragment = new TimePickerFragment(GrowAssistantActivity.this);
+                timePickerFragment.show(getSupportFragmentManager(), "timepicker");
+
+            }
+
+
+        });
         /** This is how we request the user for Calendar write and read permissions **/
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // Ask the user for permission and then re-run
@@ -105,6 +142,7 @@ public class GrowAssistantActivity extends AppCompatActivity {
             requestPermissions(new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"}, requestCode);
         }
     }
+
 
     // This sets the back arrow on the toolbar to work
     @Override
@@ -224,27 +262,33 @@ public class GrowAssistantActivity extends AppCompatActivity {
         // set some values into variables from user input
 
         /**  This checks the edit text fields to ensure there is some kind of data entered **/
-        int yourDesiredLength = 2;
-        if (titleText.getText().length() < yourDesiredLength) {
-            titleText.setError("You must provide a title for the event"); }
-        else if (descText.getText().length() < yourDesiredLength) {
-            descText.setError("You must provide a short description"); }
+        if (titleText.getText().length() < 1) {
+            titleText.setError("You must provide a title for the event");
+            runButton.setError("Error : Check your information above");}
+        else if (descText.getText().length() < 2) {
+            descText.setError("You must provide a short description");
+            runButton.setError("Error : Check your information above");}
         else if (dateText.getText().length() < 10) {
-            dateText.setError("please provide a start date 'YYYY-MM-DD'"); }
+            dateText.setError("please provide a start date 'YYYY-MM-DD'");
+            runButton.setError("Error : Check your information above");}
         else if (dateText.getText().length() > 10) {
-            dateText.setError("please provide a start date 'YYYY-MM-DD'"); }
-        else if (hourNotifyText.getText().length() < 5) {
-            hourNotifyText.setError("please provide a time for events 'hh:mm'"); }
-        else if (hourNotifyText.getText().length() > 5) {
-            hourNotifyText.setError("please provide a time for events 'hh:mm'"); }
+            dateText.setError("please provide a start date 'YYYY-MM-DD'");
+            runButton.setError("Error : Check your information above");}
+        else if (timeText.getText().length() < 5) {
+            timeText.setError("please provide a time for events 'hh:mm'");
+            runButton.setError("Error : Check your information above");; }
+        else if (timeText.getText().length() > 5) {
+            timeText.setError("please provide a time for events 'hh:mm'");
+            runButton.setError("Error : Check your information above");}
         else if (reminderText.getText().length() < 2) {
-            descText.setError("Enter a time to alert before the event"); }
+            descText.setError("Enter a time to alert before the event");
+            runButton.setError("Error : Check your information above");}
         else {
 
             /**  as long as the EditTexts are filled out run the following code **/
             // Converts the EditTexts to Strings
             String mDate = dateText.getText().toString();
-            String startTime = hourNotifyText.getText().toString();
+            String startTime = timeText.getText().toString();
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = mDate + " " + startTime;
             // sets the end date the same as the start date so the rest of the hard code still works
@@ -338,7 +382,7 @@ public class GrowAssistantActivity extends AppCompatActivity {
         String convertedDate=dateFormat.format(cal.getTime());
         System.out.println("Flush date set to "+convertedDate);
 
-        String startTime = hourNotifyText.getText().toString();
+        String startTime = timeText.getText().toString();
         // takes the 2 EditText fields and combines them to set the date and time of notification
         String startDate = convertedDate + " " + startTime;
         // sets the end date the same as the start date so the rest of the hard code still works
@@ -346,12 +390,36 @@ public class GrowAssistantActivity extends AppCompatActivity {
         // this is the event title
         String titleString = "Time To Start Flushing";
         // this is the event description
-        String descString = "From now until harvest use only water to quench your plants.  No fertilizer or supliments.  This will wash out any undissolved salts in your grow medium which in turn will make your final product taste better.";
+        String descString = "From now until harvest use only water to quench your plants.  No fertilizer or supplements.  This will wash out any undissolved salts in your grow medium which in turn will make your final product taste better.";
         // this is the time before the event that the reminder will fire
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
         addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+
+        Toast.makeText(GrowAssistantActivity.this, "Flush Notificiation Has Been Set",
+                Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        // Do something with the date chosen by the user
+        if (month <10 && dayOfMonth <10) {
+            dateText.setText(year + "-0" + month + "-0" + dayOfMonth);
+        }
+        else if (month <10) {
+            dateText.setText(year + "-0" + month + "-" + dayOfMonth);
+        }
+        else if (dayOfMonth <10) {
+            dateText.setText(year + "-" + month + "-0" + dayOfMonth);
+        }
+        else if (month >9 && dayOfMonth >9) {
+            dateText.setText(year + "-" + month + "-" + dayOfMonth);
+        }
+        }
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+    }
 }

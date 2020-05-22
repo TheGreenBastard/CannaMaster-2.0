@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Name Your Grow"
-                        android:textColor="@color/red_A100"
+                        android:textColor="@color/green_700"
                         android:layout_marginBottom="5dp"
                         />
 
@@ -115,7 +115,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="10dp"
                         android:textAlignment="center"
-                        android:textColor="@color/red_A100"
+                        android:textColor="@color/green_700"
                         android:text="Use this for any important info you might not want to forget" />
 
                     <!-- Set Date Layout -->
@@ -125,8 +125,7 @@
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true"
-                        android:onClick="setDate">
+                        android:focusable="true">
                         <!-- Date Icon -->
                         <ImageView
                             android:id="@+id/date_icon"
@@ -136,7 +135,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="32dp"
-                            android:onClick="setDate"
+                            android:onClick="showDatePickerDialog"
                             android:src="@drawable/ic_view_day_grey600_24dp" />
                         <!-- Date Icon -->
                         <LinearLayout
@@ -174,8 +173,7 @@
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true"
-                        android:onClick="setTime">
+                        android:focusable="true">
                         <!-- Time Icon -->
                         <ImageView
                             android:id="@+id/time_icon"
@@ -185,7 +183,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="32dp"
-                            android:onClick="setTime"
+                            android:onClick="showTimePickerDialog"
                             android:src="@drawable/ic_access_time_grey600_24dp" />
                         <!-- Time Layout -->
                         <LinearLayout
@@ -230,6 +228,7 @@
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
                     android:paddingTop="10dp"
+                    android:textColor="@color/green_700"
                     android:text="@string/select_your_grow_details"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textStyle="bold" />
@@ -512,7 +511,7 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingBottom="30dp"
                         android:text="Number of minutes before event to set reminder"
-                        android:textColor="@color/red_A100" />
+                        android:textColor="@color/green_700" />
 
                     <Button
                         android:id="@+id/button_set_notifications"
