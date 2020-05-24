@@ -77,46 +77,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/titleText"
-                        android:layout_width="197dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:textAlignment="center"
-                        android:ems="10"
-                        android:hint="Calendar Event Title"
-                        android:inputType="textPersonName" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Name Your Grow"
-                        android:textColor="@color/green_700"
-                        android:layout_marginBottom="5dp"
-                        />
-
-                    <EditText
-                        android:id="@+id/descText"
-                        android:layout_width="316dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"
-                        android:ems="10"
-                        android:textAlignment="center"
-                        android:hint="Description"
-                        android:inputType="textPersonName"
-                        />
-
-                    <TextView
-                        android:layout_width="280dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="10dp"
-                        android:textAlignment="center"
-                        android:textColor="@color/green_700"
-                        android:text="Use this for any important info you might not want to forget" />
 
                     <!-- Set Date Layout -->
                     <RelativeLayout
@@ -487,6 +447,49 @@
                         android:text="@string/unknown" />
 
                 </RadioGroup>
+
+                <EditText
+                    android:id="@+id/titleText"
+                    android:layout_width="197dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:hint="Calendar Event Title"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Name Your Grow"
+                    android:textColor="@color/green_700"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <EditText
+                    android:id="@+id/descText"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:textAlignment="center"
+                    android:hint="Description"
+                    android:inputType="textPersonName"
+                    />
+
+                <TextView
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/green_700"
+                    android:text="Use this for any important info you might not want to forget" />
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -539,7 +542,7 @@
                     <TextView
                         android:id="@+id/empty_space"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="250dp"
                         android:layout_gravity="center_horizontal"
                         android:text=" " />
                 </LinearLayout>
