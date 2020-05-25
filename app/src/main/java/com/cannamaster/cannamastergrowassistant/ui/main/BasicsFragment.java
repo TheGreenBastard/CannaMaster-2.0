@@ -409,7 +409,6 @@ public class BasicsFragment extends SectionsCardviewFragment {
                         "\n" +
                         "Your plants can be kept in a perpetual vegetative cycle and become towering trees if you were so inclined.  Most people would find this overkill but be aware that there is no limit to your plant size before flowering as long as you account for the stretch that will occur during the first 3-4 weeks of flowering.", "15",
                 R.drawable.veg_time));
-
         return sectionsCardviewItems;
     }
 

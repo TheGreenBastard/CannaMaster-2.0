@@ -493,7 +493,7 @@
                         android:layout_gravity="center"
                         android:textAlignment="center"
                         android:ems="10"
-                        android:hint="120"
+                        android:text="60"
                         android:inputType="number" />
 
 
