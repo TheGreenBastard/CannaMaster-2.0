@@ -44,7 +44,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     Button runButton;
 
     String mTitle;
-    String mDescription;
+    Boolean outdoorSelected;
+    Boolean hydroSelected;
 
     // Layout components for time and date picker
     ImageView mDateDialog;
@@ -222,7 +223,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             }
             // Add the event to the calendar
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-
             long eventId = Long.parseLong(uri.getLastPathSegment());
             Log.i("Event_Id", String.valueOf(eventId));
 
@@ -263,10 +263,31 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             timeText.setError("please provide a valid time for events 'hh:mm'");
             runButton.setError("Error : Check your information above");}
         else if (reminderText.getText().length() < 1) {
-            reminderText.setError("please provide a valid buffer to receive notifications")
+            reminderText.setError("please provide a valid buffer to receive notifications");
             runButton.setError("Error : Check your information above");}
-        else {
+        else if (outdoorSelected = true) {
+            // runs if outdoor is selected as grow medium of choice
+            SetOutdoorReminders();
+            SetFertilizerReminders();
+            SetWateringCalendarDates();
+            SetFlushReminder();
 
+            // Tell the user that the information has been set
+            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
+        }
+        else if (hydroSelected = true) {
+            // runs if hydro is selected as grow medium of choice
+
+
+
+
+            // Tell the user that the information has been set
+            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            // runs if indoor soil is selected as grow medium of choice
+
+            // get the user inputed title from the layout and put it into a string
             mTitle = titleText.getText().toString();
             // as long as the EditTexts are filled out run the following code
             SetFloweringStartDate();
@@ -274,7 +295,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             SetHarvestDateReminder();
             SetWateringCalendarDates();
             SetFertilizerReminders();
-            SetOutdoorReminders();
 
             // Tell the user that the information has been set
             Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
@@ -284,8 +304,47 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         }
     }
 
-    private void SetOutdoorReminders() {
+    private void SetOutdoorReminders() throws java.text.ParseException {
+        if (outdoorSelected = true) {
+
+            String startDateFormatted = "";
+            // Get a calendar instance
+            GregorianCalendar calDate = new GregorianCalendar();
+            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm");
+            Date date = originalFormat.parse(startDate);
+            startDateFormatted = targetFormat.format(date);
+            ArrayList<String> startDateList = new ArrayList<String>(Arrays.asList(startDateFormatted.split(",")));
+            int startYear = Integer.parseInt(startDateList.get(0));
+            // code to run if outdoor has been selected
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dateFormat.parse(startYear + "-08-17"));
+
+
+            // while statement to set fertilizer notifications based on user input
+            cal.add(Calendar.DATE, 14);
+            String convertedDate = dateFormat.format(cal.getTime());
+            System.out.println("Fertilizer reminder set on " + convertedDate);
+            String startTime = timeText.getText().toString();
+            // takes the 2 EditText fields and combines them to set the date and time of notification
+            String startDate = convertedDate + " " + startTime;
+            // sets the end date the same as the start date so the rest of the hard code still works
+            String endDate = startDate;
+            // this is the event title
+            String titleString = "Have you fed your girls lately?";
+            // this is the event description
+            String descString = mTitle + "\n\nDon't forget to feed your girls.\n\nThey can get quite hungry while flowering.\n\nFlowering takes a lot of (P)hosphurous make sure whatever fertilizer you are using is high in P.";
+            // this is the time before the event that the reminder will fire
+            String reminderString = reminderText.getText().toString();
+            int reminderInt = Integer.parseInt(reminderString);
+            // Calls the function to add the event to the calender
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        }
+
     }
+
+
 
     private void SetFertilizerReminders() throws java.text.ParseException {
         String mDate = dateText.getText().toString();
@@ -318,9 +377,24 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
             Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + startDate,
                     Toast.LENGTH_SHORT).show();
-
         }
+    }
 
+    private void GrowMedium(View view) {
+        checkedId = rgGrowMediumChoice.getCheckedRadioButtonId();
+        switch (checkedId) {
+            case R.id.radioSoil:
+                outdoorSelected = false;
+                hydroSelected = false;
+                break;
+            case R.id.radioOutdoor:
+                outdoorSelected = true;
+                hydroSelected = false;
+                break;
+            case R.id.radioHydro:
+                hydroSelected = true;
+                outdoorSelected = false;
+        }
     }
 
     /*******************************************************************************
@@ -443,9 +517,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
             Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
                     Toast.LENGTH_SHORT).show();
-
         }
-
     }
 
     /** Sets the first day of flowering based on user input **/

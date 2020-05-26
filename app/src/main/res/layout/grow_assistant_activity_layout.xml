@@ -115,6 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="true"
+                        android:onClick="GrowMedium"
                         android:text="@string/indoor_soil" />
 
                     <!-- Outdoor Grow -->
@@ -124,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="GrowMedium"
                         android:text="@string/outdoor_grow" />
 
                     <!-- Hydroponic -->
@@ -133,6 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="GrowMedium"
                         android:text="@string/indoor_hydroponic" />
 
                 </RadioGroup>
