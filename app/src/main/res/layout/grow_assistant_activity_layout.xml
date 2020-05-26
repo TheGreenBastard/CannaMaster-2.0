@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_100_indica" />
                     <!-- 100% Sativa -->
                     <RadioButton
@@ -271,7 +271,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_100_sativa" />
                     <!-- 50/50 -->
                     <RadioButton
@@ -280,7 +280,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_50_50_indica_sativa_hybrid" />
                     <!-- 60/40 -->
                     <RadioButton
@@ -289,7 +289,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_60_40_indica_sativa_hybrid" />
                     <!-- 60/40 -->
                     <RadioButton
@@ -298,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_40_60_indica_sativa_hybrid" />
 
                     <RadioButton
@@ -307,6 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_70_30_indica_sativa_hybrid" />
 
                     <RadioButton
@@ -315,7 +316,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/_30_70_indica_sativa_hybrid" />
 
                     <RadioButton
@@ -324,7 +325,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/mostly_sativa" />
 
                     <RadioButton
@@ -333,7 +334,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/mostly_indica" />
 
                     <RadioButton
@@ -342,7 +343,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="true"
-                        android:onClick="indicaSativaRatio"
+                        android:onClick="IndicaSativaRatio"
                         android:text="@string/unknown" />
 
                 </RadioGroup>
@@ -366,27 +367,6 @@
                     android:textColor="@color/green_700"
                     android:layout_marginBottom="5dp"
                     />
-
-                <EditText
-                    android:id="@+id/descText"
-                    android:layout_width="316dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:ems="10"
-                    android:textAlignment="center"
-                    android:hint="Description"
-                    android:inputType="textPersonName"
-                    />
-
-                <TextView
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/green_700"
-                    android:text="Use this for any important info you might not want to forget" />
 
                 <RelativeLayout
                     android:id="@+id/date"

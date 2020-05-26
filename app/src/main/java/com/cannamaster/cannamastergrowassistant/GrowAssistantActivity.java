@@ -40,7 +40,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     EditText dateText;
     EditText timeText;
     EditText titleText;
-    EditText descText;
     EditText reminderText;
     Button runButton;
 
@@ -61,6 +60,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     int mFloweringDays = 70;
     // Watering Notification Variable
     int mWateringScheduleDays;
+    int checkedId;
 
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
@@ -95,7 +95,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         dateText = (EditText) findViewById(R.id.date_edit_text);
         timeText = (EditText) findViewById(R.id.time_edit_text);
         titleText = (EditText) findViewById(R.id.titleText);
-        descText = (EditText) findViewById(R.id.descText);
         reminderText = (EditText) findViewById(R.id.reminderText);
         runButton = (Button) findViewById(R.id.button_set_notifications);
 
@@ -251,9 +250,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         if (titleText.getText().length() < 1) {
             titleText.setError("You must provide a title for the event");
             runButton.setError("Error : Check your information above");}
-        else if (descText.getText().length() < 2) {
-            descText.setError("You must provide a short description");
-            runButton.setError("Error : Check your information above");}
         else if (dateText.getText().length() < 10) {
             dateText.setError("please provide a valid start date 'YYYY-MM-DD'");
             runButton.setError("Error : Check your information above");}
@@ -266,8 +262,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         else if (timeText.getText().length() > 5) {
             timeText.setError("please provide a valid time for events 'hh:mm'");
             runButton.setError("Error : Check your information above");}
-        else if (reminderText.getText().length() < 2) {
-            descText.setError("How long before your event would you like to be reminded?");
+        else if (reminderText.getText().length() < 1) {
+            reminderText.setError("please provide a valid buffer to receive notifications")
             runButton.setError("Error : Check your information above");}
         else {
 
@@ -277,109 +273,141 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             SetFlushReminder();
             SetHarvestDateReminder();
             SetWateringCalendarDates();
-
+            SetFertilizerReminders();
+            SetOutdoorReminders();
 
             // Tell the user that the information has been set
             Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
 
-
             // This closes the grow assistant activity
             finish();
+        }
+    }
+
+    private void SetOutdoorReminders() {
+    }
+
+    private void SetFertilizerReminders() throws java.text.ParseException {
+        String mDate = dateText.getText().toString();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateFormat.parse(mDate));
+
+        int repeatNumber = (mFloweringDays / 14);
+        while (repeatNumber > 2) {
+            // while statement to set fertilizer notifications based on user input
+            cal.add(Calendar.DATE, 14);
+            String convertedDate = dateFormat.format(cal.getTime());
+            System.out.println("Fertilizer reminder set on " + convertedDate);
+            String startTime = timeText.getText().toString();
+            // takes the 2 EditText fields and combines them to set the date and time of notification
+            String startDate = convertedDate + " " + startTime;
+            // sets the end date the same as the start date so the rest of the hard code still works
+            String endDate = startDate;
+            // this is the event title
+            String titleString = "Have you fed your girls lately?";
+            // this is the event description
+            String descString = mTitle + "\n\nDon't forget to feed your girls.\n\nThey can get quite hungry while flowering.\n\nFlowering takes a lot of (P)hosphurous make sure whatever fertilizer you are using is high in P.";
+            // this is the time before the event that the reminder will fire
+            String reminderString = reminderText.getText().toString();
+            int reminderInt = Integer.parseInt(reminderString);
+            // Calls the function to add the event to the calender
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            repeatNumber--;
+
+            Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + startDate,
+                    Toast.LENGTH_SHORT).show();
+
         }
 
     }
 
     /*******************************************************************************
-     * OnCheckChanged Listener for Indica/Sativa Ratio - (it sets mFloweringDays)
+     * What Happens When You Click Something in Indica/Sativa Ratio - (it sets mFloweringDays)
      *******************************************************************************/
     // This changes the value of mFloweringDays every time a button in the group is selected.
-    public void indicaSativaRatio(View view) {
+    public void IndicaSativaRatio(View view) {
         // Grab the RadioGroup and check to make sure there haven't been any changes.  If there has act accordingly.
-        rgIndicaSativaOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Get Index Of Radio Button
-                int pos = rgIndicaSativaOptions.indexOfChild(findViewById(rgIndicaSativaOptions.getCheckedRadioButtonId()));
-                switch (pos) {
-                    case 0:
-                        // 100% Indica
-                        mFloweringDays = 56;
-                        break;
-                    case 1:
-                        // 100% Sativa
-                        mFloweringDays = 84;
-                        break;
-                    case 2:
-                        // 50/50 Indica Sativa
-                        mFloweringDays = 70;
-                        break;
-                    case 3:
-                        // 60/40 Indica Sativa
-                        mFloweringDays = 63;
-                        break;
-                    case 4:
-                        // 40/60 Indica Sativa
-                        mFloweringDays = 77;
-                        break;
-                    case 5:
-                        // 70/30 Indica Sativa
-                        mFloweringDays = 60;
-                        break;
-                    case 6:
-                        // 30/70 Indica Sativa
-                        mFloweringDays = 77;
-                        break;
-                    case 7:
-                        // Mostly Sativa
-                        mFloweringDays = 80;
-                        break;
-                    case 8:
-                        // Mostly Indica
-                        mFloweringDays = 60;
-                        break;
-                    case 9:
-                        // Unknown Genetics
-                        mFloweringDays = 70;
-                        break;
-                }
-                // informs the user how many flowering days their choice has set
-                Toast.makeText(GrowAssistantActivity.this, "Flowering Days = " + mFloweringDays,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        checkedId = rgIndicaSativaOptions.getCheckedRadioButtonId();
+        switch (checkedId) {
+            case R.id.radioButtonIndicaSativa1000:
+                // 100% Indica
+                mFloweringDays = 56;
+                break;
+            case R.id.radioButtonIndicaSativa0100:
+                // 100% Sativa
+                mFloweringDays = 84;
+                break;
+            case R.id.radioButtonIndicaSativa5050:
+                // 50/50 Indica Sativa
+                mFloweringDays = 70;
+                break;
+            case R.id.radioButtonIndicaSativa6040:
+                // 60/40 Indica Sativa
+                mFloweringDays = 63;
+                break;
+            case R.id.radioButtonIndicaSativa4060:
+                // 40/60 Indica Sativa
+                mFloweringDays = 77;
+                break;
+            case R.id.radioButtonIndicaSativa7030:
+                // 70/30 Indica Sativa
+                mFloweringDays = 60;
+                break;
+            case R.id.radioButtonIndicaSativa3070:
+                // 30/70 Indica Sativa
+                mFloweringDays = 77;
+                break;
+            case R.id.radioButtonIndicaSativa9010:
+                // Mostly Sativa
+                mFloweringDays = 80;
+                break;
+            case R.id.radioButtonIndicaSativa1090:
+                // Mostly Indica
+                mFloweringDays = 60;
+                break;
+            case R.id.radioButtonIndicaSativaUnknown:
+                // Unknown Genetics
+                mFloweringDays = 70;
+                break;
+        }
+        // informs the user how many flowering days their choice has set
+        Toast.makeText(GrowAssistantActivity.this, "Flowering Days = " + mFloweringDays,
+                Toast.LENGTH_SHORT).show();
     }
 
+
+    /**************************************************************************************
+     *  This is what happens when watering options are selected
+     **************************************************************************************/
     public void WaterScheduleRatio(View view) {
-        rgWateringSchedule.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // Get Index Of Radio Button
-                int pos = rgWateringSchedule.indexOfChild(findViewById(rgWateringSchedule.getCheckedRadioButtonId()));
-                switch (pos) {
-                    case 0:
-                        // Every Day
-                        mWateringScheduleDays = 1;
-                        break;
-                    case 1:
-                        // Every 2 Days
-                        mWateringScheduleDays = 2;
-                        break;
-                    case 2:
-                        // Every 3 Days
-                        mWateringScheduleDays = 3;
-                        break;
-                    case 3:
-                        // Once A week
-                        mWateringScheduleDays = 7;
-                        break;
-                    case 4:
-                        // do not set notification
-                        mWateringScheduleDays = 0;
-                        break;
-                }
-            }
-        });
+        checkedId = rgWateringSchedule.getCheckedRadioButtonId();
+        switch (checkedId) {
+            case R.id.radioButtonWaterDaily:
+                // Every Day
+                mWateringScheduleDays = 1;
+                break;
+            case R.id.radioButtonWater2Days:
+                // Every 2 Days
+                mWateringScheduleDays = 2;
+                break;
+            case R.id.radioButtonWater3Days:
+                // Every 3 Days
+                mWateringScheduleDays = 3;
+                break;
+            case R.id.radioButtonWaterWeekly:
+                // Once A week
+                mWateringScheduleDays = 7;
+                break;
+            case R.id.radioButtonWaterNoNotify:
+                // do not set notification
+                mWateringScheduleDays = 0;
+                break;
+        }
     }
+
+
 
     /** Sets the watering notifications based on what is selected **/
     public void SetWateringCalendarDates() throws java.text.ParseException {
@@ -393,19 +421,19 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
         int repeatNumber = (mFloweringDays / mWateringScheduleDays);
         while (repeatNumber > 1) {
-            // while statement to set watering notifications based on user input
+            // while statement to set fertilizer notifications based on user input
             cal.add(Calendar.DATE, mWateringScheduleDays);
             String convertedDate = dateFormat.format(cal.getTime());
-            System.out.println("water reminder set to " + convertedDate);
+            System.out.println("Watering reminder set on " + convertedDate);
             String startTime = timeText.getText().toString();
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = convertedDate + " " + startTime;
             // sets the end date the same as the start date so the rest of the hard code still works
             String endDate = startDate;
             // this is the event title
-            String titleString = "Watering Reminder";
+            String titleString = "Have you watered your girls lately?";
             // this is the event description
-            String descString = mTitle + "\n\nDon't forget to water your girls.\n\nThey can get quite thirsty while flowering.\n\nBe sure to check on them and make sure they stay hydrated.";
+            String descString = mTitle + "\n\nDon't forget to water your girls.\n\nThey can get quite thirsty while flowering.\n\nThe soil should be dry to the touch as well as dry 2'' below the surface before you water again";
             // this is the time before the event that the reminder will fire
             String reminderString = reminderText.getText().toString();
             int reminderInt = Integer.parseInt(reminderString);
@@ -502,7 +530,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 Toast.LENGTH_SHORT).show();
     }
 
-    /** date picker dialog rules **/
+    /** Date Picker Dialog Rules **/
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         // This ensures that the date is populated correctly
@@ -520,7 +548,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         }
     }
 
-
+    /** Time Picker Dialog Rules  **/
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         // This ensures that the time is populated correctly
