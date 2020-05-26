@@ -26,10 +26,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -46,6 +44,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     String mTitle;
     Boolean outdoorSelected;
     Boolean hydroSelected;
+    Boolean doNotSetWateringEvents;
 
     // Layout components for time and date picker
     ImageView mDateDialog;
@@ -245,6 +244,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
     /**  This takes the data from the TextViews and turns it into events to pass to calendar **/
     public void onMakeEvent (View view) throws java.text.ParseException {
+        // get the user inputed title from the layout and put it into a string
+        mTitle = titleText.getText().toString();
         // This function sets all the events based on the users selctions and input
         // This checks the edit text fields to ensure there is some kind of data entered
         if (titleText.getText().length() < 1) {
@@ -268,18 +269,14 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         else if (outdoorSelected = true) {
             // runs if outdoor is selected as grow medium of choice
             SetOutdoorReminders();
-            SetFertilizerReminders();
-            SetWateringCalendarDates();
-            SetFlushReminder();
-
             // Tell the user that the information has been set
             Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
         }
         else if (hydroSelected = true) {
             // runs if hydro is selected as grow medium of choice
-
-
-
+            SetFloweringStartDate();
+            SetFlushReminder();
+            SetHarvestDateReminder();
 
             // Tell the user that the information has been set
             Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
@@ -287,8 +284,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         else {
             // runs if indoor soil is selected as grow medium of choice
 
-            // get the user inputed title from the layout and put it into a string
-            mTitle = titleText.getText().toString();
+
             // as long as the EditTexts are filled out run the following code
             SetFloweringStartDate();
             SetFlushReminder();
@@ -304,61 +300,123 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         }
     }
 
+    /** **************************************************************************************************
+     *                         ---- OUTDOOR GROW in one huge function ----
+     *
+     * This sets the outdoor reminders separate from other defined methods
+     * It is quite long because if I were to call the other methods it would end up double setting events
+     * ***************************************************************************************************/
     private void SetOutdoorReminders() throws java.text.ParseException {
+        // check to make sure outdoor is selected
         if (outdoorSelected = true) {
-
-            String startDateFormatted = "";
-            // Get a calendar instance
-            GregorianCalendar calDate = new GregorianCalendar();
-            SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm");
-            Date date = originalFormat.parse(startDate);
-            startDateFormatted = targetFormat.format(date);
-            ArrayList<String> startDateList = new ArrayList<String>(Arrays.asList(startDateFormatted.split(",")));
-            int startYear = Integer.parseInt(startDateList.get(0));
-            // code to run if outdoor has been selected
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            // Turn the first 4 digits of date entry into the year then add a preselected flower date
+            dateText = (EditText) findViewById(R.id.date_edit_text);
+            CharSequence firstFour = dateText.getText();
+            String yearDate = firstFour.toString();
+            String fourDigitDate = yearDate.substring(0,4);
+            String mDate = fourDigitDate + "-07-30";
+            // turn the strings into values the app can actually use
+            SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
             Calendar cal = Calendar.getInstance();
-            cal.setTime(dateFormat.parse(startYear + "-08-17"));
-
-
-            // while statement to set fertilizer notifications based on user input
-            cal.add(Calendar.DATE, 14);
-            String convertedDate = dateFormat.format(cal.getTime());
-            System.out.println("Fertilizer reminder set on " + convertedDate);
+            cal.setTime(dateFormat.parse(mDate));
             String startTime = timeText.getText().toString();
             // takes the 2 EditText fields and combines them to set the date and time of notification
-            String startDate = convertedDate + " " + startTime;
+            String startDate = mDate + " " + startTime;
+            /** clone the start date for some functions coming up **/
+            Calendar calHarvestDate = cal;
+            Calendar calFlushDate = cal;
+            Calendar calWater = cal;
+            Calendar calFertilizer = cal;
+
             // sets the end date the same as the start date so the rest of the hard code still works
             String endDate = startDate;
             // this is the event title
-            String titleString = "Have you fed your girls lately?";
+            String titleString = "First day of outdoor flowering";
             // this is the event description
-            String descString = mTitle + "\n\nDon't forget to feed your girls.\n\nThey can get quite hungry while flowering.\n\nFlowering takes a lot of (P)hosphurous make sure whatever fertilizer you are using is high in P.";
+            String growTitle = titleText.getText().toString();
+            String descString = growTitle + "\n\nThis is the first day of the outdoor flowering cycle.\n\nThe days are getting shorter and your girls will start the flowering process any day now.  This is a good date to use as a reference point for your respective timelines.\n\n";
             // this is the time before the event that the reminder will fire
             String reminderString = reminderText.getText().toString();
             int reminderInt = Integer.parseInt(reminderString);
             // Calls the function to add the event to the calender
             addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-        }
+            // Notify the user that the first day of flower has been set
+            Toast.makeText(GrowAssistantActivity.this, "First day of outdoor flowering set to " + mDate,
+                    Toast.LENGTH_SHORT).show();
 
+            /** This will set the flush notification 2 weeks before harvest **/
+            calFlushDate.add(Calendar.DATE, mFloweringDays -14);
+            String convertedDate = dateFormat.format(calFlushDate.getTime());
+            startDate = convertedDate + " " + startTime;
+            endDate = startDate;
+            titleString = "Time To Start Flushing";
+            descString = growTitle + "\n\nFrom now until harvest use only water to quench your plants.  This will flush out any undissolved salts left over from the fertilizer you may have used.  This will noticeably improve the taste of your product once harvested and cured.";
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            // Inform the user that the flush notification has been set
+            Toast.makeText(GrowAssistantActivity.this, "Flush notification event has been set for " + convertedDate,
+                    Toast.LENGTH_SHORT).show();
+
+            /** set the fertilizer notification events **/
+            calFertilizer.add(Calendar.DATE, 14);
+            convertedDate = dateFormat.format(((calFertilizer.getTime())));
+            startDate = convertedDate + " " + startTime;
+            endDate = startDate;
+            titleString = "Feed Your Girls";
+            descString = growTitle + "\n\nNow would be a good time to supliment your girls with some fertilizer.  You can use chemical based fertilizer or organic fertilizer.  There are pros and cons to each choice, the decision is ultimately up to you.\n\nBe careful not to over fertilize.\n\nYou can certainly have too much of a good thing.  Overuse of fertilizers can result in poor plant growth and production.  Be sure to follow all warnings labels and mix your fertilizers consistent with manufactures label and recommendations.";
+
+
+            /** set the outdoor harvest date **/
+            calHarvestDate.add(Calendar.DATE, mFloweringDays);
+            convertedDate = dateFormat.format((calHarvestDate.getTime()));
+            startDate = convertedDate + " " + startTime;
+            endDate = startDate;
+            titleString = "Harvest Day Is Here!";
+            descString = growTitle + "\n\nIts taken a lot of work to get here but the time is finally upon you.\n\nIt's time to cut down your girls and start the drying/curing process.\n\nYour end product will taste and cure better if you hang the plants whole to dry.  Don't cut them into a bunch of pieces to hang and dry, instead hang the entire plant as one or cut it into as few pieces as possible";
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            // Inform the user that the flush notification has been set
+            Toast.makeText(GrowAssistantActivity.this, "Harvest date set for " + convertedDate,
+                    Toast.LENGTH_SHORT).show();
+
+            /** Outdoor Watering Notifications **/
+            if (doNotSetWateringEvents = false) {
+                int repeatNumber = (mFloweringDays / mWateringScheduleDays);
+                // This repeats the fertilization event as many times as it is needed
+                while (repeatNumber > 1) {
+                    calWater.add(Calendar.DATE, mWateringScheduleDays);
+                    convertedDate = dateFormat.format(calWater.getTime());
+                    startDate = convertedDate + " " + startTime;
+                    endDate = startDate;
+                    titleString = "Water your girls";
+                    descString = growTitle + "\n\nIt can get mighty dry outdoors this time of year.  Check on your girls regularly to ensure they have plenty of water.\n\nYou can add a layer of mulch up to 3' around your plants for added protection from getting dry. It makes a huge difference.";
+                    addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+                    repeatNumber--;
+
+                    Toast.makeText(GrowAssistantActivity.this, "A watering event has been set for " + convertedDate,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                // don't do shit
+            }
+        }
     }
 
 
-
+    /** This sets the indoor fertilization schedule **/
     private void SetFertilizerReminders() throws java.text.ParseException {
+        // grab the date from the user input TextEdit
         String mDate = dateText.getText().toString();
-
+        // Turn the date into something the app can actually use
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateFormat.parse(mDate));
-
+        // This figures out how many times you should add fertilizer
         int repeatNumber = (mFloweringDays / 14);
+        // This repeats the fertilization event as many times as it is needed
         while (repeatNumber > 2) {
             // while statement to set fertilizer notifications based on user input
             cal.add(Calendar.DATE, 14);
             String convertedDate = dateFormat.format(cal.getTime());
-            System.out.println("Fertilizer reminder set on " + convertedDate);
             String startTime = timeText.getText().toString();
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = convertedDate + " " + startTime;
@@ -378,6 +436,125 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + startDate,
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /** Sets the indoor watering notifications based on what is selected **/
+    public void SetWateringCalendarDates() throws java.text.ParseException {
+        // Converts the EditTexts to Strings
+
+        String mDate = dateText.getText().toString();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateFormat.parse(mDate));
+
+        int repeatNumber = (mFloweringDays / mWateringScheduleDays);
+        while (repeatNumber > 1) {
+            // while statement to set fertilizer notifications based on user input
+            cal.add(Calendar.DATE, mWateringScheduleDays);
+            String convertedDate = dateFormat.format(cal.getTime());
+            System.out.println("Watering reminder set on " + convertedDate);
+            String startTime = timeText.getText().toString();
+            // takes the 2 EditText fields and combines them to set the date and time of notification
+            String startDate = convertedDate + " " + startTime;
+            // sets the end date the same as the start date so the rest of the hard code still works
+            String endDate = startDate;
+            // this is the event title
+            String titleString = "Have you watered your girls lately?";
+            // this is the event description
+            String descString = mTitle + "\n\nDon't forget to water your girls.\n\nThey can get quite thirsty while flowering.\n\nThe soil should be dry to the touch as well as dry 2'' below the surface before you water again";
+            // this is the time before the event that the reminder will fire
+            String reminderString = reminderText.getText().toString();
+            int reminderInt = Integer.parseInt(reminderString);
+            // Calls the function to add the event to the calender
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            repeatNumber--;
+
+            Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /** Sets the first day of indoor flowering based on user input **/
+    public void SetFloweringStartDate() {
+        // Converts the EditTexts to Strings
+        String growTitle = titleText.getText().toString();
+        String mDate = dateText.getText().toString();
+        String startTime = timeText.getText().toString();
+        // takes the 2 EditText fields and combines them to set the date and time of notification
+        String startDate = mDate + " " + startTime;
+        // sets the end date the same as the start date so the rest of the hard code still works
+        String endDate = startDate;
+        // this is the event title
+        String titleString = "First day of flowering";
+        // this is the event description
+        String descString = growTitle + "\n\nThis is the first day of the flowering cycle.\n\nPlants should be placed into a 12/12 light cycle.  Be sure to check for any light leaks in your grow room as they could lead to hermaphrodite plants which in turn could produce seeds.\n\n";
+        // this is the time before the event that the reminder will fire
+        String reminderString = reminderText.getText().toString();
+        int reminderInt = Integer.parseInt(reminderString);
+        // Calls the function to add the event to the calender
+        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        // Notify the user that the first day of flower has been set
+        Toast.makeText(GrowAssistantActivity.this, "First day of flowering set to " + mDate,
+                Toast.LENGTH_SHORT).show();
+    }
+
+    /** This is the  indoor flush reminder that springs 2 weeks before harvest **/
+    public void SetFlushReminder() throws java.text.ParseException {
+        // Converts the EditTexts to Strings
+        String mDate = dateText.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        Calendar cal = Calendar.getInstance();
+        cal.setTime( dateFormat.parse(mDate));
+        cal.add( Calendar.DATE, mFloweringDays -14);
+        String convertedDate = dateFormat.format(cal.getTime());
+
+        String startTime = timeText.getText().toString();
+        // takes the 2 EditText fields and combines them to set the date and time of notification
+        String startDate = convertedDate + " " + startTime;
+        // sets the end date the same as the start date so the rest of the hard code still works
+        String endDate = startDate;
+        // this is the event title
+        String titleString = "Time To Start Flushing";
+        // this is the event description
+        String descString = "From now until harvest use only water to quench your plants.\n \n  No fertilizer or supplements.\n \n  This will wash out any undissolved fertilizer salts in your grow medium which in turn will make your final product taste better.";
+        // this is the time before the event that the reminder will fire
+        String reminderString = reminderText.getText().toString();
+        int reminderInt = Integer.parseInt(reminderString);
+        // Calls the function to add the event to the calender
+        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        // Inform the user that the flush notification has been set
+        Toast.makeText(GrowAssistantActivity.this, "Flush Notificiation Has Been Set",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    /** Set Harvest Date **/
+    public void SetHarvestDateReminder() throws java.text.ParseException {
+
+        String mDate = dateText.getText().toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dateFormat.parse(mDate));
+        cal.add( Calendar.DATE, mFloweringDays);
+        String convertedDate = dateFormat.format(cal.getTime());
+
+        String startTime = timeText.getText().toString();
+        // takes the 2 EditText fields and combines them to set the date and time of notification
+        String startDate = convertedDate + " " + startTime;
+        // sets the end date the same as the start date so the rest of the hard code still works
+        String endDate = startDate;
+        // this is the event title
+        String titleString = "Time To Harvest!";
+        // this is the event description
+        String descString = "All your hard work has finally paid off.  \n \n " + titleText + " is finally done. \n \n  Today is the day you cut down your girls and start the journey towards enjoying all that hard earned work.";
+        // this is the time before the event that the reminder will fire
+        String reminderString = reminderText.getText().toString();
+        int reminderInt = Integer.parseInt(reminderString);
+        // Calls the function to add the event to the calender
+        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        // inform the user that the harvest date has been set
+        Toast.makeText(GrowAssistantActivity.this, "Harvest date set for " + convertedDate ,
+                Toast.LENGTH_SHORT).show();
     }
 
     private void GrowMedium(View view) {
@@ -461,146 +638,33 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             case R.id.radioButtonWaterDaily:
                 // Every Day
                 mWateringScheduleDays = 1;
+                doNotSetWateringEvents = true;
                 break;
             case R.id.radioButtonWater2Days:
                 // Every 2 Days
                 mWateringScheduleDays = 2;
+                doNotSetWateringEvents = true;
                 break;
             case R.id.radioButtonWater3Days:
                 // Every 3 Days
                 mWateringScheduleDays = 3;
+                doNotSetWateringEvents = true;
                 break;
             case R.id.radioButtonWaterWeekly:
                 // Once A week
                 mWateringScheduleDays = 7;
+                doNotSetWateringEvents = true;
                 break;
             case R.id.radioButtonWaterNoNotify:
                 // do not set notification
                 mWateringScheduleDays = 0;
+                doNotSetWateringEvents = false;
                 break;
         }
     }
 
 
 
-    /** Sets the watering notifications based on what is selected **/
-    public void SetWateringCalendarDates() throws java.text.ParseException {
-        // Converts the EditTexts to Strings
-
-        String mDate = dateText.getText().toString();
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateFormat.parse(mDate));
-
-        int repeatNumber = (mFloweringDays / mWateringScheduleDays);
-        while (repeatNumber > 1) {
-            // while statement to set fertilizer notifications based on user input
-            cal.add(Calendar.DATE, mWateringScheduleDays);
-            String convertedDate = dateFormat.format(cal.getTime());
-            System.out.println("Watering reminder set on " + convertedDate);
-            String startTime = timeText.getText().toString();
-            // takes the 2 EditText fields and combines them to set the date and time of notification
-            String startDate = convertedDate + " " + startTime;
-            // sets the end date the same as the start date so the rest of the hard code still works
-            String endDate = startDate;
-            // this is the event title
-            String titleString = "Have you watered your girls lately?";
-            // this is the event description
-            String descString = mTitle + "\n\nDon't forget to water your girls.\n\nThey can get quite thirsty while flowering.\n\nThe soil should be dry to the touch as well as dry 2'' below the surface before you water again";
-            // this is the time before the event that the reminder will fire
-            String reminderString = reminderText.getText().toString();
-            int reminderInt = Integer.parseInt(reminderString);
-            // Calls the function to add the event to the calender
-            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-            repeatNumber--;
-
-            Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /** Sets the first day of flowering based on user input **/
-    public void SetFloweringStartDate() {
-        // Converts the EditTexts to Strings
-        String growTitle = titleText.getText().toString();
-        String mDate = dateText.getText().toString();
-        String startTime = timeText.getText().toString();
-        // takes the 2 EditText fields and combines them to set the date and time of notification
-        String startDate = mDate + " " + startTime;
-        // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
-        // this is the event title
-        String titleString = "First day of flowering";
-        // this is the event description
-        String descString = growTitle + "\n\nThis is the first day of the flowering cycle.\n\nPlants should be placed into a 12/12 light cycle.  Be sure to check for any light leaks in your grow room as they could lead to hermaphrodite plants which in turn could produce seeds.\n\n";
-        // this is the time before the event that the reminder will fire
-        String reminderString = reminderText.getText().toString();
-        int reminderInt = Integer.parseInt(reminderString);
-        // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-        // Notify the user that the first day of flower has been set
-        Toast.makeText(GrowAssistantActivity.this, "First day of flowering set to " + mDate,
-                Toast.LENGTH_SHORT).show();
-    }
-
-    /** This is the flush reminder that springs 2 weeks before harvest **/
-    public void SetFlushReminder() throws java.text.ParseException {
-        // Converts the EditTexts to Strings
-        String mDate = dateText.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-        Calendar cal = Calendar.getInstance();
-        cal.setTime( dateFormat.parse(mDate));
-        cal.add( Calendar.DATE, mFloweringDays -14);
-        String convertedDate = dateFormat.format(cal.getTime());
-
-        String startTime = timeText.getText().toString();
-        // takes the 2 EditText fields and combines them to set the date and time of notification
-        String startDate = convertedDate + " " + startTime;
-        // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
-        // this is the event title
-        String titleString = "Time To Start Flushing";
-        // this is the event description
-        String descString = "From now until harvest use only water to quench your plants.\n \n  No fertilizer or supplements.\n \n  This will wash out any undissolved fertilizer salts in your grow medium which in turn will make your final product taste better.";
-        // this is the time before the event that the reminder will fire
-        String reminderString = reminderText.getText().toString();
-        int reminderInt = Integer.parseInt(reminderString);
-        // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-        // Inform the user that the flush notification has been set
-        Toast.makeText(GrowAssistantActivity.this, "Flush Notificiation Has Been Set",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    /** Set Harvest Date **/
-    public void SetHarvestDateReminder() throws java.text.ParseException {
-
-        String mDate = dateText.getText().toString();
-        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateFormat.parse(mDate));
-        cal.add( Calendar.DATE, mFloweringDays);
-        String convertedDate = dateFormat.format(cal.getTime());
-
-        String startTime = timeText.getText().toString();
-        // takes the 2 EditText fields and combines them to set the date and time of notification
-        String startDate = convertedDate + " " + startTime;
-        // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
-        // this is the event title
-        String titleString = "Time To Harvest!";
-        // this is the event description
-        String descString = "All your hard work has finally paid off.  \n \n " + titleText + " is finally done. \n \n  Today is the day you cut down your girls and start the journey towards enjoying all that hard earned work.";
-        // this is the time before the event that the reminder will fire
-        String reminderString = reminderText.getText().toString();
-        int reminderInt = Integer.parseInt(reminderString);
-        // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-        // inform the user that the harvest date has been set
-        Toast.makeText(GrowAssistantActivity.this, "Harvest date set for " + convertedDate ,
-                Toast.LENGTH_SHORT).show();
-    }
 
     /** Date Picker Dialog Rules **/
     @Override
