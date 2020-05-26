@@ -44,6 +44,9 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     EditText reminderText;
     Button runButton;
 
+    String mTitle;
+    String mDescription;
+
     // Layout components for time and date picker
     ImageView mDateDialog;
     ImageView mTimeDialog;
@@ -57,7 +60,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     // Flowering Days Variable
     int mFloweringDays = 70;
     // Watering Notification Variable
-    int mWateringScheduleDays = 0;
+    int mWateringScheduleDays;
 
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
@@ -235,8 +238,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 e.printStackTrace();
             }
 
-            // Tell the user that the information has been set
-            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -270,14 +271,20 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             runButton.setError("Error : Check your information above");}
         else {
 
+            mTitle = titleText.getText().toString();
             // as long as the EditTexts are filled out run the following code
             SetFloweringStartDate();
             SetFlushReminder();
-            SetWateringCalendarDates();
             SetHarvestDateReminder();
+            SetWateringCalendarDates();
+
+
+            // Tell the user that the information has been set
+            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
+
 
             // This closes the grow assistant activity
-            finishAffinity();
+            finish();
         }
 
     }
@@ -350,20 +357,20 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 int pos = rgWateringSchedule.indexOfChild(findViewById(rgWateringSchedule.getCheckedRadioButtonId()));
                 switch (pos) {
                     case 0:
-                        // Once A week
-                        mWateringScheduleDays = 7;
+                        // Every Day
+                        mWateringScheduleDays = 1;
                         break;
                     case 1:
-                        // Every 3 Days
-                        mWateringScheduleDays = 3;
-                        break;
-                    case 2:
                         // Every 2 Days
                         mWateringScheduleDays = 2;
                         break;
+                    case 2:
+                        // Every 3 Days
+                        mWateringScheduleDays = 3;
+                        break;
                     case 3:
-                        // Every Day
-                        mWateringScheduleDays = 1;
+                        // Once A week
+                        mWateringScheduleDays = 7;
                         break;
                     case 4:
                         // do not set notification
@@ -377,13 +384,14 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     /** Sets the watering notifications based on what is selected **/
     public void SetWateringCalendarDates() throws java.text.ParseException {
         // Converts the EditTexts to Strings
+
         String mDate = dateText.getText().toString();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
         Calendar cal = Calendar.getInstance();
-        cal.setTime( dateFormat.parse(mDate));
+        cal.setTime(dateFormat.parse(mDate));
 
-        int repeatNumber = mFloweringDays / mWateringScheduleDays;
+        int repeatNumber = (mFloweringDays / mWateringScheduleDays);
         while (repeatNumber > 1) {
             // while statement to set watering notifications based on user input
             cal.add(Calendar.DATE, mWateringScheduleDays);
@@ -397,19 +405,25 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // this is the event title
             String titleString = "Watering Reminder";
             // this is the event description
-            String descString = "Don't forget to water your girls.  They can get quite thirsty while flowering.  Be sure to check on them and make sure they stay hydrated.";
+            String descString = mTitle + "\n\nDon't forget to water your girls.\n\nThey can get quite thirsty while flowering.\n\nBe sure to check on them and make sure they stay hydrated.";
             // this is the time before the event that the reminder will fire
             String reminderString = reminderText.getText().toString();
             int reminderInt = Integer.parseInt(reminderString);
             // Calls the function to add the event to the calender
             addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-            repeatNumber = repeatNumber - 1;
+            repeatNumber--;
+
+            Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
+                    Toast.LENGTH_SHORT).show();
+
         }
+
     }
 
     /** Sets the first day of flowering based on user input **/
     public void SetFloweringStartDate() {
         // Converts the EditTexts to Strings
+        String growTitle = titleText.getText().toString();
         String mDate = dateText.getText().toString();
         String startTime = timeText.getText().toString();
         // takes the 2 EditText fields and combines them to set the date and time of notification
@@ -419,7 +433,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         // this is the event title
         String titleString = "First day of flowering";
         // this is the event description
-        String descString = titleText.getText().toString() + "\n \n  This is the first day of the flowering cycle.  Plants should be placed into a 12/12 light cycle.  Be sure to check for any light leaks in your grow room as they could lead to hermaphrodite plants which in turn could produce seeds. \n \n" + descText.getText().toString();
+        String descString = growTitle + "\n\nThis is the first day of the flowering cycle.\n\nPlants should be placed into a 12/12 light cycle.  Be sure to check for any light leaks in your grow room as they could lead to hermaphrodite plants which in turn could produce seeds.\n\n";
         // this is the time before the event that the reminder will fire
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
@@ -477,7 +491,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         // this is the event title
         String titleString = "Time To Harvest!";
         // this is the event description
-        String descString = "All your hard work has finally paid off.  \n \n" + titleText + " is finally done. \n \n  Today is the day you cut down your girls and start the journey towards enjoying all that hard earned work.";
+        String descString = "All your hard work has finally paid off.  \n \n " + titleText + " is finally done. \n \n  Today is the day you cut down your girls and start the journey towards enjoying all that hard earned work.";
         // this is the time before the event that the reminder will fire
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);

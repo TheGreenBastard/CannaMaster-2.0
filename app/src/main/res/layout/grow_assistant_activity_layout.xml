@@ -198,6 +198,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="WaterScheduleRatio"
                         android:text="@string/every_day" />
                     <!-- Every Other Day -->
                     <RadioButton
@@ -205,6 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:onClick="WaterScheduleRatio"
                         android:checked="false"
                         android:text="@string/every_other_day" />
                     <!-- Every 3 Days -->
@@ -214,6 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="WaterScheduleRatio"
                         android:text="@string/every_three_days" />
                     <!-- Weekly Watering Notification -->
                     <RadioButton
@@ -222,6 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="false"
+                        android:onClick="WaterScheduleRatio"
                         android:text="@string/once_a_week" />
                     <!-- Do Not Set Water Notification -->
                     <RadioButton
@@ -230,6 +234,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:checked="true"
+                        android:onClick="WaterScheduleRatio"
                         android:text="@string/do_not_set_watering_notification" />
 
                 </RadioGroup>
