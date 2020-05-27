@@ -45,6 +45,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     Boolean outdoorSelected;
     Boolean hydroSelected;
     Boolean doNotSetWateringEvents;
+    Boolean soilSelected;
 
     // Layout components for time and date picker
     ImageView mDateDialog;
@@ -101,7 +102,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         rgIndicaSativaOptions = findViewById(R.id.rgIndicaSativa);
         rgWateringSchedule = findViewById(R.id.rgWaterOptions);
         rgFertilizerChoice = findViewById(R.id.rgFertilizerOptions);
-        rgGrowMediumChoice = findViewById(R.id.rgGrowMedium);
+        rgGrowMediumChoice = findViewById(R.id.rgGrowMediumChoice);
 
         // OnClick Listener For The Date Picker Dialog
         mDateDialog.setOnClickListener(new View.OnClickListener() {
@@ -557,20 +558,24 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void GrowMedium(View view) {
+    public void GrowMedium(View view) {
         checkedId = rgGrowMediumChoice.getCheckedRadioButtonId();
         switch (checkedId) {
             case R.id.radioSoil:
+                soilSelected = true;
                 outdoorSelected = false;
                 hydroSelected = false;
                 break;
             case R.id.radioOutdoor:
+                soilSelected = false;
                 outdoorSelected = true;
                 hydroSelected = false;
                 break;
             case R.id.radioHydro:
+                soilSelected = false;
                 hydroSelected = true;
                 outdoorSelected = false;
+                break;
         }
     }
 
