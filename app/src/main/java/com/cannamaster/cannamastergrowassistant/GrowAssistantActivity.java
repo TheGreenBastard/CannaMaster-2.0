@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     int mWateringScheduleDays = 0;
     int checkedId;
 
+    RadioButton radioButton, radioButtonWater2Days, radioButtonWater3Days, radioButtonWaterWeekly, radioButtonWaterNoNotify, radioButtonWaterDaily;
+
     // Values for orientation change
     private static final String KEY_TITLE = "title_key";
     private static final String KEY_TIME = "time_key";
@@ -98,6 +101,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         titleText = (EditText) findViewById(R.id.titleText);
         reminderText = (EditText) findViewById(R.id.reminderText);
         runButton = (Button) findViewById(R.id.button_set_notifications);
+
+
 
         rgIndicaSativaOptions = findViewById(R.id.rgIndicaSativa);
         rgWateringSchedule = findViewById(R.id.rgWaterOptions);
@@ -246,7 +251,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     /**  This takes the data from the TextViews and turns it into events to pass to calendar **/
     public void onMakeEvent (View view) throws java.text.ParseException {
         // get the user inputed title from the layout and put it into a string
-        
+
         // This function sets all the events based on the users selctions and input
         // This checks the edit text fields to ensure there is some kind of data entered
         if (titleText.getText().length() < 1) {
@@ -372,8 +377,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 endDate = startDate;
                 titleString = "Feed Your Girls";
                 descString = growTitle + "\n\nNow would be a good time to supplement your girls with some fertilizer.  You can use chemical based fertilizer or organic fertilizer.  There are pros and cons to each choice, the decision is ultimately up to you.\n\nBe careful not to over fertilize.\n\nYou can certainly have too much of a good thing.  Overuse of fertilizers can result in poor plant growth and production.  Be sure to follow all warnings labels and mix your fertilizers consistent with manufactures label and recommendations.";
-            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
-            repeatNumber--;
+                addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+                repeatNumber--;
                 Toast.makeText(GrowAssistantActivity.this, "Feeding date set for " + convertedDate,
                         Toast.LENGTH_SHORT).show();
             }
@@ -396,9 +401,9 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 repeatNumber = (mFloweringDays / mWateringScheduleDays);
                 // This repeats the fertilization event as many times as it is needed
                 while (repeatNumber > 1) {
-                    calWater.add(Calendar.DATE, mWateringScheduleDays);
+                    cal.add(Calendar.DATE, mWateringScheduleDays);
                     dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
-                    convertedDate = dateFormat.format(calWater.getTime());
+                    convertedDate = dateFormat.format(cal.getTime());
                     startDate = convertedDate + " " + startTime;
                     endDate = startDate;
                     titleString = "Water your girls";
