@@ -46,6 +46,7 @@ public abstract class SectionsCardviewFragment extends Fragment {
         return v;
     }
 
+
     private void prepareArticles() {
         articles = getArticles();
     }

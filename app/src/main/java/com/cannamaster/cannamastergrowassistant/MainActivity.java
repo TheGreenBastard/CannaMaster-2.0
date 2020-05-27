@@ -39,6 +39,8 @@ import com.bumptech.glide.Glide;
 
 import com.cannamaster.cannamastergrowassistant.ui.main.SectionsPagerAdapter;
 
+import static androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (InitApplication.getInstance().isNightModeEnabled()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         /** Set up initial Views */
         setContentView(R.layout.activity_main);
         /** Associate The ViewPager with new instance of adapter (ie link the viewpager with the adapter (SectionsPagerAdapter) */
@@ -156,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        switch (AppCompatDelegate.getDefaultNightMode()) {
+        switch (getDefaultNightMode()) {
             case AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY:
                 menu.findItem(R.id.menu_night_mode_auto).setChecked(true);
                 break;
@@ -212,6 +220,21 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
+   /** @Override
+    protected void onSaveInstanceState(Bundle outstate) {
+        super.onSaveInstanceState(outstate);
+        (AppCompatDelegate.setDefaultNightMode();
+        );
+
+
+
+
+
+
+
+
+    }
+**/
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -219,9 +242,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    /**
+    /******************************
      * Icons for Drawer Menu
-     */
+     *****************************/
     private void setupNavigationIcons(NavigationView mNavigationView) {
 
         mNavigationView.getMenu().findItem(R.id.nav_basics).setIcon(R.drawable.ic_launcher);
@@ -229,23 +252,10 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView.getMenu().findItem(R.id.nav_tipsandtricks).setIcon(R.drawable.ic_launcher);
         mNavigationView.getMenu().findItem(R.id.nav_advancedtechniques).setIcon(R.drawable.ic_launcher);
         mNavigationView.getMenu().findItem(R.id.nav_sickplants).setIcon(R.drawable.ic_launcher);
-
         mNavigationView.getMenu().findItem(R.id.nav_favorites).setIcon(R.drawable.ic_star);
         mNavigationView.getMenu().findItem(R.id.nav_settings).setIcon(R.drawable.settings);
         mNavigationView.getMenu().findItem(R.id.nav_help).setIcon(R.drawable.help_circle);
         mNavigationView.getMenu().findItem(R.id.nav_about).setIcon(R.drawable.information);
-    }
-
-
-    /**
-     * Nav Drawer
-     */
-    private void setupDrawerContent(NavigationView mNavigationView) {
-        mNavigationView.setNavigationItemSelectedListener(
-                menuItem -> {
-                    selectDrawerItem(menuItem);
-                    return true;
-                });
     }
 
     public void selectDrawerItem(MenuItem menuItem) {

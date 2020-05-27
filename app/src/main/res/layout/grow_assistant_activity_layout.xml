@@ -8,15 +8,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/green_A700"
         android:titleTextColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"        />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -67,15 +66,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
-                    <!-- Set Date Layout -->
-
                 </LinearLayout>
-
-
-
-
-
 
                 <!-- Select Your Grow Details -->
                 <TextView
@@ -193,7 +184,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:paddingStart="65dp"
-                    android:paddingBottom="10dp">
+                    android:paddingBottom="10dp"
+                    >
                     <!-- Every Day -->
                     <RadioButton
                         android:id="@+id/radioButtonWaterDaily"
@@ -209,9 +201,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
-                        android:onClick="WaterScheduleRatio"
                         android:checked="false"
-                        android:text="@string/every_other_day" />
+                        android:onClick="WaterScheduleRatio"
+                        android:text="Every Two Days" />
+
+
                     <!-- Every 3 Days -->
                     <RadioButton
                         android:id="@+id/radioButtonWater3Days"
@@ -484,7 +478,6 @@
                         android:text="60"
                         android:inputType="number" />
 
-
                     <TextView
                         android:id="@+id/recurrenceDateInfo"
                         android:layout_width="170dp"
@@ -525,7 +518,6 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

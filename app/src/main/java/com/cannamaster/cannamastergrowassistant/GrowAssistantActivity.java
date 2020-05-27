@@ -60,7 +60,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     // Flowering Days Variable
     int mFloweringDays = 70;
     // Watering Notification Variable
-    int mWateringScheduleDays;
+    int mWateringScheduleDays = 0;
     int checkedId;
 
     // Values for orientation change
@@ -246,7 +246,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     /**  This takes the data from the TextViews and turns it into events to pass to calendar **/
     public void onMakeEvent (View view) throws java.text.ParseException {
         // get the user inputed title from the layout and put it into a string
-        mTitle = titleText.getText().toString();
+        
         // This function sets all the events based on the users selctions and input
         // This checks the edit text fields to ensure there is some kind of data entered
         if (titleText.getText().length() < 1) {
@@ -308,8 +308,10 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
      * It is quite long because if I were to call the other methods it would end up double setting events
      * ***************************************************************************************************/
     private void SetOutdoorReminders() throws java.text.ParseException {
+        //
         // check to make sure outdoor is selected
         if (outdoorSelected = true) {
+            String growTitle = titleText.getText().toString();
             // Turn the first 4 digits of date entry into the year then add a preselected flower date
             dateText = (EditText) findViewById(R.id.date_edit_text);
             CharSequence firstFour = dateText.getText();
@@ -324,17 +326,19 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = mDate + " " + startTime;
             /** clone the start date for some functions coming up **/
-            Calendar calHarvestDate = cal;
-            Calendar calFlushDate = cal;
-            Calendar calWater = cal;
-            Calendar calFertilizer = cal;
+            Calendar calHarvestDate = Calendar.getInstance();
+            calHarvestDate.setTime(dateFormat.parse(mDate));
+            Calendar calFlushDate = Calendar.getInstance();
+            calFlushDate.setTime(dateFormat.parse(mDate));
+            Calendar calWater = Calendar.getInstance();
+            calWater.setTime(dateFormat.parse(mDate));
+            Calendar calFertilizer = Calendar.getInstance();
+            calFertilizer.setTime(dateFormat.parse(mDate));
 
             // sets the end date the same as the start date so the rest of the hard code still works
             String endDate = startDate;
             // this is the event title
             String titleString = "First day of outdoor flowering";
-            // this is the event description
-            String growTitle = titleText.getText().toString();
             String descString = growTitle + "\n\nThis is the first day of the outdoor flowering cycle.\n\nThe days are getting shorter and your girls will start the flowering process any day now.  This is a good date to use as a reference point for your respective timelines.\n\n";
             // this is the time before the event that the reminder will fire
             String reminderString = reminderText.getText().toString();
@@ -347,6 +351,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
             /** This will set the flush notification 2 weeks before harvest **/
             calFlushDate.add(Calendar.DATE, mFloweringDays -14);
+            dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
             String convertedDate = dateFormat.format(calFlushDate.getTime());
             startDate = convertedDate + " " + startTime;
             endDate = startDate;
@@ -358,17 +363,25 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                     Toast.LENGTH_SHORT).show();
 
             /** set the fertilizer notification events **/
-            calFertilizer.add(Calendar.DATE, 14);
-            convertedDate = dateFormat.format(((calFertilizer.getTime())));
-            startDate = convertedDate + " " + startTime;
-            endDate = startDate;
-            titleString = "Feed Your Girls";
-            descString = growTitle + "\n\nNow would be a good time to supliment your girls with some fertilizer.  You can use chemical based fertilizer or organic fertilizer.  There are pros and cons to each choice, the decision is ultimately up to you.\n\nBe careful not to over fertilize.\n\nYou can certainly have too much of a good thing.  Overuse of fertilizers can result in poor plant growth and production.  Be sure to follow all warnings labels and mix your fertilizers consistent with manufactures label and recommendations.";
-
+            int repeatNumber = (mFloweringDays / 14);
+            while (repeatNumber > 2){
+                calFertilizer.add(Calendar.DATE, 14);
+                dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+                convertedDate = dateFormat.format(calFertilizer.getTime());
+                startDate = convertedDate + " " + startTime;
+                endDate = startDate;
+                titleString = "Feed Your Girls";
+                descString = growTitle + "\n\nNow would be a good time to supplement your girls with some fertilizer.  You can use chemical based fertilizer or organic fertilizer.  There are pros and cons to each choice, the decision is ultimately up to you.\n\nBe careful not to over fertilize.\n\nYou can certainly have too much of a good thing.  Overuse of fertilizers can result in poor plant growth and production.  Be sure to follow all warnings labels and mix your fertilizers consistent with manufactures label and recommendations.";
+            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            repeatNumber--;
+                Toast.makeText(GrowAssistantActivity.this, "Feeding date set for " + convertedDate,
+                        Toast.LENGTH_SHORT).show();
+            }
 
             /** set the outdoor harvest date **/
             calHarvestDate.add(Calendar.DATE, mFloweringDays);
-            convertedDate = dateFormat.format((calHarvestDate.getTime()));
+            dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+            convertedDate = dateFormat.format(calHarvestDate.getTime());
             startDate = convertedDate + " " + startTime;
             endDate = startDate;
             titleString = "Harvest Day Is Here!";
@@ -380,10 +393,11 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
             /** Outdoor Watering Notifications **/
             if (doNotSetWateringEvents = false) {
-                int repeatNumber = (mFloweringDays / mWateringScheduleDays);
+                repeatNumber = (mFloweringDays / mWateringScheduleDays);
                 // This repeats the fertilization event as many times as it is needed
                 while (repeatNumber > 1) {
                     calWater.add(Calendar.DATE, mWateringScheduleDays);
+                    dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
                     convertedDate = dateFormat.format(calWater.getTime());
                     startDate = convertedDate + " " + startTime;
                     endDate = startDate;
@@ -417,6 +431,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         while (repeatNumber > 2) {
             // while statement to set fertilizer notifications based on user input
             cal.add(Calendar.DATE, 14);
+            dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
             String convertedDate = dateFormat.format(cal.getTime());
             String startTime = timeText.getText().toString();
             // takes the 2 EditText fields and combines them to set the date and time of notification
@@ -536,7 +551,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd" );
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateFormat.parse(mDate));
-        cal.add( Calendar.DATE, mFloweringDays);
+        cal.add(Calendar.DATE, mFloweringDays);
         String convertedDate = dateFormat.format(cal.getTime());
 
         String startTime = timeText.getText().toString();
@@ -643,27 +658,27 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             case R.id.radioButtonWaterDaily:
                 // Every Day
                 mWateringScheduleDays = 1;
-                doNotSetWateringEvents = true;
+                doNotSetWateringEvents = false;
                 break;
             case R.id.radioButtonWater2Days:
                 // Every 2 Days
                 mWateringScheduleDays = 2;
-                doNotSetWateringEvents = true;
+                doNotSetWateringEvents = false;
                 break;
             case R.id.radioButtonWater3Days:
                 // Every 3 Days
                 mWateringScheduleDays = 3;
-                doNotSetWateringEvents = true;
+                doNotSetWateringEvents = false;
                 break;
             case R.id.radioButtonWaterWeekly:
                 // Once A week
                 mWateringScheduleDays = 7;
-                doNotSetWateringEvents = true;
+                doNotSetWateringEvents = false;
                 break;
             case R.id.radioButtonWaterNoNotify:
                 // do not set notification
                 mWateringScheduleDays = 0;
-                doNotSetWateringEvents = false;
+                doNotSetWateringEvents = true;
                 break;
         }
     }
