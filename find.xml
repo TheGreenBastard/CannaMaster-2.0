@@ -1,8 +1,8 @@
 <application>
   <component name="FindSettings">
-    <option name="customScope" value="Project 'MeetingCalendar1'" />
-    <option name="defaultScopeName" value="Project 'MeetingCalendar1'" />
-    <option name="SEARCH_SCOPE" value="Project 'MeetingCalendar1'" />
+    <option name="customScope" value="Project 'app'" />
+    <option name="defaultScopeName" value="Project 'app'" />
+    <option name="SEARCH_SCOPE" value="Project 'app'" />
     <mask>*.css</mask>
     <mask>*.html</mask>
     <mask>*.jsp</mask>
