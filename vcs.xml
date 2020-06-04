@@ -64,6 +64,6 @@
         </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="C:\CannaMaster" />
+    <option name="cloneParentDir" value="C:\Program Files\Android\Android Studio\jre\jre\bin" />
   </component>
 </application>
