@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant;
+package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+
+import com.cannamaster.cannamastergrowassistant.R;
 
 
 /*********************

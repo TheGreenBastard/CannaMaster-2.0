@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant;
+package com.cannamaster.cannamastergrowassistant.ui.main;
 
 
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.cannamaster.cannamastergrowassistant.R;
 
 import java.util.Objects;
 

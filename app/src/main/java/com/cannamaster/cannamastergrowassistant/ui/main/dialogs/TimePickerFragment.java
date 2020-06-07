@@ -3,14 +3,13 @@ package com.cannamaster.cannamastergrowassistant.ui.main.dialogs;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cannamaster.cannamastergrowassistant.GrowAssistantActivity;
+import com.cannamaster.cannamastergrowassistant.ui.main.GrowAssistantActivity;
 
 import java.util.Calendar;
 

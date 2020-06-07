@@ -1,6 +1,4 @@
-package com.cannamaster.cannamastergrowassistant;
-
-import android.annotation.SuppressLint;
+package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,10 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.cannamaster.cannamastergrowassistant.ui.main.AdvancedTechniquesFragment;
-import com.cannamaster.cannamastergrowassistant.ui.main.BasicsFragment;
-import com.cannamaster.cannamastergrowassistant.ui.main.SickPlantsFragment;
-import com.cannamaster.cannamastergrowassistant.ui.main.TipsAndTricksFragment;
+import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesEndpageActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -36,8 +31,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-
-import com.cannamaster.cannamastergrowassistant.ui.main.SectionsPagerAdapter;
 
 import static androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode;
 

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        fab:context=".MainActivity">
+        fab:context=".ui.main.MainActivity">
 
         <!-- AppBar / Action Bar
                 this sets the height for the entire collapsing header and tabs -->
@@ -62,7 +62,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/sections_and_viewpager_layout"
-            tools:context=".MainActivity">
+            tools:context=".ui.main.MainActivity">
 
             <!-- This LinearLayout represents the contents of the screen
               below the collapsing toolbar -->

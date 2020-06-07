@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant;
+package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import com.cannamaster.cannamastergrowassistant.R;
 
 /**
  * This is the Grow Assistant Fragment visible in the View Pager Tabs

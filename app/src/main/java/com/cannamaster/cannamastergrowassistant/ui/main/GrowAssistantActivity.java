@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant;
+package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
@@ -31,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
 

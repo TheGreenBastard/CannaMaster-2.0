@@ -1,4 +1,6 @@
-package com.cannamaster.cannamastergrowassistant;
+package com.cannamaster.cannamastergrowassistant.ui.main;
+
+import com.cannamaster.cannamastergrowassistant.R;
 
 import java.util.Random;
 

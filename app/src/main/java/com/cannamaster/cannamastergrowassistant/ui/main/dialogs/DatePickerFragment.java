@@ -3,7 +3,6 @@ package com.cannamaster.cannamastergrowassistant.ui.main.dialogs;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -11,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cannamaster.cannamastergrowassistant.GrowAssistantActivity;
-import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.GrowAssistantActivity;
 
 import java.util.Calendar;
 
