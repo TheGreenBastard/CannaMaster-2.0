@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,13 +10,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cannamaster.cannamastergrowassistant.R;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by paulq on 14/10/2019.
+ *
  */
 
 public class EventAdapter extends ArrayAdapter<Event> {

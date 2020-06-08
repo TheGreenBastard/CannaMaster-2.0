@@ -714,5 +714,6 @@
     <string name="set_your_notifications">Set Your Notifications</string>
     <string name="click_here_to_set_your_notifications">Click Here To Set Your Notifications</string>
     <string name="local_calendar_manager_string">local calendar manager</string>
+    <string name="calendar_account_title">Account Title</string>
     >
 </resources>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".ui.main.MainActivity">
@@ -12,12 +13,14 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/green_A700"
         android:title="@string/cannamaster_help"
-        android:titleTextColor="@color/black" />
+        android:titleTextColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/toolbar"
         />
 
     <!-- start Help/Contact Page Layout -->

@@ -510,19 +510,6 @@
                         android:text="@string/click_here_to_set_your_notifications"
                         android:textSize="12sp" />
 
-                    <Button
-                        android:id="@+id/button_test"
-                        android:layout_width="225dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@color/green_A700"
-                        android:onClick="TestClass"
-                        android:padding="10dp"
-                        android:paddingBottom="16dp"
-                        android:text="@string/set_your_notifications"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-
                     <TextView
                         android:id="@+id/empty_space"
                         android:layout_width="match_parent"

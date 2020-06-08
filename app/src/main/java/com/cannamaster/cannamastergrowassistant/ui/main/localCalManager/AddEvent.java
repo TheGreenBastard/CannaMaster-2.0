@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -8,12 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
-import android.provider.CalendarContract;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,10 +17,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import com.cannamaster.cannamastergrowassistant.R;
+import com.google.android.material.snackbar.Snackbar;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,90 +70,18 @@ public class AddEvent extends AppCompatActivity {
         startLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("start","start Clicked");
-                SlideDateTimeListener listener = new SlideDateTimeListener() {
 
-                    @Override
-                    public void onDateTimeSet(Date date)
-                    {
-                        // Do something with the date. This Date object contains
-                        // the date and time that the user has selected.
-                        startDate = date;
-                        DateFormat df = new SimpleDateFormat("EE dd MMM  kk:mm", Locale.UK);
-                        tv_start.setText(df.format(startDate));
-                    }
-
-                    @Override
-                    public void onDateTimeCancel()
-                    {
-                        // Overriding onDateTimeCancel() is optional.
-                    }
-                };
-                Date date;
-                if(startDate != null)
-                {
-                    date = startDate;
-                }
-                else
-                {
-                    date = c.getTime();
-                }
-                new SlideDateTimePicker.Builder(getSupportFragmentManager())
-                        .setListener(listener)
-                        .setInitialDate(date)
-                        .setIs24HourTime(true)
-                        .build()
-                        .show();
             }
         });
         //end time onClick
         endLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("end", "end Clicked");
-
-                SlideDateTimeListener listener = new SlideDateTimeListener() {
-
-                    @Override
-                    public void onDateTimeSet(Date date)
-                    {
-                        // Do something with the date. This Date object contains
-                        // the date and time that the user has selected.
-                        endDate = date;
-                        DateFormat df = new SimpleDateFormat("EE dd MMM  kk:mm", Locale.UK);
-                        tv_end.setText(df.format(endDate));
 
                     }
 
-                    @Override
-                    public void onDateTimeCancel()
-                    {
-                        // Overriding onDateTimeCancel() is optional.
-                    }
-                };
-                Date date;
-                if(endDate != null)
-                {
-                    date = endDate;
-                }
-                else if(startDate != null)
-                {
-                    c.setTime(startDate);
-                    c.set(Calendar.HOUR,c.get(Calendar.HOUR)+1);
-                    date = c.getTime();
-                }
-                else
-                {
-                    date = c.getTime();
-                }
 
-                new SlideDateTimePicker.Builder(getSupportFragmentManager())
-                        .setListener(listener)
-                        .setInitialDate(date)
-                        .setIs24HourTime(true)
-                        .build()
-                        .show();
-            }
+
         });
 
         cancel_btn.setOnClickListener(new View.OnClickListener() {

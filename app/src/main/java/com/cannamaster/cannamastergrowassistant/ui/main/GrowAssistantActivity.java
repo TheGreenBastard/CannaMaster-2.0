@@ -48,13 +48,15 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     EditText reminderText;
     Button runButton;
 
+    GregorianCalendar calDate = new GregorianCalendar();
+
     String calID;
 
     String mTitle;
-    Boolean outdoorSelected;
-    Boolean hydroSelected;
+    Boolean outdoorSelected = false;
+    Boolean hydroSelected = false;
     Boolean doNotSetWateringEvents;
-    Boolean soilSelected;
+    Boolean soilSelected = true;
 
     // Layout components for time and date picker
     ImageView mDateDialog;
@@ -74,22 +76,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
     RadioButton radioButton, radioButtonWater2Days, radioButtonWater3Days, radioButtonWaterWeekly, radioButtonWaterNoNotify, radioButtonWaterDaily;
 
-    // Values for orientation change
-    private static final String KEY_TITLE = "title_key";
-    private static final String KEY_TIME = "time_key";
-    private static final String KEY_DATE = "date_key";
-    private static final String KEY_REPEAT = "repeat_key";
-    private static final String KEY_REPEAT_NO = "repeat_no_key";
-    private static final String KEY_REPEAT_TYPE = "repeat_type_key";
-    private static final String KEY_ACTIVE = "active_key";
-
-    // Constant values in milliseconds
-    private static final long milMinute = 60000L;
-    private static final long milHour = 3600000L;
-    private static final long milDay = 86400000L;
-    private static final long milWeek = 604800000L;
-    private static final long milMonth = 2592000000L;
-    private static final long mil2weeks = 1209600000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,17 +177,17 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
     private void CreateNewCalendar() {
         ContentValues values = new ContentValues();
-        values.put(CalendarContract.Calendars.ACCOUNT_NAME, titleText.toString());
+        values.put(CalendarContract.Calendars.ACCOUNT_NAME, "CannaMaster Grow Assistant");
         values.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
-        values.put(CalendarContract.Calendars.NAME, "Cannamaster Grow Assistant");
+        values.put(CalendarContract.Calendars.NAME, "Grow Assistant");
         values.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "Grow Assistant");
         values.put( CalendarContract.Calendars.CALENDAR_COLOR, 0xffff0000);
-        values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,CalendarContract.Calendars.CAL_ACCESS_OWNER);
-        values.put(CalendarContract.Calendars.OWNER_ACCOUNT,"owner");
+        values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_OWNER);
+        values.put(CalendarContract.Calendars.OWNER_ACCOUNT, "owner");
         values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, String.valueOf(TimeZone.UNKNOWN_ZONE_ID));
-        values.put(CalendarContract.Calendars.SYNC_EVENTS,1);
-        Uri.Builder builder =CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "com.cannamaster.cannamastergrowassistant");
+        values.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+        Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
+        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
         builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
         builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
         Uri uri = getContentResolver().insert(builder.build(), values);
@@ -216,9 +202,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         String startDateFormatted = "";
         String endDateFormatted = "";
 
-        // Get a calendar instance
-        GregorianCalendar calDate = new GregorianCalendar();
-
         // Formats used to format the date into the correct format
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm");
@@ -228,26 +211,22 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // Convert date to the first format
             Date date = originalFormat.parse(startDate);
             Date eDate = originalFormat.parse(endDate);
-
             // Convert it into the second format
             startDateFormatted = targetFormat.format(date);
             endDateFormatted = targetFormat.format(eDate);
-
         } catch (ParseException ex) {} catch (java.text.ParseException e) {
             e.printStackTrace();
         }
-
         // Makes an ArrayList of the date split into different sections
         ArrayList<String> startDateList = new ArrayList<String>(Arrays.asList(startDateFormatted.split(",")));
         ArrayList<String> endDateList = new ArrayList<String>(Arrays.asList(endDateFormatted.split(",")));
-
         // Converts the strings of the start and end list into ints
         int startYear = Integer.parseInt(startDateList.get(0));
         int startMonth = Integer.parseInt(startDateList.get(1));
         int startDay = Integer.parseInt(startDateList.get(2));
         int startHour = Integer.parseInt(startDateList.get(3));
         int startMinute = Integer.parseInt(startDateList.get(4));
-
+        // bad way of making ending numbers work
         int endYear = startYear;
         int endMonth = startMonth;
         int endDay = startDay;
@@ -267,14 +246,17 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
 
             // Puts the values into an array for the calendar
             ContentResolver cr = this.getContentResolver();
-            ContentValues valuez = new ContentValues();
-            valuez.put(CalendarContract.Events.DTSTART, startMillis);
-            valuez.put(CalendarContract.Events.DTEND, endMillis);
-            valuez.put(CalendarContract.Events.TITLE, title);
-            valuez.put(CalendarContract.Events.DESCRIPTION, description);
-            valuez.put(CalendarContract.Events.HAS_ALARM, 1);
-            valuez.put(CalendarContract.Events.CALENDAR_ID, calID);
-            valuez.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
+            ContentValues values = new ContentValues();
+            values.put(CalendarContract.Calendars.OWNER_ACCOUNT, "owner");
+            values.put(CalendarContract.Calendars.ACCOUNT_NAME, "CannaMaster");
+            values.put(CalendarContract.Calendars.ACCOUNT_TYPE, "local");
+            values.put(CalendarContract.Events.DTSTART, startMillis);
+            values.put(CalendarContract.Events.DTEND, endMillis);
+            values.put(CalendarContract.Events.TITLE, title);
+            values.put(CalendarContract.Events.DESCRIPTION, description);
+            values.put(CalendarContract.Events.HAS_ALARM, 1);
+            values.put(CalendarContract.Events.CALENDAR_ID, calID);
+            values.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
                     .getTimeZone().getID());
             System.out.println(Calendar.getInstance().getTimeZone().getID());
 
@@ -288,18 +270,18 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 return;
             }
             // Add the event to the calendar
-            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, valuez);
+            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             assert uri != null;
             long eventId = Long.parseLong(Objects.requireNonNull(uri.getLastPathSegment()));
             Log.i("Event_Id", String.valueOf(eventId));
 
             // We add the reminder time to the new event
             try {
-                valuez.clear();
-                valuez.put(CalendarContract.Reminders.EVENT_ID, eventId);
-                valuez.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
-                valuez.put(CalendarContract.Reminders.MINUTES, reminder);
-                getContentResolver().insert(CalendarContract.Reminders.CONTENT_URI, valuez);
+                values.clear();
+                values.put(CalendarContract.Reminders.EVENT_ID, eventId);
+                values.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
+                values.put(CalendarContract.Reminders.MINUTES, reminder);
+                getContentResolver().insert(CalendarContract.Reminders.CONTENT_URI, values);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -313,6 +295,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     /**  This takes the data from the TextViews and turns it into events to pass to calendar **/
     public void onMakeEvent (View view) throws java.text.ParseException {
         // get the user inputed title from the layout and put it into a string
+        CreateNewCalendar();
         getCalendarId();
         // This function sets all the events based on the users selctions and input
         // This checks the edit text fields to ensure there is some kind of data entered
@@ -393,14 +376,10 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = mDate + " " + startTime;
             /** clone the start date for some functions coming up **/
-            Calendar calHarvestDate = Calendar.getInstance();
-            calHarvestDate.setTime(dateFormat.parse(mDate));
-            Calendar calFlushDate = Calendar.getInstance();
-            calFlushDate.setTime(dateFormat.parse(mDate));
-            Calendar calWater = Calendar.getInstance();
-            calWater.setTime(dateFormat.parse(mDate));
-            Calendar calFertilizer = Calendar.getInstance();
-            calFertilizer.setTime(dateFormat.parse(mDate));
+            Calendar calHarvestDate = cal;
+            Calendar calFlushDate = cal;
+            Calendar calWater = cal;
+            Calendar calFertilizer = cal;
 
             // sets the end date the same as the start date so the rest of the hard code still works
             String endDate = startDate;
@@ -488,7 +467,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
                 repeatNumber--;
 
-                Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
+                Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + mDate,
                         Toast.LENGTH_SHORT).show();
 
                 finish();
@@ -529,7 +508,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
             repeatNumber--;
 
-            Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + startDate,
+            Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + mDate,
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -566,7 +545,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
             repeatNumber--;
 
-            Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
+            Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + mDate,
                     Toast.LENGTH_SHORT).show();
         }
     }

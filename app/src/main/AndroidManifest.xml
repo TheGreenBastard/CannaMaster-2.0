@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cannamaster.cannamastergrowassistant">
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
@@ -40,6 +41,12 @@
         <activity android:name=".ui.main.ui.FavoritesListActivity"
             android:layout="@layout/favorites_list_activity"
             android:label="@string/favorites_list_activity" />
+        <activity android:name=".ui.main.localcalmanager.LocalCalendarManagerMainActivity"
+            android:layout="@layout/favorites_list_activity"
+            android:label="@string/favorites_list_activity"
+            tools:ignore="MissingClass" />
+
+
         <activity android:name=".ui.main.GrowAssistantActivity" />
         <activity
             android:name=".ui.main.MainActivity"

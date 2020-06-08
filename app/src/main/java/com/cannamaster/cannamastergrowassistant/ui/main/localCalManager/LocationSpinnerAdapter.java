@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import com.cannamaster.cannamastergrowassistant.R;
 
 import java.util.ArrayList;
 

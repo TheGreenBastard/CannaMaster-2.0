@@ -3,32 +3,26 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_launcher"
         android:title="@string/pref_header_general" />
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$NotificationPreferenceFragment"
         android:icon="@drawable/ic_launcher"
         android:title="@string/pref_header_notifications" />
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_launcher"
         android:title="" />
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$DataSyncPreferenceFragment"
         android:icon="@drawable/star_off_pressed"
         android:title="@string/pref_header_data_sync" />
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$ClearDataPreference"
         android:icon="@drawable/ic_launcher"
         android:title="Clear All User Data" />
 
     <header
-        android:fragment="com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity$ClearDataPreference"
         android:icon="@drawable/ic_launcher"
         android:title="Application Preferences" />
 

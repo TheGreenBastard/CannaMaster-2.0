@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
@@ -28,15 +31,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
-public class MainActivity extends AppActivity{
+public class LocalCalendarManagerMainActivity extends AppCompatActivity{
 
     Context context;
     View parentView;
     //ArrayList<String> calendars;
     ArrayList<Date> dates;
-    ArrayList<Event> events;
-    TreeMap<Date,ArrayList<Event>> dataSet;
-    ExpandableEventAdapter eveAdpt;
+    ArrayList<com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Event> events;
+    TreeMap<Date,ArrayList<com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Event>> dataSet;
+    com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.ExpandableEventAdapter eveAdpt;
     ExpandableListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
     @Override
@@ -44,9 +47,9 @@ public class MainActivity extends AppActivity{
         super.onCreate(savedInstanceState);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
-        getLayoutInflater().inflate(R.layout.content_main, layout);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.content_main);
+        CoordinatorLayout layout = findViewById(R.id.local_cal_coordinator_layout);
+        getLayoutInflater().inflate(R.layout.local_calendar_manager_layout, layout);
+        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
         context = this;
         //calendars = getCalendars();
         getDataFromCalendarTable();
@@ -55,26 +58,26 @@ public class MainActivity extends AppActivity{
         dataSet = new TreeMap<Date,ArrayList<Event>>();
         //events.add(new Event(16,"Work","",1571048836,1571048847));
         dataSet = getDataFromEventTable();
-        eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
-        listView.setAdapter(eveAdpt);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent = new Intent(context,AddEvent.class);
-                startActivityForResult(intent,1);
+        // eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
+        // listView.setAdapter(eveAdpt);
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//                Intent intent = new Intent(context,AddEvent.class);
+//                startActivityForResult(intent,1);
+//
+//            }
+//        });
 
-            }
-        });
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                updateListView();
-                Log.i("refresh", "Layout Refreshed");
-            }
-        });
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                updateListView();
+//                Log.i("refresh", "Layout Refreshed");
+//            }
+//        });
 
     }
 
@@ -203,55 +206,55 @@ public class MainActivity extends AppActivity{
 
         while (cur.moveToNext()) {
             if (Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID))) == 16) {
-            try {
-                int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
-                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
-                long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
-                //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                //String dateString = dateFormat.format(new Date(dtstart));
-                Date testDate = new Date(dtstart);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(testDate);
-                cal.set(Calendar.HOUR_OF_DAY,0);
-                cal.set(Calendar.MINUTE,0);
-                cal.set(Calendar.SECOND,0);
-                Date inputDate = cal.getTime();
-                Event event = new Event(id, title, location, dtstart, dtend);
+                try {
+                    int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
+                    String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                    String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
+                    long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                    long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+                    //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    //String dateString = dateFormat.format(new Date(dtstart));
+                    Date testDate = new Date(dtstart);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(testDate);
+                    cal.set(Calendar.HOUR_OF_DAY,0);
+                    cal.set(Calendar.MINUTE,0);
+                    cal.set(Calendar.SECOND,0);
+                    Date inputDate = cal.getTime();
+                    Event event = new Event(id, title, location, dtstart, dtend);
 
-                //String date = dateFormat.format(event.getStartDate());
-                if(dataSet.get(inputDate)== null)
-                {
-                    ArrayList<Event> events = new ArrayList<>();
-                    events.add(event);
-                    dataSet.put(inputDate,events);
-                    dates.add(inputDate);
-                }
-                else
-                {
-                    ArrayList<Event> events = dataSet.get(inputDate);
-                    boolean unique = true;
-                    for(Event e : events)
+                    //String date = dateFormat.format(event.getStartDate());
+                    if(dataSet.get(inputDate)== null)
                     {
-                        if(e.getUid() == event.getUid())
+                        ArrayList<Event> events = new ArrayList<>();
+                        events.add(event);
+                        dataSet.put(inputDate,events);
+                        dates.add(inputDate);
+                    }
+                    else
+                    {
+                        ArrayList<Event> events = dataSet.get(inputDate);
+                        boolean unique = true;
+                        for(Event e : events)
                         {
-                            unique = false;
+                            if(e.getUid() == event.getUid())
+                            {
+                                unique = false;
+                            }
+                        }
+                        if(unique) {
+                            events.add(event);
+                            dataSet.remove(inputDate);
+                            dataSet.put(inputDate, events);
                         }
                     }
-                    if(unique) {
-                        events.add(event);
-                        dataSet.remove(inputDate);
-                        dataSet.put(inputDate, events);
-                    }
                 }
-            }
-            catch(Exception e)
-            {
-                Log.e("Error", e.getMessage());
-                Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
-            }
+                catch(Exception e)
+                {
+                    Log.e("Error", e.getMessage());
+                    Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                    Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+                }
             }
 
         }
@@ -263,7 +266,7 @@ public class MainActivity extends AppActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_settings:
-                Intent intent = new Intent(context, Settings.class);
+                Intent intent = new Intent(context, SettingsActivity.class);
                 startActivityForResult(intent,0);
                 return true;
             case R.id.menu_refresh:

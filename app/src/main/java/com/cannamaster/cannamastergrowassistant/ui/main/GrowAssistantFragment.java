@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.LocalCalendarManagerMainActivity;
 
 /**
  * This is the Grow Assistant Fragment visible in the View Pager Tabs
@@ -68,12 +69,10 @@ public class GrowAssistantFragment extends Fragment {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toast.makeText(getActivity(), "Edit Data Button Clicked", Toast.LENGTH_LONG)
-                //        .show();
 
-                // this starts the grow assistant
-                // Intent intent = new Intent(thisContext, ReminderNotificationList.class);
-                //  startActivity(intent);
+                // this will open the Local Calendar viewer activity
+                Intent viewCalendars = new Intent(thisContext, LocalCalendarManagerMainActivity.class);
+                startActivity(viewCalendars);
             }
         });
 
@@ -100,7 +99,6 @@ public class GrowAssistantFragment extends Fragment {
 
                             }
                         });
-
                 builder1.setNegativeButton(
                         "Cancel",
                         new DialogInterface.OnClickListener() {
@@ -108,13 +106,9 @@ public class GrowAssistantFragment extends Fragment {
                                 dialog.cancel();
                             }
                         });
-
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
-
             }
-
-
         });
         return view;
     }
