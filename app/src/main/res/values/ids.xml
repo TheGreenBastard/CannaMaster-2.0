@@ -2,4 +2,5 @@
 <resources>
     <item name="menu_refresh" type="id" />
     <item name="settingsList" type="id" />
+    <item name="action_refresh" type="id"/>
 </resources>

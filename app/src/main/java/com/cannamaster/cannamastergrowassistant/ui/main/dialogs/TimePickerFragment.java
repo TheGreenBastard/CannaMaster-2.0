@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.cannamaster.cannamastergrowassistant.ui.main.GrowAssistantActivity;
+import com.cannamaster.cannamastergrowassistant.GrowAssistantActivity;
 
 import java.util.Calendar;
 
