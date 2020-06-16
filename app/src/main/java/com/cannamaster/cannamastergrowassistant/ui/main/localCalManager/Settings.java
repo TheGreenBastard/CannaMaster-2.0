@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -16,11 +14,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.cannamaster.cannamastergrowassistant.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
-/**
- * Created by paulq on 14/10/2019.
- */
+/**********************************************
+ * Settings page relating to Calendar Manager
+ **********************************************/
 
 public class Settings extends CalendarManagerAppActivity {
     static Context context;
@@ -28,7 +32,7 @@ public class Settings extends CalendarManagerAppActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         getLayoutInflater().inflate(R.layout.cal_mgr_content_settings, layout);

@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -9,9 +9,6 @@ import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.provider.CalendarContract;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,8 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
-import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.cannamaster.cannamastergrowassistant.R;
+//import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
+//import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
+//import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -61,7 +63,7 @@ public class CalendarAddEvent extends AppCompatActivity {
         c.set(Calendar.HOUR,hour);
         tv_end.setText(df.format(c.getTime()));
         //start time onClick
-        startLayout.setOnClickListener(new View.OnClickListener() {
+        /*startLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.i("start","start Clicked");
@@ -148,9 +150,9 @@ public class CalendarAddEvent extends AppCompatActivity {
                         .build()
                         .show();
             }
-        });
+        });*/
 
-        cancel_btn.setOnClickListener(new View.OnClickListener() {
+ /*       cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -172,7 +174,7 @@ public class CalendarAddEvent extends AppCompatActivity {
                     Snackbar.make(view,"Unable to add Event",Snackbar.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
             }
 
             public boolean addEvent(){

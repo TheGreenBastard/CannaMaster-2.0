@@ -13,11 +13,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.CalManagerMainActivity;
+import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.MainActivityCalendarManager;
 
-/**
+/*********************************************************************
  * This is the Grow Assistant Fragment visible in the View Pager Tabs
- */
+ *********************************************************************/
 
 public class GrowAssistantFragment extends Fragment {
 
@@ -72,7 +72,7 @@ public class GrowAssistantFragment extends Fragment {
                 //        .show();
 
                 // this starts the grow assistant
-                 Intent intent = new Intent(thisContext, CalManagerMainActivity.class);
+                 Intent intent = new Intent(thisContext, MainActivityCalendarManager.class);
                  startActivity(intent);
             }
         });

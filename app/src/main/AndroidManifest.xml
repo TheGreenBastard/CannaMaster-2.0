@@ -41,12 +41,13 @@
         <activity android:name=".ui.main.ui.FavoritesListActivity"
             android:layout="@layout/favorites_list_activity"
             android:label="@string/favorites_list_activity" />
-        <activity android:name=".ui.main.localcalmanager.CalManagerMainActivity"
-            android:layout="@layout/favorites_list_activity"
-            android:label="@string/favorites_list_activity"
-            tools:ignore="MissingClass" />
+        <activity
+            android:name=".ui.main.localcalmanager.MainActivityCalendarManager"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".ui.main.localcalmanager.AddEvent" />
+        <activity android:name=".ui.main.localcalmanager.CalendarAddEvent" />
         <activity android:name="GrowAssistantActivity" />
         <activity
             android:name=".ui.main.MainActivity"

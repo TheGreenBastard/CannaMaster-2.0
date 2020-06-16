@@ -1,5 +1,6 @@
 package com.cannamaster.cannamastergrowassistant.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,15 +30,15 @@ import java.util.ArrayList;
 public class SettingsActivity<AppActivity> extends AppCompatActivity {
     static Context context;
     FloatingActionButton fab;
-    CoordinatorLayout layout;
+    @SuppressLint("WrongViewCast")
+    CoordinatorLayout layout = findViewById(R.id.settingsList);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        layout = findViewById(R.id.settingsList);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        getLayoutInflater().inflate(R.layout.content_settings, layout);
+        getLayoutInflater().inflate(R.layout.cal_mgr_content_settings, layout);
         context = this;
         fab = (FloatingActionButton) fab.findViewById(R.id.fab);
         layout.removeView(fab);

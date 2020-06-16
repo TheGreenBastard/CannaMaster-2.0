@@ -7,28 +7,52 @@
 
         <EditTextPreference
             android:key="account_name"
-            android:title="account_name"
+            android:title="@string/calendar_account_title"
             android:summary="%s"
             android:dialogTitle="@string/calendar_account_title"
             android:inputType="textNoSuggestions|textUri"/>
         <EditTextPreference
             android:key="account_type"
-            android:title="Account Type"
+            android:title="@string/calendar_account_type"
             android:summary="%s"
-            android:dialogTitle="account_type"
+            android:dialogTitle="@string/calendar_account_type"
             android:inputType="textNoSuggestions|textUri"/>
         <EditTextPreference
             android:key="owner_account"
-            android:title="owner_account"
+            android:title="@string/calendar_owner_account"
             android:summary="%s"
-            android:dialogTitle="owner_account"
+            android:dialogTitle="@string/calendar_owner_account"
             android:inputType="textNoSuggestions|textUri"/>
 
         <CheckBoxPreference
             android:key="haptic_feedback"
-            android:title="haptic_feedback_preference"
-            android:summary="haptic_feedback_preference_summary" />
+            android:title="@string/haptic_feedback_preference_title"
+            android:summary="@string/haptic_feedback_preference_summary" />
 
+        <ListPreference
+            android:dialogTitle="Select first day of week"
+            android:entries="@array/settings_list_preference_titles"
+            android:entryValues="@array/settings_list_preference_values"
+            android:key="list"
+            android:summary="Click to select the first day of the week"
+            android:title="Select first day of week" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
+        android:title="Dropbox Settings">
+        <Preference
+            android:key="dropbox_login"
+            android:title="Login">
+            <intent android:action="com.example.mss.mobilesalessystem.DropboxLogin"/>
+        </Preference>
+        <Preference
+            android:key="dropbox_details"
+            android:selectable="false"
+            android:persistent="false"
+            android:title="Dropbox Details"
+            android:summary="Name: n/a\nEmail: n/a"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -38,13 +62,13 @@
             android:selectable="true"
             android:persistent="false"
             android:title="Application Version"
-            android:summary="2.0.1"/>
+            android:summary="@string/appVersionTitle"/>
         <Preference
             android:key="copyright"
             android:selectable="true"
             android:persistent="false"
-            android:title="Cannamaster Grow Assistant"
-            android:summary="Copyright © 2020"/>
+            android:title="@string/copyright_title"
+            android:summary="@string/copyright_summary"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

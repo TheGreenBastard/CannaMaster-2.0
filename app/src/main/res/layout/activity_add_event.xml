@@ -9,7 +9,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.AddEvent"
+    tools:context="com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.CalendarAddEvent"
     android:orientation="vertical">
 
     <LinearLayout

@@ -1,15 +1,19 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Created by paulq on 15/10/2019.
- */
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.cannamaster.cannamastergrowassistant.R;
+
+/*****************************************************
+ * Extension of Calendar Manager Main Activity
+ *****************************************************/
 
 public class CalendarManagerAppActivity extends AppCompatActivity {
 

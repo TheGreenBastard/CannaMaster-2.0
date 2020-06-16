@@ -715,5 +715,14 @@
     <string name="click_here_to_set_your_notifications">Click Here To Set Your Notifications</string>
     <string name="local_calendar_manager_string">local calendar manager</string>
     <string name="calendar_account_title">Account Title</string>
+    <string name="add">add</string>
+    <string name="eventTitle">Event Title</string>
+    <string name="copyright_title">CannaMaster Grow Assistant</string>
+    <string name="copyright_summary">Copyright 2020 GB Productions</string>
+    <string name="appVersionTitle">Version 2.0.1</string>
+    <string name="calendar_account_type">Calendar Account Type</string>
+    <string name="calendar_owner_account">Calendar Owner Account</string>
+    <string name="haptic_feedback_preference_title">Haptic Feedback Preference</string>
+    <string name="haptic_feedback_preference_summary">Haptic Feedback Summary</string>
     >
 </resources>

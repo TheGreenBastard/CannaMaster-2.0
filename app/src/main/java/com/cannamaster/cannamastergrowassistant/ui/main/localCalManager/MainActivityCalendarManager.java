@@ -1,4 +1,4 @@
-package com.quigglesproductions.paulq.calendartest;
+package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -11,20 +11,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
-
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.cannamaster.cannamastergrowassistant.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
+
+/**********************************************************
+ * Main Activity for Calendar Manager Functions
+ **********************************************************/
 
 public class MainActivityCalendarManager extends CalendarManagerAppActivity {
 
@@ -42,7 +47,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         super.onCreate(savedInstanceState);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         getLayoutInflater().inflate(R.layout.cal_mgr_content_main, layout);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.content_main);
         context = this;
@@ -62,7 +67,6 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Intent intent = new Intent(context, CalendarAddEvent.class);
                 startActivityForResult(intent,1);
-
             }
         });
 
@@ -73,7 +77,6 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 Log.i("refresh", "Layout Refreshed");
             }
         });
-
     }
 
     @Override
@@ -83,14 +86,11 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         // Check that it is the SecondActivity with an OK result
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-
                 // Get String data from Intent
                 String returnString = data.getStringExtra("string");
-
                 // Set text view with string
                 getSnackbar(parentView, returnString);
             }
-
         }
     }
 
@@ -159,7 +159,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
         String[] selectionArgs = new String[]{mSharedPreference.getString("account_name",""), mSharedPreference.getString("account_type",""),
                 mSharedPreference.getString("owner_account","")};
-
+        // ask for permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR},0);
         }
@@ -169,10 +169,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
             String displayName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
             String accountName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME));
             String ID = cur.getString(cur.getColumnIndex(CalendarContract.Calendars._ID));
-
-
         }
-
     }
 
     public TreeMap<Date,ArrayList<CalendarManagerEvent>> getDataFromEventTable() {
@@ -251,7 +248,6 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
             }
             }
-
         }
         return dataSet;
 
