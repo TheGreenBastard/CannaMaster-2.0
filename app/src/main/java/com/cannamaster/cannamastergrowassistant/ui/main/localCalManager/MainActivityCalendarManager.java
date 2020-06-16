@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
+package com.quigglesproductions.paulq.calendartest;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -11,16 +11,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
-import com.cannamaster.cannamastergrowassistant.R;
-import com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.app.ActivityCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.MenuItem;
@@ -31,15 +26,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
-public class LocalCalendarManagerMainActivity extends AppCompatActivity{
+public class MainActivityCalendarManager extends CalendarManagerAppActivity {
 
     Context context;
     View parentView;
     //ArrayList<String> calendars;
     ArrayList<Date> dates;
-    ArrayList<com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Event> events;
-    TreeMap<Date,ArrayList<com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Event>> dataSet;
-    com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.ExpandableEventAdapter eveAdpt;
+    ArrayList<CalendarManagerEvent> calendarManagerEvents;
+    TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
+    ExpandableEventAdapter eveAdpt;
     ExpandableListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
     @Override
@@ -47,37 +42,37 @@ public class LocalCalendarManagerMainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
-        CoordinatorLayout layout = findViewById(R.id.local_cal_coordinator_layout);
-        getLayoutInflater().inflate(R.layout.local_calendar_manager_layout, layout);
-        swipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
+        getLayoutInflater().inflate(R.layout.cal_mgr_content_main, layout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.content_main);
         context = this;
         //calendars = getCalendars();
         getDataFromCalendarTable();
         listView = (ExpandableListView) findViewById(R.id.list);
-        events = new ArrayList<>();
-        dataSet = new TreeMap<Date,ArrayList<Event>>();
+        calendarManagerEvents = new ArrayList<>();
+        dataSet = new TreeMap<Date,ArrayList<CalendarManagerEvent>>();
         //events.add(new Event(16,"Work","",1571048836,1571048847));
         dataSet = getDataFromEventTable();
-        // eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
-        // listView.setAdapter(eveAdpt);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//                Intent intent = new Intent(context,AddEvent.class);
-//                startActivityForResult(intent,1);
-//
-//            }
-//        });
+        eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
+        listView.setAdapter(eveAdpt);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent intent = new Intent(context, CalendarAddEvent.class);
+                startActivityForResult(intent,1);
 
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                updateListView();
-//                Log.i("refresh", "Layout Refreshed");
-//            }
-//        });
+            }
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                updateListView();
+                Log.i("refresh", "Layout Refreshed");
+            }
+        });
 
     }
 
@@ -180,8 +175,8 @@ public class LocalCalendarManagerMainActivity extends AppCompatActivity{
 
     }
 
-    public TreeMap<Date,ArrayList<Event>> getDataFromEventTable() {
-        ArrayList<Event> content = new ArrayList<>();
+    public TreeMap<Date,ArrayList<CalendarManagerEvent>> getDataFromEventTable() {
+        ArrayList<CalendarManagerEvent> content = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR}, 0);
         }
@@ -206,55 +201,55 @@ public class LocalCalendarManagerMainActivity extends AppCompatActivity{
 
         while (cur.moveToNext()) {
             if (Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID))) == 16) {
-                try {
-                    int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
-                    String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                    String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
-                    long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                    long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
-                    //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    //String dateString = dateFormat.format(new Date(dtstart));
-                    Date testDate = new Date(dtstart);
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(testDate);
-                    cal.set(Calendar.HOUR_OF_DAY,0);
-                    cal.set(Calendar.MINUTE,0);
-                    cal.set(Calendar.SECOND,0);
-                    Date inputDate = cal.getTime();
-                    Event event = new Event(id, title, location, dtstart, dtend);
+            try {
+                int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
+                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
+                long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+                //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                //String dateString = dateFormat.format(new Date(dtstart));
+                Date testDate = new Date(dtstart);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(testDate);
+                cal.set(Calendar.HOUR_OF_DAY,0);
+                cal.set(Calendar.MINUTE,0);
+                cal.set(Calendar.SECOND,0);
+                Date inputDate = cal.getTime();
+                CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, dtstart, dtend);
 
-                    //String date = dateFormat.format(event.getStartDate());
-                    if(dataSet.get(inputDate)== null)
-                    {
-                        ArrayList<Event> events = new ArrayList<>();
-                        events.add(event);
-                        dataSet.put(inputDate,events);
-                        dates.add(inputDate);
-                    }
-                    else
-                    {
-                        ArrayList<Event> events = dataSet.get(inputDate);
-                        boolean unique = true;
-                        for(Event e : events)
-                        {
-                            if(e.getUid() == event.getUid())
-                            {
-                                unique = false;
-                            }
-                        }
-                        if(unique) {
-                            events.add(event);
-                            dataSet.remove(inputDate);
-                            dataSet.put(inputDate, events);
-                        }
-                    }
-                }
-                catch(Exception e)
+                //String date = dateFormat.format(event.getStartDate());
+                if(dataSet.get(inputDate)== null)
                 {
-                    Log.e("Error", e.getMessage());
-                    Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                    Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+                    ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
+                    calendarManagerEvents.add(calendarManagerEvent);
+                    dataSet.put(inputDate, calendarManagerEvents);
+                    dates.add(inputDate);
                 }
+                else
+                {
+                    ArrayList<CalendarManagerEvent> calendarManagerEvents = dataSet.get(inputDate);
+                    boolean unique = true;
+                    for(CalendarManagerEvent e : calendarManagerEvents)
+                    {
+                        if(e.getUid() == calendarManagerEvent.getUid())
+                        {
+                            unique = false;
+                        }
+                    }
+                    if(unique) {
+                        calendarManagerEvents.add(calendarManagerEvent);
+                        dataSet.remove(inputDate);
+                        dataSet.put(inputDate, calendarManagerEvents);
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                Log.e("Error", e.getMessage());
+                Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+            }
             }
 
         }
@@ -266,7 +261,7 @@ public class LocalCalendarManagerMainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_settings:
-                Intent intent = new Intent(context, SettingsActivity.class);
+                Intent intent = new Intent(context, Settings.class);
                 startActivityForResult(intent,0);
                 return true;
             case R.id.menu_refresh:

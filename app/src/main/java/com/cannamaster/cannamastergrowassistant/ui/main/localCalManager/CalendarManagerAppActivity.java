@@ -1,22 +1,17 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
+package com.quigglesproductions.paulq.calendartest;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.cannamaster.cannamastergrowassistant.R;
-import com.cannamaster.cannamastergrowassistant.ui.main.SettingsActivity;
+/**
+ * Created by paulq on 15/10/2019.
+ */
 
-/**************************************************************************
- * Sets up basic views and menus while in Local Calendar Manager
- ***********************************************************************/
-
-public class AppActivity extends AppCompatActivity {
+public class CalendarManagerAppActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +32,7 @@ public class AppActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, Settings.class);
                 startActivity(intent);
                 return true;
             case R.id.menu_refresh:

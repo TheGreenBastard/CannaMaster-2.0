@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
+package com.quigglesproductions.paulq.calendartest;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,13 +8,10 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.cannamaster.cannamastergrowassistant.R;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -25,9 +22,9 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<Date> dates;
-    private TreeMap<Date,ArrayList<Event>> dataSet;
+    private TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
 
-    public ExpandableEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<Event>> events)
+    public ExpandableEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events)
     {
         this.context = context;
         this.dates = dates;
@@ -80,7 +77,7 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
         Date date = dates.get(listPosition);
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.groupview_date,null);
+            convertView = layoutInflater.inflate(R.layout.cal_mgr_groupview_date,null);
         }
         TextView dateView = (TextView) convertView.findViewById(R.id.tv_groupView_date);
         TextView shiftNumber = (TextView) convertView.findViewById(R.id.tv_groupView_shift_number);
@@ -97,63 +94,41 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
         TextView title, date, shiftLength, earning;
         //create the list item view
         if(expandedListPosition<getChildrenCount(listPosition)-1) {
-            final Event currentEvent = (Event) getChild(listPosition,expandedListPosition);
+            final CalendarManagerEvent currentCalendarManagerEvent = (CalendarManagerEvent) getChild(listPosition,expandedListPosition);
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.event_listitem, parent, false);
+            convertView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
             //get item at position
             convertView.setLongClickable(true);
             title = (TextView) convertView.findViewById(R.id.tv_groupView_title);
             date = (TextView) convertView.findViewById(R.id.tv_groupView_date);
-            shiftLength = (TextView) convertView.findViewById(R.id.tv_groupView_shiftlength);
-            earning = (TextView) convertView.findViewById(R.id.tv_groupView_earning);
+
+
             // set on layout
-            title.setText(currentEvent.getTitle());
+            title.setText(currentCalendarManagerEvent.getTitle());
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            date.setText(dateFormat.format(currentEvent.getStartDate()) + " " + currentEvent.getStartTime() + " - " + currentEvent.getEndTime());
-            long shLen = currentEvent.getEndDate().getTime() - currentEvent.getStartDate().getTime();
+            date.setText(dateFormat.format(currentCalendarManagerEvent.getStartDate()) + " " + currentCalendarManagerEvent.getStartTime() + " - " + currentCalendarManagerEvent.getEndTime());
+            long shLen = currentCalendarManagerEvent.getEndDate().getTime() - currentCalendarManagerEvent.getStartDate().getTime();
             long seconds = shLen / 1000;
             long minutes = seconds / 60;
             long hours = minutes / 60;
             minutes = minutes - (hours * 60);
             dateFormat = new SimpleDateFormat("hh:mm:ss");
-            shiftLength.setText(hours + " hours " + minutes + " minutes");
-            earning.setText("£" + String.format("%.2f", currentEvent.getEarnings(9.95)));
+
+
         }
         if(expandedListPosition == getChildrenCount(listPosition)-1)
         {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.childview_footer,parent,false);
-            TextView hrsWorked = (TextView) convertView.findViewById(R.id.tv_childViewFooter_hrs);
-            TextView totalEarnings = (TextView) convertView.findViewById(R.id.tv_childViewFooter_total_earnings);
-            hrsWorked.setText(getTotalShiftLength(listPosition)+" hrs Total");
-            totalEarnings.setText("£"+String.format("%.2f",getDayEarnings(listPosition)));
+            convertView = inflater.inflate(R.layout.cal_mgr_childview_footer,parent,false);
+
         }
         return convertView;
     }
 
-    public double getDayEarnings(int listPosition)
-    {
-        double earnings = 0;
-        ArrayList<Event> events = this.dataSet.get(this.dates.get(listPosition));
-        for(Event e : events)
-        {
-            earnings = earnings + e.getEarnings(9.95);
-        }
-        return earnings;
-    }
 
-    public double getTotalShiftLength(int listPosition)
-    {
-        double length = 0;
-        ArrayList<Event> events = this.dataSet.get(this.dates.get(listPosition));
-        for(Event e : events)
-        {
-            length = length + e.getShiftLength();
-        }
-        return length;
-    }
 
-    public void update(ArrayList<Date> dates,TreeMap<Date,ArrayList<Event>> events){
+
+    public void update(ArrayList<Date> dates,TreeMap<Date,ArrayList<CalendarManagerEvent>> events){
         this.dates = dates;
         this.dataSet = events;
         notifyDataSetChanged();
@@ -163,6 +138,6 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return true;
+        return false;
     }
 }

@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
+package com.quigglesproductions.paulq.calendartest;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,31 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.cannamaster.cannamastergrowassistant.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- *
+ * Created by paulq on 14/10/2019.
  */
 
-public class EventAdapter extends ArrayAdapter<Event> {
+public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEvent> {
     private Context context;
     int layoutResourceId;
-    private ArrayList<Event> events;
-    public EventAdapter(Context context, int layoutResourceId, ArrayList<Event> events)
+    private ArrayList<CalendarManagerEvent> calendarManagerEvents;
+    public CalendarManagerEventAdapter(Context context, int layoutResourceId, ArrayList<CalendarManagerEvent> calendarManagerEvents)
     {
-        super(context, layoutResourceId,events);
+        super(context, layoutResourceId, calendarManagerEvents);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
-        this.events = events;
+        this.calendarManagerEvents = calendarManagerEvents;
     }
 
     @Override
@@ -41,14 +36,14 @@ public class EventAdapter extends ArrayAdapter<Event> {
         {
             //create the list item view
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.event_listitem, parent, false);
+            convertView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
             mViewHolder = new MyViewHolder(convertView);
             convertView.setTag(mViewHolder);
         } else {
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
         //get item at position
-        final Event currentEvent = events.get(position);
+        final CalendarManagerEvent currentCalendarManagerEvent = calendarManagerEvents.get(position);
         convertView.setLongClickable(true);
         /*convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,17 +53,16 @@ public class EventAdapter extends ArrayAdapter<Event> {
         });*/
 
         // set on layout
-        mViewHolder.title.setText(currentEvent.getTitle());
+        mViewHolder.title.setText(currentCalendarManagerEvent.getTitle());
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        mViewHolder.date.setText(dateFormat.format(currentEvent.getStartDate())+" "+currentEvent.getStartTime()+" - "+currentEvent.getEndTime());
-        long shLen = currentEvent.getEndDate().getTime() - currentEvent.getStartDate().getTime();
+        mViewHolder.date.setText(dateFormat.format(currentCalendarManagerEvent.getStartDate())+" "+ currentCalendarManagerEvent.getStartTime()+" - "+ currentCalendarManagerEvent.getEndTime());
+        long shLen = currentCalendarManagerEvent.getEndDate().getTime() - currentCalendarManagerEvent.getStartDate().getTime();
         long seconds = shLen/1000;
         long minutes = seconds/60;
         long hours = minutes/60;
         minutes = minutes-(hours*60);
         dateFormat = new SimpleDateFormat("hh:mm:ss");
-        mViewHolder.shiftLength.setText(hours+" hours "+minutes+" minutes");
-        mViewHolder.earning.setText("£"+String.format("%.2f",currentEvent.getEarnings(9.95)));
+
         return convertView;
 
     }

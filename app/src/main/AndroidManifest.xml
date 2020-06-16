@@ -46,7 +46,7 @@
             android:label="@string/favorites_list_activity"
             tools:ignore="MissingClass" />
 
-
+        <activity android:name=".ui.main.localcalmanager.AddEvent" />
         <activity android:name="GrowAssistantActivity" />
         <activity
             android:name=".ui.main.MainActivity"
