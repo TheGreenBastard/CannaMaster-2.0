@@ -22,6 +22,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cannamaster.cannamastergrowassistant.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +70,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                 Intent intent = new Intent(context, CalendarAddEvent.class);
                 startActivityForResult(intent,1);
+
             }
         });
 
@@ -77,6 +81,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 Log.i("refresh", "Layout Refreshed");
             }
         });
+
     }
 
     @Override
@@ -86,11 +91,14 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         // Check that it is the SecondActivity with an OK result
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
+
                 // Get String data from Intent
                 String returnString = data.getStringExtra("string");
+
                 // Set text view with string
                 getSnackbar(parentView, returnString);
             }
+
         }
     }
 
@@ -159,7 +167,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                 + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
         String[] selectionArgs = new String[]{mSharedPreference.getString("account_name",""), mSharedPreference.getString("account_type",""),
                 mSharedPreference.getString("owner_account","")};
-        // ask for permissions
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR},0);
         }
@@ -169,7 +177,10 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
             String displayName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
             String accountName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME));
             String ID = cur.getString(cur.getColumnIndex(CalendarContract.Calendars._ID));
+
+
         }
+
     }
 
     public TreeMap<Date,ArrayList<CalendarManagerEvent>> getDataFromEventTable() {
@@ -188,6 +199,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                         CalendarContract.Events.EVENT_LOCATION,
                         CalendarContract.Events.DTSTART,
                         CalendarContract.Events.DTEND,
+                        CalendarContract.Events.DESCRIPTION
                 };
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
@@ -198,56 +210,58 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
 
         while (cur.moveToNext()) {
             if (Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID))) == 16) {
-            try {
-                int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
-                String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
-                long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
-                //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                //String dateString = dateFormat.format(new Date(dtstart));
-                Date testDate = new Date(dtstart);
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(testDate);
-                cal.set(Calendar.HOUR_OF_DAY,0);
-                cal.set(Calendar.MINUTE,0);
-                cal.set(Calendar.SECOND,0);
-                Date inputDate = cal.getTime();
-                CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, dtstart, dtend);
+                try {
+                    int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
+                    String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
+                    String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
+                    long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                    long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
+                    String desc = cur.getString(cur.getColumnIndex(CalendarContract.Events.DESCRIPTION));
+                    //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    //String dateString = dateFormat.format(new Date(dtstart));
+                    Date testDate = new Date(dtstart);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(testDate);
+                    cal.set(Calendar.HOUR_OF_DAY,0);
+                    cal.set(Calendar.MINUTE,0);
+                    cal.set(Calendar.SECOND,0);
+                    Date inputDate = cal.getTime();
+                    CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend);
 
-                //String date = dateFormat.format(event.getStartDate());
-                if(dataSet.get(inputDate)== null)
-                {
-                    ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
-                    calendarManagerEvents.add(calendarManagerEvent);
-                    dataSet.put(inputDate, calendarManagerEvents);
-                    dates.add(inputDate);
-                }
-                else
-                {
-                    ArrayList<CalendarManagerEvent> calendarManagerEvents = dataSet.get(inputDate);
-                    boolean unique = true;
-                    for(CalendarManagerEvent e : calendarManagerEvents)
+                    //String date = dateFormat.format(event.getStartDate());
+                    if(dataSet.get(inputDate)== null)
                     {
-                        if(e.getUid() == calendarManagerEvent.getUid())
+                        ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
+                        calendarManagerEvents.add(calendarManagerEvent);
+                        dataSet.put(inputDate, calendarManagerEvents);
+                        dates.add(inputDate);
+                    }
+                    else
+                    {
+                        ArrayList<CalendarManagerEvent> calendarManagerEvents = dataSet.get(inputDate);
+                        boolean unique = true;
+                        for(CalendarManagerEvent e : calendarManagerEvents)
                         {
-                            unique = false;
+                            if(e.getUid() == calendarManagerEvent.getUid())
+                            {
+                                unique = false;
+                            }
+                        }
+                        if(unique) {
+                            calendarManagerEvents.add(calendarManagerEvent);
+                            dataSet.remove(inputDate);
+                            dataSet.put(inputDate, calendarManagerEvents);
                         }
                     }
-                    if(unique) {
-                        calendarManagerEvents.add(calendarManagerEvent);
-                        dataSet.remove(inputDate);
-                        dataSet.put(inputDate, calendarManagerEvents);
-                    }
+                }
+                catch(Exception e)
+                {
+                    Log.e("Error", e.getMessage());
+                    Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
+                    Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                 }
             }
-            catch(Exception e)
-            {
-                Log.e("Error", e.getMessage());
-                Log.e("start time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
-                Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
-            }
-            }
+
         }
         return dataSet;
 
