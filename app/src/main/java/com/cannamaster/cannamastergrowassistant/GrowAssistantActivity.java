@@ -47,7 +47,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     EditText reminderText;
     Button runButton;
 
-    String calID;
+    String calID = "16";
 
     String mTitle;
     Boolean outdoorSelected;
@@ -115,12 +115,14 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         rgFertilizerChoice = findViewById(R.id.rgFertilizerOptions);
         rgGrowMediumChoice = findViewById(R.id.rgGrowMediumChoice);
 
+        CreateNewCalendar();
+
         // OnClick Listener For The Date Picker Dialog
         mDateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                DatePickerFragment datePickerFragment = new DatePickerFragment(GrowAssistantActivity.this);
-         //       datePickerFragment.show(getSupportFragmentManager(), "datepicker");
+               DatePickerFragment datePickerFragment = new DatePickerFragment(GrowAssistantActivity.this);
+                datePickerFragment.show(getSupportFragmentManager(), "datepicker");
             }
         });
 
@@ -128,8 +130,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         mTimeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-         //       TimePickerFragment timePickerFragment = new TimePickerFragment(GrowAssistantActivity.this);
-          //      timePickerFragment.show(getSupportFragmentManager(), "timepicker");
+               TimePickerFragment timePickerFragment = new TimePickerFragment(GrowAssistantActivity.this);
+             timePickerFragment.show(getSupportFragmentManager(), "timepicker");
             }
         });
 
@@ -185,22 +187,23 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
                 // ...
             } while (calCursor.moveToNext());
         }
-        Toast.makeText(this, "Calendar ID = 32", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Calendar ID = " + calID, Toast.LENGTH_SHORT).show();
     }
 
     private void CreateNewCalendar() {
         ContentValues values = new ContentValues();
-        values.put(CalendarContract.Calendars.ACCOUNT_NAME, titleText.toString());
+        values.put(CalendarContract.Calendars._ID, 16);
+        values.put(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
         values.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
-        values.put(CalendarContract.Calendars.NAME, "Cannamaster Grow Assistant");
+        values.put(CalendarContract.Calendars.NAME, "Grow Assistant");
         values.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, "Grow Assistant");
         values.put( CalendarContract.Calendars.CALENDAR_COLOR, 0xffff0000);
         values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,CalendarContract.Calendars.CAL_ACCESS_OWNER);
-        values.put(CalendarContract.Calendars.OWNER_ACCOUNT,"owner");
+        values.put(CalendarContract.Calendars.OWNER_ACCOUNT,"ownerAccount");
         values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, String.valueOf(TimeZone.UNKNOWN_ZONE_ID));
         values.put(CalendarContract.Calendars.SYNC_EVENTS,1);
         Uri.Builder builder =CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "com.cannamaster.cannamastergrowassistant");
+        builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
         builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
         builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
         Uri uri = getContentResolver().insert(builder.build(), values);
@@ -262,8 +265,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         long endMillis = calDate.getTimeInMillis();
 
         try {
-
-
             // Puts the values into an array for the calendar
             ContentResolver cr = this.getContentResolver();
             ContentValues valuez = new ContentValues();
@@ -272,7 +273,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             valuez.put(CalendarContract.Events.TITLE, title);
             valuez.put(CalendarContract.Events.DESCRIPTION, description);
             valuez.put(CalendarContract.Events.HAS_ALARM, 1);
-            valuez.put(CalendarContract.Events.CALENDAR_ID, calID);
+            valuez.put(CalendarContract.Events.CALENDAR_ID, 16);
             valuez.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
                     .getTimeZone().getID());
             System.out.println(Calendar.getInstance().getTimeZone().getID());
