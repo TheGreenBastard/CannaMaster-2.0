@@ -67,56 +67,52 @@ public class EndpageActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // this adds the back button arrow to the header
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_left));
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //what to do when clicked
+        toolbar.setNavigationIcon(getDrawable(R.drawable.ic_arrow_left));
+
+        //what to do when clicked
+        // set view contents on Endpage
+        image = findViewById(R.id.endpage_header_image);
+        image.setImageDrawable(getDrawable(getIntent().getIntExtra("image", 0)));
+        // set the article text on Endpage
+        article = findViewById(R.id.tv_endpage_article);
+        article.setText(sArticle);
 
 
-                // set view contents on Endpage
-                image = findViewById(R.id.endpage_header_image);
-                image.setImageDrawable(getDrawable(getIntent().getIntExtra("image", 0)));
-                // set the article text on Endpage
-                article = findViewById(R.id.tv_endpage_article);
-                article.setText(sArticle);
+            /***************************************
+             * FAB Button click to add to favorites
+             **************************************/
+
+            final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    // Insert Record to SQLite Database for Favorites List
+
+                    Intent intent = getIntent();
+
+                    String name = intent.getStringExtra("_id");
+                    String title = intent.getStringExtra("title");
+                    String article = intent.getStringExtra("article");
+                    String description = intent.getStringExtra("description");
+                    String image_id = intent.getStringExtra("image_id");
+                    int image = intent.getIntExtra("image", 0);
+
+                    helper = new DatabaseHelper(EndpageActivity.this);
+                    helper.insertIntoDB(name, title, article, description, image_id, image);
+
+                    Toast.makeText(EndpageActivity.this, "'"
+                                    + sTitle + "' Added To Favorite Articles",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
 
 
-                /***************************************
-                 * FAB Button click to add to favorites
-                 **************************************/
-
-                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // Insert Record to SQLite Database for Favorites List
-
-                        Intent intent = getIntent();
-
-                        String name = intent.getStringExtra("_id");
-                        String title = intent.getStringExtra("title");
-                        String article = intent.getStringExtra("article");
-                        String description = intent.getStringExtra("description");
-                        String image_id = intent.getStringExtra("image_id");
-                        int image = intent.getIntExtra("image", 0);
-
-                        helper = new DatabaseHelper(EndpageActivity.this);
-                        helper.insertIntoDB(name, title, article, description, image_id, image);
-
-                        Toast.makeText(EndpageActivity.this, "'"
-                                        + sTitle + "' Added To Favorite Articles",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
-    }
 
 
     /*************************
@@ -141,7 +137,7 @@ public class EndpageActivity extends AppCompatActivity {
                         .setChecked(true);
                 break;
             case R.id.menu_font_size_large:
-                menu.findItem(R.id.menu_font_size_small)
+                menu.findItem(R.id.menu_font_size_large)
                         .setChecked(true);
                 break;
         }

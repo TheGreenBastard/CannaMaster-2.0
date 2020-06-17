@@ -14,6 +14,7 @@ import com.cannamaster.cannamastergrowassistant.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FavoritesListActivity extends AppCompatActivity {
 
@@ -31,7 +32,7 @@ public class FavoritesListActivity extends AppCompatActivity {
         setContentView(R.layout.favorites_list_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.fav_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         helper = new DatabaseHelper(this);
         dbList = new ArrayList<DatabaseModel>();

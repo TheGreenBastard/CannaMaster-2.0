@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
+        <activity android:name=".ui.main.GrowAssistantActivity" />
         <activity android:name=".ui.main.SettingsActivity"
             android:layout="@layout/settings_activity"
             android:label="@string/settings"/>
@@ -48,7 +49,6 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ui.main.localcalmanager.CalendarAddEvent" />
-        <activity android:name="GrowAssistantActivity" />
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/cannamaster"

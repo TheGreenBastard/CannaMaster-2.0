@@ -1,7 +1,6 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.Manifest;
-import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -16,15 +15,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.cannamaster.cannamastergrowassistant.GrowAssistantActivity;
 import com.cannamaster.cannamastergrowassistant.R;
-import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
 import com.google.android.material.snackbar.Snackbar;
 //import com.github.jjobes.slidedatetimepicker.SlideDateTimeListener;
 //import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;

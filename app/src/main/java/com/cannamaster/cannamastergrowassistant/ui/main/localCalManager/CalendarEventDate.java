@@ -4,9 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by paulq on 15/10/2019.
- */
+/****************************************************************************************
+ * holder for some values relating to CalendarEventDate - not sure this is even needed
+ ****************************************************************************************/
 
 public class CalendarEventDate {
     private Date date;

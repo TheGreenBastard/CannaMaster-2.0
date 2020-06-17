@@ -2,7 +2,6 @@ package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -11,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.cannamaster.cannamastergrowassistant.GrowAssistantFragment;
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesEndpageActivity;
+import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesListActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -271,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_favorites:
-                Intent favoritesIntent = new Intent(this, FavoritesEndpageActivity.class);
+                Intent favoritesIntent = new Intent(this, FavoritesListActivity.class);
                 startActivity(favoritesIntent);
                 break;
             case R.id.nav_settings:
