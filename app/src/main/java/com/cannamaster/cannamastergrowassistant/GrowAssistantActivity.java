@@ -200,7 +200,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         values.put( CalendarContract.Calendars.CALENDAR_COLOR, 0xffff0000);
         values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,CalendarContract.Calendars.CAL_ACCESS_OWNER);
         values.put(CalendarContract.Calendars.OWNER_ACCOUNT,"ownerAccount");
-        values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, String.valueOf(TimeZone.UNKNOWN_ZONE_ID));
+        values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, TimeZone.UNKNOWN_ZONE_ID);
         values.put(CalendarContract.Calendars.SYNC_EVENTS,1);
         Uri.Builder builder =CalendarContract.Calendars.CONTENT_URI.buildUpon();
         builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
@@ -250,18 +250,14 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         int startHour = Integer.parseInt(startDateList.get(3));
         int startMinute = Integer.parseInt(startDateList.get(4));
 
-        int endYear = startYear;
-        int endMonth = startMonth;
-        int endDay = startDay;
         int endHour = startHour + 1;
-        int endMinute = startMinute;
 
         // Sets the date and gets the time in milliseconds
         calDate.set(startYear, startMonth-1, startDay, startHour, startMinute);
         long startMillis = calDate.getTimeInMillis();
 
         // Sets the date and gets the time in milliseconds
-        calDate.set(endYear, endMonth-1, endDay, endHour, endMinute);
+        calDate.set(startYear, startMonth -1, startDay, endHour, startMinute);
         long endMillis = calDate.getTimeInMillis();
 
         try {
@@ -327,7 +323,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             runButton.setError("Error : Check your information above");}
         else if (timeText.getText().length() < 5) {
             timeText.setError("please provide a valid time for events 'hh:mm'");
-            runButton.setError("Error : Check your information above");; }
+            runButton.setError("Error : Check your information above"); }
         else if (timeText.getText().length() > 5) {
             timeText.setError("please provide a valid time for events 'hh:mm'");
             runButton.setError("Error : Check your information above");}
@@ -517,7 +513,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = convertedDate + " " + startTime;
             // sets the end date the same as the start date so the rest of the hard code still works
-            String endDate = startDate;
             // this is the event title
             String titleString = "Have you fed your girls lately?";
             // this is the event description
@@ -526,7 +521,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             String reminderString = reminderText.getText().toString();
             int reminderInt = Integer.parseInt(reminderString);
             // Calls the function to add the event to the calender
-            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            addToDeviceCalendar(startDate, startDate, titleString, descString, reminderInt);
             repeatNumber--;
 
             Toast.makeText(GrowAssistantActivity.this, "Setting Fertilizer notification for " + startDate,
@@ -554,7 +549,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // takes the 2 EditText fields and combines them to set the date and time of notification
             String startDate = convertedDate + " " + startTime;
             // sets the end date the same as the start date so the rest of the hard code still works
-            String endDate = startDate;
             // this is the event title
             String titleString = "Have you watered your girls lately?";
             // this is the event description
@@ -563,7 +557,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             String reminderString = reminderText.getText().toString();
             int reminderInt = Integer.parseInt(reminderString);
             // Calls the function to add the event to the calender
-            addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+            addToDeviceCalendar(startDate, startDate, titleString, descString, reminderInt);
             repeatNumber--;
 
             Toast.makeText(GrowAssistantActivity.this, "Setting Water notification for " + startDate,
@@ -580,7 +574,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         // takes the 2 EditText fields and combines them to set the date and time of notification
         String startDate = mDate + " " + startTime;
         // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
         // this is the event title
         String titleString = "First day of flowering";
         // this is the event description
@@ -589,7 +582,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        addToDeviceCalendar(startDate, startDate, titleString, descString, reminderInt);
         // Notify the user that the first day of flower has been set
         Toast.makeText(GrowAssistantActivity.this, "First day of flowering set to " + mDate,
                 Toast.LENGTH_SHORT).show();
@@ -609,7 +602,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         // takes the 2 EditText fields and combines them to set the date and time of notification
         String startDate = convertedDate + " " + startTime;
         // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
         // this is the event title
         String titleString = "Time To Start Flushing";
         // this is the event description
@@ -618,7 +610,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        addToDeviceCalendar(startDate, startDate, titleString, descString, reminderInt);
         // Inform the user that the flush notification has been set
         Toast.makeText(GrowAssistantActivity.this, "Flush Notificiation Has Been Set",
                 Toast.LENGTH_SHORT).show();
@@ -638,7 +630,6 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         // takes the 2 EditText fields and combines them to set the date and time of notification
         String startDate = convertedDate + " " + startTime;
         // sets the end date the same as the start date so the rest of the hard code still works
-        String endDate = startDate;
         // this is the event title
         String titleString = "Time To Harvest!";
         // this is the event description
@@ -647,7 +638,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         String reminderString = reminderText.getText().toString();
         int reminderInt = Integer.parseInt(reminderString);
         // Calls the function to add the event to the calender
-        addToDeviceCalendar(startDate, endDate, titleString, descString, reminderInt);
+        addToDeviceCalendar(startDate, startDate, titleString, descString, reminderInt);
         // inform the user that the harvest date has been set
         Toast.makeText(GrowAssistantActivity.this, "Harvest date set for " + convertedDate ,
                 Toast.LENGTH_SHORT).show();

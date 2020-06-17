@@ -62,9 +62,9 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
-        public TextView title, description;
-        public ImageView image;
-        public CardView cardview;
+        public final TextView title, description;
+        public final ImageView image;
+        public final CardView cardview;
 
 
         public ViewHolder(View itemLayoutView) {

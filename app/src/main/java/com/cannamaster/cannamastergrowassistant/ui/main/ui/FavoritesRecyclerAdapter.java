@@ -37,11 +37,11 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
     SQLiteDatabase db;
 
     public interface OnItemClickListener {
-        public void onItemClicked(int position);
+        void onItemClicked(int position);
     }
 
     public interface OnItemLongClickListener {
-        public boolean onItemLongClicked(int position);
+        boolean onItemLongClicked(int position);
     }
 
     private FavoritesListActivity mFragment;
@@ -79,9 +79,9 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
 
-        public TextView title, description;
-        public ImageView image;
-        public CardView cardview;
+        public final TextView title, description;
+        public final ImageView image;
+        public final CardView cardview;
 
 
         public ViewHolder(View itemLayoutView) {

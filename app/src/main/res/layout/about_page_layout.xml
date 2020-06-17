@@ -48,7 +48,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CannaMaster v1.0.1"
+                android:text="CannaMaster v2.0.1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
                 android:layout_gravity="center_horizontal"/>
@@ -65,7 +65,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All Rights Reserved"
+                android:text="@string/all_rights_reserved"
                 android:textSize="10sp"
                 android:layout_gravity="center_horizontal"/>
 
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="- What&apos;s New -"
+                android:text="@string/what_apos_s_new"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -85,7 +85,7 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-New Grow Assistant Method"
+                android:text="@string/new_grow_assistant_method"
                 android:layout_gravity="center_horizontal"/>
 
             <TextView
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="- Software Licences -"
+                android:text="@string/software_licences"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/black"
                 android:textStyle="bold"

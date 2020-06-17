@@ -10,10 +10,9 @@ import android.util.Log;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
-/**
- * @author Zeyad Assem
- * Created by Zeyad Assem on 23/03/16.
- */
+/**********************************************************************************************
+ * Permission wrapper method, i can probably get rid of this and just hardcode it into the app
+ ***********************************************************************************************/
 public class CalendarPermissionWrapper {
 
     /**

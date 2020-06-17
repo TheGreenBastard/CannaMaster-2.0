@@ -12,8 +12,7 @@ import java.util.List;
 public class AdvancedTechniquesFragment extends SectionsCardviewFragment {
 
     public static AdvancedTechniquesFragment newInstance() {
-        AdvancedTechniquesFragment fragment = new AdvancedTechniquesFragment();
-        return fragment;
+        return new AdvancedTechniquesFragment();
     }
 
     @Override

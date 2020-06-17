@@ -14,8 +14,7 @@ import java.util.List;
 public class BasicsFragment extends SectionsCardviewFragment {
 
     public static BasicsFragment newInstance() {
-        BasicsFragment fragment = new BasicsFragment();
-        return fragment;
+        return new BasicsFragment();
     }
 
     @Override

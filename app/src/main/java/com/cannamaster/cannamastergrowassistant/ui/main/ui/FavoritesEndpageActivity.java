@@ -62,7 +62,7 @@ public class FavoritesEndpageActivity extends AppCompatActivity {
         int image = dbList.get(position).getImage();
 
         // set the collapsing toolbar image
-        ivImage.setImageDrawable(getResources().getDrawable(image));
+        ivImage.setImageDrawable(getDrawable(image));
         tvTitle.setTitle(title);
         tvarticle.setText(article);
     }

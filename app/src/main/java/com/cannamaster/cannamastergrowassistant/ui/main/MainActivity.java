@@ -195,9 +195,7 @@ public class MainActivity extends AppCompatActivity {
     // Dark Mode Menu
     private void setNightMode(@AppCompatDelegate.NightMode int nightMode) {
         AppCompatDelegate.setDefaultNightMode(nightMode);
-        if (Build.VERSION.SDK_INT >= 21) {
-            recreate();
-        }
+        recreate();
     }
 
     // This loads the main view header image that scrolls into oblivion "backdrop.jpg"
@@ -275,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_favorites:
                 Intent favoritesIntent = new Intent(this, FavoritesEndpageActivity.class);
                 startActivity(favoritesIntent);
-                ;
                 break;
             case R.id.nav_settings:
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);

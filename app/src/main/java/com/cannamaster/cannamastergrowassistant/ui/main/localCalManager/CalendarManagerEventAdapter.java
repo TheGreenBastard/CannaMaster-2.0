@@ -56,6 +56,7 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
         mViewHolder.title.setText(currentCalendarManagerEvent.getTitle());
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         mViewHolder.date.setText(dateFormat.format(currentCalendarManagerEvent.getStartDate())+" "+ currentCalendarManagerEvent.getStartTime()+" - "+ currentCalendarManagerEvent.getEndTime());
+        mViewHolder.desc.setText(currentCalendarManagerEvent.getDesc());
         long shLen = currentCalendarManagerEvent.getEndDate().getTime() - currentCalendarManagerEvent.getStartDate().getTime();
         long seconds = shLen/1000;
         long minutes = seconds/60;
@@ -67,15 +68,15 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
 
     }
     private class MyViewHolder {
-        TextView title, date, shiftLength, earning;
+        TextView title, date, desc, earning;
 
         // refer on layout
         public MyViewHolder(View item) {
             //sets the View Holder Text Views
             title = (TextView) item.findViewById(R.id.tv_groupView_title);
-            date = (TextView) item.findViewById(R.id.tv_groupView_date);
-            shiftLength = (TextView) item.findViewById(R.id.tv_groupView_shiftlength);
-            earning = (TextView) item.findViewById(R.id.tv_groupView_earning);
+            date = (TextView) item.findViewById(R.id.tv_groupView_desc);
+
+
         }
     }
 }

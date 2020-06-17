@@ -12,8 +12,7 @@ import java.util.List;
 public class SickPlantsFragment extends SectionsCardviewFragment {
 
     public static SickPlantsFragment newInstance() {
-        SickPlantsFragment fragment = new SickPlantsFragment();
-        return fragment;
+        return new SickPlantsFragment();
     }
 
     @Override

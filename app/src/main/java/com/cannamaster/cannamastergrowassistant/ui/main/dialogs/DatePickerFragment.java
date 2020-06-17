@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
-    GrowAssistantActivity growAssistantActivity;
+    final GrowAssistantActivity growAssistantActivity;
     EditText dateEditText;
 
     public DatePickerFragment(GrowAssistantActivity growAssistantActivity) {

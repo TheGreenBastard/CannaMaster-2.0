@@ -36,7 +36,7 @@ public class EndpageActivity extends AppCompatActivity {
     int sImage;
 
     //CREATE TABLE
-    String createDB = "CREATE TABLE IF NOT EXISTS TABLE_ARTICLES(_id TEXT PRIMARY KEY, title TEXT, description TEXT, article TEXT, image_id TEXT, image INTEGER)";
+    final String createDB = "CREATE TABLE IF NOT EXISTS TABLE_ARTICLES(_id TEXT PRIMARY KEY, title TEXT, description TEXT, article TEXT, image_id TEXT, image INTEGER)";
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createDB);
@@ -74,50 +74,48 @@ public class EndpageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //what to do when clicked
-                onBackPressed();
+
+
+                // set view contents on Endpage
+                image = findViewById(R.id.endpage_header_image);
+                image.setImageDrawable(getDrawable(getIntent().getIntExtra("image", 0)));
+                // set the article text on Endpage
+                article = findViewById(R.id.tv_endpage_article);
+                article.setText(sArticle);
+
+
+                /***************************************
+                 * FAB Button click to add to favorites
+                 **************************************/
+
+                final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // Insert Record to SQLite Database for Favorites List
+
+                        Intent intent = getIntent();
+
+                        String name = intent.getStringExtra("_id");
+                        String title = intent.getStringExtra("title");
+                        String article = intent.getStringExtra("article");
+                        String description = intent.getStringExtra("description");
+                        String image_id = intent.getStringExtra("image_id");
+                        int image = intent.getIntExtra("image", 0);
+
+                        helper = new DatabaseHelper(EndpageActivity.this);
+                        helper.insertIntoDB(name, title, article, description, image_id, image);
+
+                        Toast.makeText(EndpageActivity.this, "'"
+                                        + sTitle + "' Added To Favorite Articles",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
-
-
-        // set view contents on Endpage
-        image = findViewById(R.id.endpage_header_image);
-        image.setImageDrawable(getResources().getDrawable(getIntent().getIntExtra("image", 0)));
-        // set the article text on Endpage
-        article = findViewById(R.id.tv_endpage_article);
-        article.setText(sArticle);
-
-
-        /***************************************
-         * FAB Button click to add to favorites
-         **************************************/
-
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // Insert Record to SQLite Database for Favorites List
-
-                Intent intent = getIntent();
-
-                String name = intent.getStringExtra("_id");
-                String title = intent.getStringExtra("title");
-                String article = intent.getStringExtra("article");
-                String description = intent.getStringExtra("description");
-                String image_id = intent.getStringExtra("image_id");
-                int image = intent.getIntExtra("image", 0);
-
-                helper = new DatabaseHelper(EndpageActivity.this);
-                helper.insertIntoDB(name, title, article, description, image_id, image);
-
-                Toast.makeText(EndpageActivity.this, "'"
-                                + sTitle + "' Added To Favorite Articles",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
     }
 
 

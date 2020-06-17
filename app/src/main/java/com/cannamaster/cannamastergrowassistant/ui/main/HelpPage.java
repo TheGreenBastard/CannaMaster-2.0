@@ -20,7 +20,7 @@ public class HelpPage extends AppCompatActivity {
 
     String emailTitle;
     String emailBody;
-    String emailRecipient = "prisonerofconsciousness@gmail.com";
+    final String emailRecipient = "prisonerofconsciousness@gmail.com";
     RadioButton rbQuestion;
     RadioButton rbError;
     RadioButton rbSuggestion;

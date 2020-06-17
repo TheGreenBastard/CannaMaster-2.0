@@ -61,12 +61,6 @@
                     android:textSize="12sp" />
 
                 <!-- Date Layout -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                </LinearLayout>
 
                 <!-- Select Your Grow Details -->
                 <TextView

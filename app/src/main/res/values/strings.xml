@@ -724,5 +724,9 @@
     <string name="calendar_owner_account">Calendar Owner Account</string>
     <string name="haptic_feedback_preference_title">Haptic Feedback Preference</string>
     <string name="haptic_feedback_preference_summary">Haptic Feedback Summary</string>
+    <string name="all_rights_reserved">All Rights Reserved</string>
+    <string name="what_apos_s_new">- What\'s New -</string>
+    <string name="new_grow_assistant_method">-New Grow Assistant Method</string>
+    <string name="software_licences">- Software Licences -</string>
     >
 </resources>

@@ -4,15 +4,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by paulq on 13/10/2019.
- */
+/*************************************************
+ * This is the values for Calendar Manager Event
+ *************************************************/
 
 public class CalendarManagerEvent {
     private int id;
     private int uid;
     private String title;
-    private String eventLocation;
+    private String desc;
     private long dtstart;
     private long dtend;
 
@@ -20,20 +20,11 @@ public class CalendarManagerEvent {
     {
 
     }
-    public CalendarManagerEvent(int id, String title, String eventLocation, long dtstart, long dtend)
+    public CalendarManagerEvent(int id, String title, String desc, long dtstart, long dtend)
     {
         this.id = id;
         this.title = title;
-        this.eventLocation = eventLocation;
-        this.dtstart = dtstart;
-        this.dtend = dtend;
-        this.uid = (int) (dtstart+dtend);
-    }
-
-    public CalendarManagerEvent(int id, String title, long dtstart, long dtend)
-    {
-        this.id = id;
-        this.title = title;
+        this.desc = desc;
         this.dtstart = dtstart;
         this.dtend = dtend;
         this.uid = (int) (dtstart+dtend);
@@ -51,16 +42,18 @@ public class CalendarManagerEvent {
         return title;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
     public String getStartTime(){
         DateFormat dateFormat = new SimpleDateFormat("kk:mm");
-        String time = dateFormat.format(new Date(dtstart));
-        return time;
+        return dateFormat.format(new Date(dtstart));
     }
 
     public String getEndTime(){
         DateFormat dateFormat = new SimpleDateFormat("kk:mm");
-        String time = dateFormat.format(new Date(dtend));
-        return time;
+        return dateFormat.format(new Date(dtend));
     }
 
     private double breakLength(int hours)
@@ -90,15 +83,6 @@ public class CalendarManagerEvent {
                 break;
         }
         return breakLn;
-
-    }
-
-    public double getShiftLength(){
-        double shLen = dtend - dtstart;
-        double seconds = shLen/1000;
-        double minutes = seconds/60;
-        double hours = (minutes/60);
-        return hours;
 
     }
 
