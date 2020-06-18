@@ -261,31 +261,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                     Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                 }
             }
-
         }
         return dataSet;
-
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.action_settings:
-                Intent intent = new Intent(context, Settings.class);
-                startActivityForResult(intent,0);
-                return true;
-            case R.id.menu_refresh:
-                updateListView();
-                return true;
-        }
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
-        return super.onOptionsItemSelected(item);
-    }
-
 }

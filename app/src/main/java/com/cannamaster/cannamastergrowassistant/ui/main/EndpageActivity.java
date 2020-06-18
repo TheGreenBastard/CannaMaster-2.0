@@ -65,7 +65,7 @@ public class EndpageActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(sTitle);
         Toolbar toolbar = findViewById(R.id.endpage_toolbar);
         setSupportActionBar(toolbar);
-
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         // this adds the back button arrow to the header
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //

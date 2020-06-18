@@ -4,14 +4,12 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.provider.CalendarContract;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,10 +24,7 @@ import com.google.android.material.snackbar.Snackbar;
 //import com.github.jjobes.slidedatetimepicker.SlideDateTimePicker;
 //import com.google.android.material.snackbar.Snackbar;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class CalendarAddEvent extends AppCompatActivity {
     Context context;

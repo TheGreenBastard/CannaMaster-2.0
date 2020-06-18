@@ -10,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.cannamaster.cannamastergrowassistant.GrowAssistantFragment;
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Settings;
-import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesEndpageActivity;
 import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesListActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -75,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         /** Navigation Drawer */
         // Find our drawer view

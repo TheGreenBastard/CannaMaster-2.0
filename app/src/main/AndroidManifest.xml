@@ -49,6 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ui.main.localcalmanager.CalendarAddEvent" />
+        <activity android:name=".ui.main.GrowAssistantActivity" />
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/cannamaster"
