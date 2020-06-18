@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.cannamaster.cannamastergrowassistant.GrowAssistantFragment;
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Settings;
 import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesEndpageActivity;
 import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesListActivity;
 import com.google.android.material.navigation.NavigationView;
@@ -274,9 +276,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(favoritesIntent);
                 break;
             case R.id.nav_settings:
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                Intent settingsIntent = new Intent(this, Settings.class);
                 startActivity(settingsIntent);
-                new SettingsActivity();
+                new Settings();
                 break;
             case R.id.nav_help:
                 Intent helpIntent = new Intent(this, HelpPage.class);
