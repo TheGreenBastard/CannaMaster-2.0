@@ -34,6 +34,7 @@ import androidx.core.app.ActivityCompat;
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
+import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.CalendarManagerEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +50,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
     Button runButton;
 
     String calID = "16";
+    String uid = "";
 
     String mTitle;
     Boolean outdoorSelected;
@@ -184,15 +186,17 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             do {
                 long id = calCursor.getLong(0);
                 calID = Long.toString(id);
-                String displayName = calCursor.getString(1);
+                uid = calCursor.getString(5);
                 // ...
             } while (calCursor.moveToNext());
         }
-        Toast.makeText(this, "Calendar ID = " + calID, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Calendar ID = " + uid, Toast.LENGTH_SHORT).show();
     }
 
     private void CreateNewCalendar() {
+
         ContentValues values = new ContentValues();
+
         values.put(CalendarContract.Calendars._ID, 16);
         values.put(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
         values.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
@@ -203,6 +207,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         values.put(CalendarContract.Calendars.OWNER_ACCOUNT,"ownerAccount");
         values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, String.valueOf(TimeZone.UNKNOWN_ZONE_ID));
         values.put(CalendarContract.Calendars.SYNC_EVENTS,1);
+
         Uri.Builder builder =CalendarContract.Calendars.CONTENT_URI.buildUpon();
         builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_NAME, "Grow Assistant");
         builder.appendQueryParameter(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);

@@ -56,35 +56,6 @@ public class CalendarManagerEvent {
         return dateFormat.format(new Date(dtend));
     }
 
-    private double breakLength(int hours)
-    {
-        double breakLn;
-        switch(hours){
-            case 5:
-                breakLn = 0.25;
-            break;
-            case 6:
-                breakLn = 0.33333;
-                break;
-            case 7:
-                breakLn = 0.41667;
-                break;
-            case 8:
-                breakLn = 0.5;
-                break;
-            case 9:
-                breakLn = 0.75;
-                break;
-            case 10:
-                breakLn = 1;
-                break;
-            default:
-                breakLn = 0;
-                break;
-        }
-        return breakLn;
-
-    }
 
     public int getUid()
     {

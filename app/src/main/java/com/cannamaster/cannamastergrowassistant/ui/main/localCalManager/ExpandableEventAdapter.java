@@ -1,7 +1,13 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
+import android.icu.util.Calendar;
+import android.net.Uri;
+import android.provider.CalendarContract;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +29,8 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private ArrayList<Date> dates;
     private TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
+    private SparseBooleanArray mSelectedItemsIds;
+    LayoutInflater inflater;
 
     public ExpandableEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events)
     {
@@ -90,22 +98,22 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int listPosition, int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        TextView title, desc;
+        TextView title, desc, uid;
         //create the list item view
         if(expandedListPosition<getChildrenCount(listPosition)-1) {
             final CalendarManagerEvent currentCalendarManagerEvent = (CalendarManagerEvent) getChild(listPosition,expandedListPosition);
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
-            //get item at position
+            //set the item as longClickable
             convertView.setLongClickable(true);
+            // declare the textviews
             title = (TextView) convertView.findViewById(R.id.tv_groupView_title);
             desc = (TextView) convertView.findViewById(R.id.tv_groupView_desc);
-
-
-            // set on layout
+            uid = (TextView) convertView.findViewById(R.id.tv_uid);
+            // set the text in above views
             title.setText(currentCalendarManagerEvent.getTitle());
-
             desc.setText(currentCalendarManagerEvent.getDesc());
+           // uid.setText(currentCalendarManagerEvent.getUid());
 
         }
         if(expandedListPosition == getChildrenCount(listPosition)-1)
@@ -119,6 +127,22 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
 
 
 
+    public void toggleSelection(int position) {
+        selectView(position, !mSelectedItemsIds.get(position));
+}
+
+    public void removeSelection() {
+        mSelectedItemsIds = new SparseBooleanArray();
+        notifyDataSetChanged();
+    }
+
+    public void selectView(int position, boolean value) {
+        if (value)
+            mSelectedItemsIds.put(position, value);
+        else
+            mSelectedItemsIds.delete(position);
+        notifyDataSetChanged();
+    }
 
     public void update(ArrayList<Date> dates,TreeMap<Date,ArrayList<CalendarManagerEvent>> events){
         this.dates = dates;
@@ -126,7 +150,12 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-
+private class ViewHolder {
+        TextView title;
+        TextView date;
+        TextView desc;
+        TextView uid;
+}
 
     @Override
     public boolean isChildSelectable(int i, int i1) {

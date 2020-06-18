@@ -10,17 +10,16 @@ import java.util.Date;
 
 public class CalendarEventDate {
     private Date date;
-    private int shiftNumber;
-    private double totalShiftLength;
-    private double totalEarnings;
+    private String uid;
 
 
-    public CalendarEventDate(Date date, double totalShiftLength, double totalEarnings)
+
+
+    public CalendarEventDate(Date date,String uid)
     {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         this.date = date;
-        this.totalShiftLength = totalShiftLength;
-        this.totalEarnings = totalEarnings;
+        this.uid = uid;
     }
     public CalendarEventDate(Date date)
     {

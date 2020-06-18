@@ -12,9 +12,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-/**
- * Created by paulq on 14/10/2019.
- */
+/******************************************
+ * Adapter for Calendar Manager List View
+ ******************************************/
 
 public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEvent> {
     private Context context;
@@ -45,6 +45,14 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
         //get item at position
         final CalendarManagerEvent currentCalendarManagerEvent = calendarManagerEvents.get(position);
         convertView.setLongClickable(true);
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                return false;
+            }
+        });
+
         /*convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +65,7 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         mViewHolder.date.setText(dateFormat.format(currentCalendarManagerEvent.getStartDate())+" "+ currentCalendarManagerEvent.getStartTime()+" - "+ currentCalendarManagerEvent.getEndTime());
         mViewHolder.desc.setText(currentCalendarManagerEvent.getDesc());
+        mViewHolder.uid.setText(currentCalendarManagerEvent.getUid());
         long shLen = currentCalendarManagerEvent.getEndDate().getTime() - currentCalendarManagerEvent.getStartDate().getTime();
         long seconds = shLen/1000;
         long minutes = seconds/60;
@@ -68,13 +77,15 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
 
     }
     private class MyViewHolder {
-        TextView title, date, desc, earning;
+        TextView title, date, desc, uid;
 
         // refer on layout
         public MyViewHolder(View item) {
             //sets the View Holder Text Views
             title = (TextView) item.findViewById(R.id.tv_groupView_title);
-            date = (TextView) item.findViewById(R.id.tv_groupView_desc);
+            desc = (TextView) item.findViewById(R.id.tv_groupView_desc);
+            date = (TextView) item.findViewById(R.id.tv_groupView_date);
+            uid = (TextView) item.findViewById(R.id.tv_uid);
 
 
         }
