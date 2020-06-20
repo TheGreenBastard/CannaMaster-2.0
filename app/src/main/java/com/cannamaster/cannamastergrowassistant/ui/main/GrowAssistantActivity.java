@@ -124,7 +124,7 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         mDateDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               DatePickerFragment datePickerFragment = new DatePickerFragment(GrowAssistantActivity.this);
+                DatePickerFragment datePickerFragment = new DatePickerFragment(GrowAssistantActivity.this);
                 datePickerFragment.show(getSupportFragmentManager(), "datepicker");
             }
         });
@@ -133,8 +133,8 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
         mTimeDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               TimePickerFragment timePickerFragment = new TimePickerFragment(GrowAssistantActivity.this);
-             timePickerFragment.show(getSupportFragmentManager(), "timepicker");
+                TimePickerFragment timePickerFragment = new TimePickerFragment(GrowAssistantActivity.this);
+                timePickerFragment.show(getSupportFragmentManager(), "timepicker");
             }
         });
 
@@ -279,7 +279,9 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             valuez.put(CalendarContract.Events.TITLE, title);
             valuez.put(CalendarContract.Events.DESCRIPTION, description);
             valuez.put(CalendarContract.Events.HAS_ALARM, 1);
+            valuez.put(CalendarContract.Events.EVENT_COLOR, "#689F38");
             valuez.put(CalendarContract.Events.CALENDAR_ID, 16);
+            // valuez.put(CalendarContract.Events.ORIGINAL_SYNC_ID, 234)
             valuez.put(CalendarContract.Events.EVENT_TIMEZONE, Calendar.getInstance()
                     .getTimeZone().getID());
             System.out.println(Calendar.getInstance().getTimeZone().getID());
@@ -347,32 +349,34 @@ public class GrowAssistantActivity extends AppCompatActivity implements DatePick
             // Tell the user that the information has been set
             Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
         }
-        else if (hydroSelected = true) {
-            // runs if hydro is selected as grow medium of choice
-            SetFloweringStartDate();
-            SetFlushReminder();
-            SetHarvestDateReminder();
+        checkedId = rgGrowMediumChoice.getCheckedRadioButtonId();
+        switch (checkedId) {
+            case R.id.radioSoil:
+                // runs if indoors soil is selected
+                SetFloweringStartDate();
+                SetFlushReminder();
+                SetHarvestDateReminder();
+                SetWateringCalendarDates();
+                SetFertilizerReminders();
+                break;
+            case R.id.radioOutdoor:
+                SetOutdoorReminders();
+                break;
+            case R.id.radioHydro:
+                // runs if hydro is selected as grow medium of choice
+                SetFloweringStartDate();
+                SetFlushReminder();
+                SetHarvestDateReminder();
 
-            // Tell the user that the information has been set
-            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
+                break;
+
+
         }
-        else {
-            // runs if indoor soil is selected as grow medium of choice
+        finish();
+        // Tell the user that the information has been set
+        Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
 
 
-            // as long as the EditTexts are filled out run the following code
-            SetFloweringStartDate();
-            SetFlushReminder();
-            SetHarvestDateReminder();
-            SetWateringCalendarDates();
-            SetFertilizerReminders();
-
-            // Tell the user that the information has been set
-            Toast.makeText(this, "Check Google Calendar for your new events, you may need to refresh it.", Toast.LENGTH_LONG).show();
-
-            // This closes the grow assistant activity
-            finish();
-        }
     }
 
     /** **************************************************************************************************
