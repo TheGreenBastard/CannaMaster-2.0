@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.ui;
+package com.cannamaster.cannamastergrowassistant.ui.main.favorites;
 
 import android.Manifest;
 import android.app.Activity;

@@ -1,5 +1,6 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.favorites;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +13,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.DatabaseHelper;
+import com.cannamaster.cannamastergrowassistant.ui.main.DatabaseModel;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,7 @@ public class FavoritesEndpageActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FavoritesRecyclerAdapter mAdapter;
     TextView tvarticle;
+    CollapsingToolbarLayout tvTitle;
     ImageView ivImage;
 
     @Override
@@ -43,6 +48,7 @@ public class FavoritesEndpageActivity extends AppCompatActivity {
 
         ivImage = (ImageView) findViewById(R.id.fav_endpage_header_image);
         tvarticle = (TextView) findViewById(R.id.fav_endpage_article);
+        tvTitle = (CollapsingToolbarLayout) findViewById(R.id.fav_endpage_header);
 
         helper = new DatabaseHelper(this);
         dbList = new ArrayList<DatabaseModel>();
@@ -57,7 +63,7 @@ public class FavoritesEndpageActivity extends AppCompatActivity {
 
         // set the collapsing toolbar image
         ivImage.setImageDrawable(getDrawable(image));
-
+        tvTitle.setTitle(title);
         tvarticle.setText(article);
     }
 

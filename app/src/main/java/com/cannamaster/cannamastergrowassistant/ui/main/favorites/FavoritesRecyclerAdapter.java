@@ -1,10 +1,12 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.favorites;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.DatabaseHelper;
+import com.cannamaster.cannamastergrowassistant.ui.main.DatabaseModel;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +32,25 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
 
     static List<DatabaseModel> dbList;
     static Context context;
-    public static DatabaseHelper helper;
-    public SQLiteDatabase db;
+    private Activity activity;
+    static DatabaseHelper helper;
+    SQLiteDatabase db;
+
+    public interface OnItemClickListener {
+        void onItemClicked(int position);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClicked(int position);
+    }
+
+    private FavoritesListActivity mFragment;
 
     FavoritesRecyclerAdapter(Context context, List<DatabaseModel> dbList) {
         this.dbList = new ArrayList<DatabaseModel>();
         this.context = context;
         this.dbList = dbList;
+        this.activity = activity;
     }
 
     @Override
@@ -83,6 +100,13 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
             itemLayoutView.setOnLongClickListener(this);
         }
 
+        /* public void updateName() {
+            SQLiteDatabase db = helper.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(DatabaseHelper._id, newName);
+            String[] whereArgs = { oldName};
+            db.update(DatabaseHelper.TABLE_ARTICLES,)
+        } */
 
         // click on cardview to open favorites endpage
         @Override
@@ -111,8 +135,6 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int _id) {
 
-                            deleteRow(getAdapterPosition());
-
                             dbList.remove(getAdapterPosition());
                             notifyItemRemoved(getAdapterPosition());
                         }
@@ -132,11 +154,9 @@ public class FavoritesRecyclerAdapter extends RecyclerView.Adapter<FavoritesRecy
             return true;
         }
 
-
         // delete a row from database
         public void deleteRow(int _id) {
 
-            helper = new DatabaseHelper(itemView.getContext());
             SQLiteDatabase db = helper.getWritableDatabase();
             String id = Integer.toString(_id);
             db.delete("TABLE_ARTICLES", "_id =? ", new String[]{id});

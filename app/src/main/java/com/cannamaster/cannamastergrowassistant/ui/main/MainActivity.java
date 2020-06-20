@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Settings;
-import com.cannamaster.cannamastergrowassistant.ui.main.ui.FavoritesListActivity;
+import com.cannamaster.cannamastergrowassistant.ui.main.favorites.FavoritesListActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
