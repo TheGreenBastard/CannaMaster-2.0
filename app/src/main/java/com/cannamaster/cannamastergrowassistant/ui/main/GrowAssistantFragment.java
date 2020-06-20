@@ -1,8 +1,12 @@
 package com.cannamaster.cannamastergrowassistant.ui.main;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -83,6 +89,25 @@ public class GrowAssistantFragment extends Fragment {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // this is to erase all calendar events at once
+                Uri eventsUri = Uri.parse("content://com.android.calendar/events");
+                ContentResolver cr = new ContentResolver(thisContext) {
+                    @Nullable
+                    @Override
+                    public String[] getStreamTypes(@NonNull Uri url, @NonNull String mimeTypeFilter) {
+                        return super.getStreamTypes(url, mimeTypeFilter);
+                    }
+                };
+                Cursor cursor;
+                cursor = cr.query(eventsUri, new String[]{ "_id" },"calendar_id=" + 1, null, null);
+                while(cursor.moveToNext()) {
+                    long eventId = cursor.getLong(cursor.getColumnIndex("_id"));
+                    cr.delete(ContentUris.withAppendedId(eventsUri, eventId), null, null);
+                }
+                cursor.close();
+                // Show message
+                Toast.makeText(getContext(), "Calendar Cleared!",Toast.LENGTH_LONG).show();
 
 
                 // Alert Dialog to inform the user all info will be erased
