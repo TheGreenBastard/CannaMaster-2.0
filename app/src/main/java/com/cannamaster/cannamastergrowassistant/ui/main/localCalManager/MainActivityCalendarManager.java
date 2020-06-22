@@ -50,7 +50,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
     ArrayList<Date> dates;
     ArrayList<CalendarManagerEvent> calendarManagerEvents;
     TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
-    ExpandableEventAdapter eveAdpt;
+    ExpandableListEventAdapter eveAdpt;
     ExpandableListView listView;
     SwipeRefreshLayout swipeRefreshLayout;
     @Override
@@ -69,7 +69,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         dataSet = new TreeMap<Date,ArrayList<CalendarManagerEvent>>();
         //events.add(new Event(16,"Work","",1571048836,1571048847));
         dataSet = getDataFromEventTable();
-        eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
+        eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -94,28 +94,6 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
             }
         });
 
-
-
-
-        //        listView.setOnItemClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                listView.setLongClickable(true);
-//            }
-//        };
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                // Intent intent = new Intent(context, CalendarAddEvent.class);
-                // startActivityForResult(intent,1);
-                getDataFromEventTable();
-                deleteEvent(getTaskId());
-
-            }
-        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
