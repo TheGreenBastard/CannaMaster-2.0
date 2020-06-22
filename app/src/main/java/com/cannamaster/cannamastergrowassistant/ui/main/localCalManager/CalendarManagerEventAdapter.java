@@ -28,6 +28,8 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
         this.calendarManagerEvents = calendarManagerEvents;
     }
 
+
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder mViewHolder;
@@ -45,11 +47,12 @@ public class CalendarManagerEventAdapter extends ArrayAdapter<CalendarManagerEve
         //get item at position
         final CalendarManagerEvent currentCalendarManagerEvent = calendarManagerEvents.get(position);
         convertView.setLongClickable(true);
+
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                return false;
+                return true;
             }
         });
 

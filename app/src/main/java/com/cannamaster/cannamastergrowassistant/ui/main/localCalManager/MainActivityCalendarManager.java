@@ -13,17 +13,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.GrowAssistantActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,11 +60,11 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         dates = new ArrayList<Date>();
         CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         getLayoutInflater().inflate(R.layout.cal_mgr_content_main, layout);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.content_main);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.cal_mgr_content_main);
         context = this;
         //calendars = getCalendars();
         getDataFromCalendarTable();
-        listView = (ExpandableListView) findViewById(R.id.list);
+        listView = (ExpandableListView) findViewById(R.id.elv_main);
         calendarManagerEvents = new ArrayList<>();
         dataSet = new TreeMap<Date,ArrayList<CalendarManagerEvent>>();
         //events.add(new Event(16,"Work","",1571048836,1571048847));
@@ -69,12 +72,47 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         eveAdpt = new ExpandableEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    final ExpandableListAdapter adapter = ((ExpandableListView) parent).getExpandableListAdapter();
+                    long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
+                    int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+
+                    // You now have everything that you would as if this was an OnChildClickListener()
+                    // Add your logic here.
+                    Toast.makeText(MainActivityCalendarManager.this, "Long click registered",
+                            Toast.LENGTH_SHORT).show();
+                    // Return true as we are handling the event.
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
+        //        listView.setOnItemClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                listView.setLongClickable(true);
+//            }
+//        };
+
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent = new Intent(context, CalendarAddEvent.class);
-                startActivityForResult(intent,1);
+                // Intent intent = new Intent(context, CalendarAddEvent.class);
+                // startActivityForResult(intent,1);
+                getDataFromEventTable();
+                deleteEvent(getTaskId());
 
             }
         });

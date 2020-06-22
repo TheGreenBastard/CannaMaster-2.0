@@ -11,6 +11,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import com.cannamaster.cannamastergrowassistant.R;
@@ -32,12 +33,17 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
     private SparseBooleanArray mSelectedItemsIds;
     LayoutInflater inflater;
 
+
+
     public ExpandableEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events)
     {
         this.context = context;
         this.dates = dates;
         this.dataSet = events;
     }
+
+
+
 
     @Override
     public int getGroupCount() {
@@ -64,9 +70,8 @@ public class ExpandableEventAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public long getGroupId(int listPosition) {
-
-        return listPosition;
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
     }
 
     @Override
@@ -159,6 +164,6 @@ private class ViewHolder {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return false;
+        return true;
     }
 }

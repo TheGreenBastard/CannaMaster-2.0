@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
         <activity android:name=".ui.main.localcalmanager.Settings"
-            android:layout="@layout/cal_mgr_content_settings"
+            android:layout="@layout/settings_page_layout"
             android:label="@string/settings"/>
         <activity android:name=".ui.main.AboutPage"
             android:layout="@layout/about_page_layout"

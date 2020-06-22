@@ -8,7 +8,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,7 +34,7 @@ public class Settings extends CalendarManagerAppActivity {
         CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        getLayoutInflater().inflate(R.layout.cal_mgr_content_settings, layout);
+        getLayoutInflater().inflate(R.layout.settings_page_layout, layout);
         context = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         layout.removeView(fab);

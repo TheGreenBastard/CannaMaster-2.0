@@ -8,5 +8,5 @@
         android:id="@+id/settingsList"
         android:paddingTop="46dp"
         />
-
+<!-- Todo : settings back button and remainder of layout -->
 </LinearLayout>
