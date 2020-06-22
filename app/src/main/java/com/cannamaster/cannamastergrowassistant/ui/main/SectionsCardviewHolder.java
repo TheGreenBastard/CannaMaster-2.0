@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cannamaster.cannamastergrowassistant.R;
 
 
-
 /****************************************
  * Sections Cardview Holder - For Viewpager
  *
  * This holds the views for each individual cardview
  *
  ****************************************/
-public abstract class SectionsCardviewHolder extends RecyclerView.ViewHolder{
+public abstract class SectionsCardviewHolder extends RecyclerView.ViewHolder {
 
     protected final Activity activity;
     protected SectionsCardviewAdapter adapter;
@@ -37,9 +36,9 @@ public abstract class SectionsCardviewHolder extends RecyclerView.ViewHolder{
         this.adapter = adapter;
 
         // declare the views
-        imgImage = (ImageView) v.findViewById(R.id.cardview_image);
-        txtTitle = (TextView) v.findViewById(R.id.cardview_title);
-        txtDescription = (TextView) v.findViewById(R.id.cardview_description);
+        imgImage = v.findViewById(R.id.cardview_image);
+        txtTitle = v.findViewById(R.id.cardview_title);
+        txtDescription = v.findViewById(R.id.cardview_description);
         view = v.findViewById(R.id.sections_card_view);
     }
 
@@ -48,7 +47,8 @@ public abstract class SectionsCardviewHolder extends RecyclerView.ViewHolder{
         final SectionsCardviewItems sectionsCardviewItems = dataModel;
 
         view.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v){
+            @Override
+            public void onClick(View v) {
 
                 // once clicked pass the stored cardview data to the endpage for final display
 

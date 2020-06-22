@@ -1,8 +1,6 @@
 package com.cannamaster.cannamastergrowassistant.ui.main;
 
 
-
-
 import com.cannamaster.cannamastergrowassistant.R;
 
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public class TipsAndTricksFragment extends SectionsCardviewFragment {
 
-    public static TipsAndTricksFragment newInstance(){
+    public static TipsAndTricksFragment newInstance() {
         TipsAndTricksFragment fragment = new TipsAndTricksFragment();
         return fragment;
     }
@@ -26,16 +24,16 @@ public class TipsAndTricksFragment extends SectionsCardviewFragment {
         // Plan For Loss
         sectionsCardviewItems.add(new SectionsCardviewItems("17", "Plan For Loss", "Unless you are growing the maximum amount of plants by law you should always plan for a loss.  Not every plant makes it all the way to harvest, especially outdoors.",
                 "Even with your best efforts, there is no way to save every plant your attempt to cultivate.  Genetics and unknown factors can cause unforeseen losses.  If you have never lost a plant, then you haven’t been growing long enough.\n" +
-                "\n" +
-                "Overcompensating may not be an option if you are growing legally within the constraints of your local laws.  Many municipalities restrict your maximum number of rooted plants.  Consult your local regulations before padding your plant count.\n" +
-                "\n" +
-                "Losses tend to be greater outdoors than indoors due to not being able to babysit outdoor plants 24/7.  Typically if you harvest half of the plants you initially put outdoors you are doing good.  Where this number indoors would be drastically bad.\n" +
-                "\n" +
-                "Some plants will grow out just fine but be considerably slower in vegetative growth or flowering than others.  This is another reason to over compensate your plant numbers.  If you always have a couple plants on the bench, you can mix and match your flowering numbers in the case of a slow developer.\n" +
-                "\n" +
-                "Outdoors it is almost a given that not all your plants will make it all the way to harvest.  Pests, deer, and rippers all have their eyes set on your beautiful girls.  If you over plan for harvest and more plants than you anticipated make it all the way to harvest you will likely be faced with a problem you want to have.\n" +
-                "\n" +
-                "I mean really, when have you ever said, “damn, I just have too damn much marijuana.”?", "17",
+                        "\n" +
+                        "Overcompensating may not be an option if you are growing legally within the constraints of your local laws.  Many municipalities restrict your maximum number of rooted plants.  Consult your local regulations before padding your plant count.\n" +
+                        "\n" +
+                        "Losses tend to be greater outdoors than indoors due to not being able to babysit outdoor plants 24/7.  Typically if you harvest half of the plants you initially put outdoors you are doing good.  Where this number indoors would be drastically bad.\n" +
+                        "\n" +
+                        "Some plants will grow out just fine but be considerably slower in vegetative growth or flowering than others.  This is another reason to over compensate your plant numbers.  If you always have a couple plants on the bench, you can mix and match your flowering numbers in the case of a slow developer.\n" +
+                        "\n" +
+                        "Outdoors it is almost a given that not all your plants will make it all the way to harvest.  Pests, deer, and rippers all have their eyes set on your beautiful girls.  If you over plan for harvest and more plants than you anticipated make it all the way to harvest you will likely be faced with a problem you want to have.\n" +
+                        "\n" +
+                        "I mean really, when have you ever said, “damn, I just have too damn much marijuana.”?", "17",
                 R.drawable.plan_for_loss));
 
         // When Should I Water?
@@ -66,18 +64,18 @@ public class TipsAndTricksFragment extends SectionsCardviewFragment {
         // Topping
         sectionsCardviewItems.add(new SectionsCardviewItems("23", "Topping", "Topping is the practice of selectively trimming your seedling to promote growth of two favorties_listview colas as opposed to one favorties_listview cola.  The process is extremely simple. Find out how to grow a second favorties_listview cola and increase your yield.",
                 "Topping is the practice of selectively trimming an adolescent cannabis plant so that instead of forming one favorties_listview cola, you for two favorties_listview cola’s prospectively doubling your end yield.  As well as producing two favorties_listview cola’s topping slows the vertical growth and concentrates more of the growth to the lower imagees which is beneficial during the beginning stages of your plant.\n" +
-                "\n" +
-                "Clones and mature plants are not able to be topped as they are taken from plants that have already started alternating nodes.  While the practice will still promote growth from the lower nodes only one favorties_listview cola will form.\n" +
-                "\n" +
-                "Before attempting to top your plants make sure you have at least 4 sets of nodes below the node you plan on making into 2 colas.  You want to ensure that the plant doesn't just turn into a dual spindle without side imageing.  The more imageing you have the larger your end yield will be.\n" +
-                "\n" +
-                "To actually top the plant you simply cut the stem after the top most node, cutting off the small growth that is sprouting from it. The plant will not suffer at all and you will notice it focusing its energy on different areas while it adjust to the topping.\n" +
-                "\n" +
-                "In about a week you will see 2 favorties_listview colas forming at the top of your plant extending from the node you cut above.\n" +
-                "\n" +
-                "If your plant grows fast enough you can possibly top it twice and create four favorties_listview colas but be aware that as soon as it starts alternating nodes, it is sexually mature and will no longer produce two colas from the topping site.\n" +
-                "\n" +
-                "When applied properly topping increases your end yield substantially.", "23",
+                        "\n" +
+                        "Clones and mature plants are not able to be topped as they are taken from plants that have already started alternating nodes.  While the practice will still promote growth from the lower nodes only one favorties_listview cola will form.\n" +
+                        "\n" +
+                        "Before attempting to top your plants make sure you have at least 4 sets of nodes below the node you plan on making into 2 colas.  You want to ensure that the plant doesn't just turn into a dual spindle without side imageing.  The more imageing you have the larger your end yield will be.\n" +
+                        "\n" +
+                        "To actually top the plant you simply cut the stem after the top most node, cutting off the small growth that is sprouting from it. The plant will not suffer at all and you will notice it focusing its energy on different areas while it adjust to the topping.\n" +
+                        "\n" +
+                        "In about a week you will see 2 favorties_listview colas forming at the top of your plant extending from the node you cut above.\n" +
+                        "\n" +
+                        "If your plant grows fast enough you can possibly top it twice and create four favorties_listview colas but be aware that as soon as it starts alternating nodes, it is sexually mature and will no longer produce two colas from the topping site.\n" +
+                        "\n" +
+                        "When applied properly topping increases your end yield substantially.", "23",
                 R.drawable.topping));
 
         // Easy Single Use Cloner
@@ -96,7 +94,7 @@ public class TipsAndTricksFragment extends SectionsCardviewFragment {
                 R.drawable.bigger_yields));
 
         // Grams Per Watt (GPW)
-        sectionsCardviewItems.add(new SectionsCardviewItems("27", "Grams Per Watt (GPW)", "It can be hard to determine how well you are advancing with the long lul between harvest and if you are running more than a single strain, the numbers can be almost impossible.  That is, unless you know how to calculate 'Grams Per Watt'","something", "27",
+        sectionsCardviewItems.add(new SectionsCardviewItems("27", "Grams Per Watt (GPW)", "It can be hard to determine how well you are advancing with the long lul between harvest and if you are running more than a single strain, the numbers can be almost impossible.  That is, unless you know how to calculate 'Grams Per Watt'", "something", "27",
                 R.drawable.gpw_calculator));
 
         // Sipping Trays
@@ -104,7 +102,7 @@ public class TipsAndTricksFragment extends SectionsCardviewFragment {
                 "The actual article text goes here", "28",
                 R.drawable.sipping_trays));
 
-        
+
         return sectionsCardviewItems;
     }
 

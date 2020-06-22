@@ -23,20 +23,20 @@ public class SectionsCardviewAdapter extends RecyclerView.Adapter<SectionsCardvi
     public List<SectionsCardviewItems> articles;
     private Activity activity;
 
-    public SectionsCardviewAdapter(Activity activity){
+    public SectionsCardviewAdapter(Activity activity) {
         articles = new ArrayList<>();
         this.activity = activity;
     }
 
-    public void add(SectionsCardviewItems dataModel){
+    public void add(SectionsCardviewItems dataModel) {
         articles.add(dataModel);
     }
 
-    public void add(SectionsCardviewItems dataModel, int position){
+    public void add(SectionsCardviewItems dataModel, int position) {
         articles.add(position, dataModel);
     }
 
-    public void addAll(List<SectionsCardviewItems> SectionsCardviewItems){
+    public void addAll(List<SectionsCardviewItems> SectionsCardviewItems) {
         articles.addAll(SectionsCardviewItems);
     }
 
@@ -57,15 +57,15 @@ public class SectionsCardviewAdapter extends RecyclerView.Adapter<SectionsCardvi
     }
 
     @Override
-    public int getItemViewType(int position){
+    public int getItemViewType(int position) {
         return articles.get(position).getViewResId();
     }
 
-    public int searchViewTypePosition(int viewType){
+    public int searchViewTypePosition(int viewType) {
         int i = 0;
         boolean found = false;
-        while(i < articles.size() && !found){
-            if(articles.get(i).getViewResId() == viewType){
+        while (i < articles.size() && !found) {
+            if (articles.get(i).getViewResId() == viewType) {
                 found = true;
                 i--;
             }
@@ -74,7 +74,7 @@ public class SectionsCardviewAdapter extends RecyclerView.Adapter<SectionsCardvi
         return i;
     }
 
-    public SectionsCardviewHolder createViewHolder(View v, int viewType){
+    public SectionsCardviewHolder createViewHolder(View v, int viewType) {
         return articles.get(searchViewTypePosition(viewType)).createViewHolder(v, activity, this);
     }
 }

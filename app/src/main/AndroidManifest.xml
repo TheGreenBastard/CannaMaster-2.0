@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cannamaster.cannamastergrowassistant">
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:icon="@drawable/ic_launcher"
-        android:fullBackupContent="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.cannamaster.cannamastergrowassistant.SplashActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".ui.main.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.cannamaster.cannamastergrowassistant.ui.main.EndpageActivity" />
-
+        <activity android:name=".ui.main.EndpageActivity" />
+        <activity android:name=".ui.main.localcalmanager.Settings"
+            android:layout="@layout/settings_page_layout"
+            android:label="@string/settings"/>
+        <activity android:name=".ui.main.AboutPage"
+            android:layout="@layout/about_page_layout"
+            android:label="@string/title_activity_about_page"/>
+        <activity android:name=".ui.main.HelpPage"
+            android:layout="@layout/help_page_layout"
+            android:label="@string/help_page"/>
+        <activity android:name=".ui.main.favorites.FavoritesListActivity"
+            android:layout="@layout/favorites_list_activity"
+            android:label="@string/favorites_list_activity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.localcalmanager.MainActivityCalendarManager"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".ui.main.localcalmanager.CalendarAddEvent" />
+        <activity android:name=".ui.main.GrowAssistantActivity" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:label="@string/cannamaster"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +56,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

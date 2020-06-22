@@ -46,12 +46,13 @@ public abstract class SectionsCardviewFragment extends Fragment {
         return v;
     }
 
+
     private void prepareArticles() {
         articles = getArticles();
     }
 
     protected void bindViews(View v) {
-        recyclerView = (RecyclerView) v.findViewById(R.id.fragment_container);
+        recyclerView = v.findViewById(R.id.fragment_container);
     }
 
     protected void prepareViews(View v) {
@@ -68,7 +69,7 @@ public abstract class SectionsCardviewFragment extends Fragment {
         }
         recyclerView.setLayoutManager(layoutManager);
     }
-    
+
     private void setupAdapter() {
         adapter = new SectionsCardviewAdapter(activity);
         adapter.addAll(articles);

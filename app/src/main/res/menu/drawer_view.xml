@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_basics"
+            android:title="Basics"
+            android:onClick="selectDrawerItem"/>
+        <item
+            android:id="@+id/nav_growassistant"
+            android:title="Grow Assistant"
+            android:onClick="selectDrawerItem"/>
+        <item
+            android:id="@+id/nav_tipsandtricks"
+            android:title="Tips And Tricks"
+            android:onClick="selectDrawerItem"/>
+        <item
+            android:id="@+id/nav_advancedtechniques"
+            android:title="Advanced Techniques"
+            android:onClick="selectDrawerItem"/>
+        <item
+            android:id="@+id/nav_sickplants"
+            android:title="Sick Plants/Problems"
+            android:onClick="selectDrawerItem"/>
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_favorites"
+            android:title="Favorites"
+            android:onClick="selectDrawerItem"
+            />
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"
+            android:onClick="selectDrawerItem"
+            />
+        <item
+            android:id="@+id/nav_help"
+            android:title="Help And Feedback"
+            android:onClick="selectDrawerItem"
+            />
+        <item
+            android:id="@+id/nav_about"
+            android:title="About"
+            android:onClick="selectDrawerItem" />
+
+    </group>
+
+</menu>

@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 /************************
  * Database Helper Class
  ************************/
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME="favorites.db";
+    private static final String DATABASE_NAME = "favorites.db";
     private static final int DATABASE_VERSION = 1;
     public static final String ARTICLES_TABLE = "TABLE_ARTICLES";
     public static final String _id = "_id";
@@ -51,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Insert into database
-    public void insertIntoDB(String name,String title,String article,String description, String image_id, int image){
+    public void insertIntoDB(String name, String title, String article, String description, String image_id, int image) {
         Log.d("insert", "before insert");
 
         // 1. get reference to writable DB
@@ -74,14 +73,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Retrieve  data from database
-    public List<DatabaseModel> getDataFromDB(){
+    public List<DatabaseModel> getDataFromDB() {
         List<DatabaseModel> modelList = new ArrayList<DatabaseModel>();
         String query = "SELECT * FROM TABLE_ARTICLES";
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query,null);
+        Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 DatabaseModel model = new DatabaseModel();
                 model.set_id(cursor.getString(0));
@@ -92,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 model.setImage(cursor.getInt(5));
 
                 modelList.add(model);
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
         }
 
         Log.d("favorites data", modelList.toString());
@@ -102,12 +101,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /** delete a row from database
-    public void deleteRow(int _id){
+     public void deleteRow(int _id){
 
-        SQLiteDatabase db = helper.getWritableDatabase();
-        String id = Integer.toString(_id);
-        db.delete("TABLE_ARTICLES", "_id =? ",new String[] {id});
-        db.close();
-    }*/
+     SQLiteDatabase db = helper.getWritableDatabase();
+     String id = Integer.toString(_id);
+     db.delete("TABLE_ARTICLES", "_id =? ",new String[] {id});
+     db.close();
+     }*/
 
 }

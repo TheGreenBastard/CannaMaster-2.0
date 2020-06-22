@@ -11,9 +11,8 @@ import java.util.List;
  */
 public class SickPlantsFragment extends SectionsCardviewFragment {
 
-    public static SickPlantsFragment newInstance(){
-        SickPlantsFragment fragment = new SickPlantsFragment();
-        return fragment;
+    public static SickPlantsFragment newInstance() {
+        return new SickPlantsFragment();
     }
 
     @Override
@@ -80,7 +79,7 @@ public class SickPlantsFragment extends SectionsCardviewFragment {
                 R.drawable.budworm));
 
         // Soil Gnats
-        sectionsCardviewItems.add(new SectionsCardviewItems("55", "Soil Gnats", "Soil gnats are more of a nuisance rather than an actual threat to your grow, but in extreme cases they can cause issues with your roots.  There are ways to control soil gnats without affecting your plant in the slightest way.","The Actual article text goes here", "55",
+        sectionsCardviewItems.add(new SectionsCardviewItems("55", "Soil Gnats", "Soil gnats are more of a nuisance rather than an actual threat to your grow, but in extreme cases they can cause issues with your roots.  There are ways to control soil gnats without affecting your plant in the slightest way.", "The Actual article text goes here", "55",
                 R.drawable.soil_gnats));
 
         // Over/Under Watering

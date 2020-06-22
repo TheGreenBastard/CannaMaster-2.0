@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        fab:context=".MainActivity">
+        fab:context=".ui.main.MainActivity">
 
         <!-- AppBar / Action Bar
                 this sets the height for the entire collapsing header and tabs -->
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:fitsSystemWindows="true"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            >
 
             <!-- this is the header that disappears and the text for the paralax title
                - contentScrim is the toolbar color
@@ -27,7 +27,7 @@
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:background="@color/black"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:fitsSystemWindows="true"
@@ -36,14 +36,7 @@
                 app:expandedTitleMarginEnd="5dp"
                 app:contentScrim="@color/green_A700">
 
-                <!-- The actual header image holder -->
-                <ImageView
-                    android:id="@+id/backdrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax" />
+
 
                 <!-- As our statusBar is transparent below and content is moved behind our toolbar has to include the padding on top so we use this area -->
                 <androidx.appcompat.widget.Toolbar
@@ -52,7 +45,14 @@
                     android:layout_height="?attr/actionBarSize"
                     app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:layout_collapseMode="pin" />
-
+                <!-- The actual header image holder -->
+                <!--ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="TODO"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" /-->
                 <!-- This ends the collapsing toolbar and header -->
             </android.support.design.widget.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
@@ -62,7 +62,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:showIn="@layout/sections_and_viewpager_layout"
-            tools:context=".MainActivity">
+            tools:context=".ui.main.MainActivity">
 
             <!-- This LinearLayout represents the contents of the screen
               below the collapsing toolbar -->
@@ -75,7 +75,8 @@
                     android:id="@+id/vpPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    android:theme="@style/Theme.AppCompat.DayNight"/>
 
 
 

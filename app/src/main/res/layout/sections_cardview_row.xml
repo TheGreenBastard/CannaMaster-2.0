@@ -1,11 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-<!-- add background to relative layout to change background recyclerview color -->
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.AppCompat.DayNight">
+    <!-- add background to relative layout to change background recyclerview color -->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/sections_card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_margin="12dp"
         android:layout_height="wrap_content"
@@ -23,37 +24,36 @@
                 android:id="@+id/cardview_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/green_900"
-                android:textStyle="bold"
-                android:gravity="center"
                 android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:paddingTop="1dp"
-                android:paddingBottom="4dp" />
+                android:paddingBottom="4dp"
+                android:textColor="@color/green_900"
+                android:textStyle="bold" />
 
             <!-- the small card image -->
             <ImageView
                 android:id="@+id/cardview_image"
-                android:layout_height="200dp"
                 android:layout_width="wrap_content"
+                android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
+                android:cropToPadding="false"
                 android:paddingTop="25dp"
-                android:paddingBottom="0dp"
-                android:cropToPadding="false">
-            </ImageView>
+                android:paddingBottom="0dp"/>
 
             <!-- the cardview description -->
             <TextView
                 android:id="@+id/cardview_description"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardview_image"
                 android:gravity="left"
-                android:paddingTop="0dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="0dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp"
-                android:textStyle="italic"/>
+                android:textColor="@color/black"
+                android:textStyle="italic" />
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
