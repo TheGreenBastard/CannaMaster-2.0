@@ -75,7 +75,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        readEvents(listView);
+
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -192,15 +192,16 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                         "_id",
                         CalendarContract.Events.CALENDAR_ID,
                         CalendarContract.Events.TITLE,
-                        CalendarContract.Events.EVENT_LOCATION,
                         CalendarContract.Events.DTSTART,
                         CalendarContract.Events.DTEND,
-                        CalendarContract.Events.DESCRIPTION
+                        CalendarContract.Events.DESCRIPTION,
+                        CalendarContract.Events._ID
                 };
 
         Uri uri = CalendarContract.Events.CONTENT_URI;
         String selection = CalendarContract.Events.CALENDAR_ID + " = ? ";
-
+        // this sets every calendar to the same ID so I dont end up with 300
+        // individual calendars (Calendar In Use Is Local#16)
         String[] selectionArgs = new String[]{"16"};
 
         cur = cr.query(uri, mProjection, selection, selectionArgs, null);
@@ -210,11 +211,11 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 try {
                     int id = Integer.parseInt(cur.getString(cur.getColumnIndex(CalendarContract.Events.CALENDAR_ID)));
                     String title = cur.getString(cur.getColumnIndex(CalendarContract.Events.TITLE));
-                    String location = cur.getString(cur.getColumnIndex(CalendarContract.Events.EVENT_LOCATION));
                     long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
                     long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                     String desc = cur.getString(cur.getColumnIndex(CalendarContract.Events.DESCRIPTION));
 
+                    // functions related to getting the date formatted correctly
                     Date testDate = new Date(dtstart);
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(testDate);
@@ -222,8 +223,8 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     cal.set(Calendar.MINUTE,0);
                     cal.set(Calendar.SECOND,0);
                     Date inputDate = cal.getTime();
+                    // end date related code
                     CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend);
-                    //String date = dateFormat.format(event.getStartDate());
                     if(dataSet.get(inputDate)== null)
                     {
                         ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
@@ -249,6 +250,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                         }
                     }
                 }
+                // just error messages
                 catch(Exception e)
                 {
                     Log.e("Error", e.getMessage());
@@ -257,32 +259,35 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 }
             }
         }
+        // bundle everything up into the dataset
         return dataSet;
     }
 
+    // This function removes an event from the calendar and your list of events
     public void removeEvent(View view) {
-        String eventTitle = "Jazzercise";
+        String eventTitle = "CannaMaster Grow Assistant";
 
+        // projection array (this is faster)
         final String[] INSTANCE_PROJECTION = new String[] {
                 CalendarContract.Instances.EVENT_ID,      // 0
                 CalendarContract.Instances.BEGIN,         // 1
-                CalendarContract.Instances.TITLE          // 2
-        };
+                CalendarContract.Instances.TITLE     };   // 2
         // The indices for the projection array above.
         final int PROJECTION_ID_INDEX = 0;
         final int PROJECTION_BEGIN_INDEX = 1;
         final int PROJECTION_TITLE_INDEX = 2;
 
         // Specify the date range you want to search for recurring event instances
+        // default set for 5 years
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2017, 9, 23, 8, 0);
+        beginTime.set(2020, 1, 23, 8, 0);
         long startMillis = beginTime.getTimeInMillis();
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2018, 1, 24, 8, 0);
+        endTime.set(2025, 1, 24, 8, 0);
         long endMillis = endTime.getTimeInMillis();
 
-
-        // The ID of the recurring event whose instances you are searching for in the Instances table
+        // Select the matching Name attribute from the db.
+        // The "Name/Title" of the recurring event whose instances you are searching for in the Instances table
         String selection = CalendarContract.Instances.TITLE + " = ?";
         String[] selectionArgs = new String[] {eventTitle};
 
@@ -294,28 +299,29 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         // Submit the query
         Cursor cur =  getContentResolver().query(builder.build(), INSTANCE_PROJECTION, selection, selectionArgs, null);
 
+        // loop through all the records
         while(cur.moveToNext()) {
-            // Get the field values
+            // Get the field values by cycling through all the records
             long eventID = cur.getLong(PROJECTION_ID_INDEX);
             long beginVal = cur.getLong(PROJECTION_BEGIN_INDEX);
             String title = cur.getString(PROJECTION_TITLE_INDEX);
 
-            Uri deleteUri = null;
-            deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+            // Delete the event as it relates to the unique URI
+            Uri deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
             int rows = getContentResolver().delete(deleteUri, null, null);
             Log.i("Calendar", "Rows deleted: " + rows);
         }
-
         showEvents(eventTitle);
     }
 
     private void showEvents(String eventTitle) {
+        // Projection Array (This is faster)
         final String[] INSTANCE_PROJECTION = new String[] {
                 CalendarContract.Instances.EVENT_ID,       // 0
                 CalendarContract.Instances.BEGIN,         // 1
                 CalendarContract.Instances.TITLE,        // 2
-                CalendarContract.Instances.ORGANIZER    //3
-        };
+                // I think i can get rid of ORGANIZER
+                CalendarContract.Instances.ORGANIZER    }; //3
 
         // The indices for the projection array above.
         final int PROJECTION_ID_INDEX = 0;
@@ -332,7 +338,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         long endMillis = endTime.getTimeInMillis();
 
 
-        // The ID of the recurring event whose instances you are searching for in the Instances table
+        // The Name/Title of the recurring event whose instances you are searching for in the Instances table
         String selection = CalendarContract.Instances.TITLE + " = ?";
         String[] selectionArgs = new String[] {eventTitle};
 
@@ -343,7 +349,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
         // Submit the query
         Cursor cur =  getContentResolver().query(builder.build(), INSTANCE_PROJECTION, selection, selectionArgs, null);
-
 
         ArrayList<String> events = new ArrayList<>();
         while (cur.moveToNext()) {
@@ -363,10 +368,11 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             events.add(String.format("Event ID: %d\nEvent: %s\nOrganizer: %s\nDate: %s", eventID, title, organizer, formatter.format(calendar.getTime())));
         }
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, events);
-        listView.setAdapter(eveAdpt);
+        //ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.cal_mgr_groupview_date, R.id.tv_groupView_date, events);
+        //listView.setAdapter(eveAdpt);
     }
 
+/*
     private boolean isEventAlreadyExist(String eventTitle) {
         final String[] INSTANCE_PROJECTION = new String[] {
                 CalendarContract.Instances.EVENT_ID,      // 0
@@ -398,7 +404,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
         return cur.getCount() > 0;
     }
-
+*/
 
     public void readEvents(View view) {
         final String[] INSTANCE_PROJECTION = new String[] {
@@ -416,16 +422,16 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
         // Specify the date range you want to search for recurring event instances
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2017, 9, 23, 8, 0);
+        beginTime.set(2020, 1, 23, 8, 0);
         long startMillis = beginTime.getTimeInMillis();
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2018, 1, 24, 8, 0);
+        endTime.set(2025, 1, 24, 8, 0);
         long endMillis = endTime.getTimeInMillis();
 
 
         // The ID of the recurring event whose instances you are searching for in the Instances table
         String selection = CalendarContract.Instances.EVENT_ID + " = ?";
-        String[] selectionArgs = new String[] {"207"};
+        String[] selectionArgs = new String[] {"16"};
 
         // Construct the query with the desired date range.
         Uri.Builder builder = CalendarContract.Instances.CONTENT_URI.buildUpon();
@@ -434,7 +440,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
         // Submit the query
         Cursor cur =  getContentResolver().query(builder.build(), INSTANCE_PROJECTION, null, null, null);
-
 
         ArrayList<String> events = new ArrayList<>();
         while (cur.moveToNext()) {
@@ -449,17 +454,22 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             Log.i("Calendar", "Event:  " + title);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(beginVal);
-            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             Log.i("Calendar", "Date: " + formatter.format(calendar.getTime()));
 
             events.add(String.format("Event ID: %d\nEvent: %s\nOrganizer: %s\nDate: %s", eventID, title, organizer, formatter.format(calendar.getTime())));
         }
 
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, events);
-        listView.setAdapter(eveAdpt);
+       // ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this,
+        //       android.R.layout.simple_expandable_list_item_1, android.R.id.list, events);
+        //ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<>(this,
+         //       R.layout.cal_mgr_childview_footer, R.id.tv_uid, events);
+
+       // listView.setAdapter(stringArrayAdapter);
     }
 
 
+/*
     private void updateEvent(long eventID) {
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
@@ -468,6 +478,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         int rows = getContentResolver().update(updateUri, values, null, null);
         Log.i("Calendar", "Rows updated: " + rows);
     }
+*/
 
     private void deleteEvent(long eventID) {
         Uri deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
@@ -476,7 +487,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
     }
 
 
-    }
+}
 
 
 
