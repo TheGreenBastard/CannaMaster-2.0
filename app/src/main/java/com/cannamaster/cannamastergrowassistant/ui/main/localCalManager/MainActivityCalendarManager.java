@@ -50,7 +50,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
     View parentView;
     //ArrayList<String> calendars;
     ArrayList<Date> dates;
-    ArrayList<DeleteCalendarEventsActivity.CalendarEntry> ids;
     ArrayList<CalendarManagerEvent> calendarManagerEvents;
     TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
     ExpandableListEventAdapter eveAdpt;
@@ -68,12 +67,10 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         getLayoutInflater().inflate(R.layout.cal_mgr_content_main, layout);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.cal_mgr_content_main);
         context = this;
-        //calendars = getCalendars();
         getDataFromCalendarTable();
         listView = (ExpandableListView) findViewById(R.id.elv_main);
         calendarManagerEvents = new ArrayList<>();
         dataSet = new TreeMap<Date,ArrayList<CalendarManagerEvent>>();
-        //events.add(new Event(16,"Work","",1571048836,1571048847));
         dataSet = getDataFromEventTable();
         eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
@@ -218,8 +215,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                     String desc = cur.getString(cur.getColumnIndex(CalendarContract.Events.DESCRIPTION));
 
-                    //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    //String dateString = dateFormat.format(new Date(dtstart));
                     Date testDate = new Date(dtstart);
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(testDate);
@@ -228,14 +223,12 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     cal.set(Calendar.SECOND,0);
                     Date inputDate = cal.getTime();
                     CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend);
-                    int uid = id;
                     //String date = dateFormat.format(event.getStartDate());
                     if(dataSet.get(inputDate)== null)
                     {
                         ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
                         calendarManagerEvents.add(calendarManagerEvent);
                         dataSet.put(inputDate, calendarManagerEvents);
-                        uid.put(ids, calendarManagerEvents);
                         dates.add(inputDate);
                     }
                     else
@@ -265,190 +258,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             }
         }
         return dataSet;
-    }
-
-    public void getCalendars(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
-            return;
-        }
-
-        // Projection array. Creating indices for this array instead of doing dynamic lookups improves performance.
-        final String[] EVENT_PROJECTION = new String[] {
-                CalendarContract.Calendars._ID,                           // 0
-                CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
-                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-                CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
-        };
-
-        // The indices for the projection array above.
-        final int PROJECTION_ID_INDEX = 0;
-        final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-        final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-        final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-
-
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cur = contentResolver.query(CalendarContract.Calendars.CONTENT_URI, EVENT_PROJECTION, null, null, null);
-
-        ArrayList<String> calendarInfos = new ArrayList<>();
-        while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-            // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-
-            String calendarInfo = String.format("Calendar ID: %s\nDisplay Name: %s\nAccount Name: %s\nOwner Name: %s", calID, displayName, accountName, ownerName);
-            calendarInfos.add(calendarInfo);
-        }
-
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, calendarInfos);
-        listView.setAdapter(stringArrayAdapter);
-    }
-
-
-    public void getPrimaryCalendar(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
-            return;
-        }
-
-        // Projection array. Creating indices for this array instead of doing dynamic lookups improves performance.
-        final String[] EVENT_PROJECTION = new String[] {
-                CalendarContract.Calendars._ID,                           // 0
-                CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
-                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-                CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
-        };
-
-        // The indices for the projection array above.
-        final int PROJECTION_ID_INDEX = 0;
-        final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-        final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-        final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-
-        ContentResolver contentResolver = getContentResolver();
-        String selection = CalendarContract.Calendars.VISIBLE + " = 1 AND "  + CalendarContract.Calendars.IS_PRIMARY + "=1";
-        Cursor cur = contentResolver.query(CalendarContract.Calendars.CONTENT_URI, EVENT_PROJECTION, selection, null, null);
-
-        ArrayList<String> calendarInfos = new ArrayList<>();
-        while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-            // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-
-            String calendarInfo = String.format("Calendar ID: %s\nDisplay Name: %s\nAccount Name: %s\nOwner Name: %s", calID, displayName, accountName, ownerName);
-            calendarInfos.add(calendarInfo);
-        }
-
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, calendarInfos);
-        listView.setAdapter(stringArrayAdapter);
-    }
-
-
-    public void readCalendarsByAccount(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
-            return;
-        }
-
-        // Projection array. Creating indices for this array instead of doing dynamic lookups improves performance.
-        final String[] EVENT_PROJECTION = new String[] {
-                CalendarContract.Calendars._ID,                           // 0
-                CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
-                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-                CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
-        };
-
-        // The indices for the projection array above.
-        final int PROJECTION_ID_INDEX = 0;
-        final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-        final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-        final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-
-        // Run query
-        Cursor cur = null;
-        ContentResolver cr = getContentResolver();
-        Uri uri = CalendarContract.Calendars.CONTENT_URI;
-        String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
-                + CalendarContract.Calendars.ACCOUNT_TYPE + " = ?) AND ("
-                + CalendarContract.Calendars.OWNER_ACCOUNT + " = ?))";
-        String[] selectionArgs = new String[] {"test@gmail.com", "com.google", "test@gmail.com"};
-        // Submit the query and get a Cursor object back.
-        cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
-
-        // Use the cursor to step through the returned records
-        ArrayList<String> calendars = new ArrayList<>();
-        while (cur.moveToNext()) {
-            long calID = 0;
-            String displayName = null;
-            String accountName = null;
-            String ownerName = null;
-
-            // Get the field values
-            calID = cur.getLong(PROJECTION_ID_INDEX);
-            displayName = cur.getString(PROJECTION_DISPLAY_NAME_INDEX);
-            accountName = cur.getString(PROJECTION_ACCOUNT_NAME_INDEX);
-            ownerName = cur.getString(PROJECTION_OWNER_ACCOUNT_INDEX);
-
-            String calendarInfo = String.format("Calendar ID: %s\nDisplay Name: %s\nAccount Name: %s\nOwner Name: %s", calID, displayName, accountName, ownerName);
-            calendars.add(calendarInfo);
-        }
-
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, calendars);
-        listView.setAdapter(stringArrayAdapter);
-    }
-
-    public void addEvent(View view) {
-        String eventTitle = "Jazzercise";
-        if (isEventAlreadyExist(eventTitle)) {
-            Snackbar.make(view, "Jazzercise event already exist!", Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-
-        long calID = 3;
-        long startMillis = 0;
-        long endMillis = 0;
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2017, 11, 18, 6, 00);
-        startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2017, 11, 18, 8, 00);
-        endMillis = endTime.getTimeInMillis();
-
-        ContentResolver cr = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(CalendarContract.Events.DTSTART, startMillis);
-        values.put(CalendarContract.Events.DTEND, endMillis);
-        values.put(CalendarContract.Events.TITLE, "Jazzercise");
-        values.put(CalendarContract.Events.DESCRIPTION, "Group workout");
-        values.put(CalendarContract.Events.CALENDAR_ID, calID);
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, "America/Los_Angeles");
-        values.put(CalendarContract.Events.ORGANIZER, "google_calendar@gmail.com");
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
-            Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
-            long eventID = Long.parseLong(uri.getLastPathSegment());
-            Log.i("Calendar", "Event Created, the event id is: " + eventID);
-            Snackbar.make(view, "Jazzercise event added!", Snackbar.LENGTH_SHORT).show();
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CALENDAR}, MY_PERMISSIONS_REQUEST_WRITE_CALENDAR);
-        }
-
-        showEvents(eventTitle);
     }
 
     public void removeEvent(View view) {
@@ -500,10 +309,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         showEvents(eventTitle);
     }
 
-    public void searchEvent(View view) {
-        showEvents("Jazzercise");
-    }
-
     private void showEvents(String eventTitle) {
         final String[] INSTANCE_PROJECTION = new String[] {
                 CalendarContract.Instances.EVENT_ID,       // 0
@@ -520,10 +325,10 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
         // Specify the date range you want to search for recurring event instances
         Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2017, 9, 23, 8, 0);
+        beginTime.set(2020, 1, 23, 8, 0);
         long startMillis = beginTime.getTimeInMillis();
         Calendar endTime = Calendar.getInstance();
-        endTime.set(2018, 1, 24, 8, 0);
+        endTime.set(2025, 1, 24, 8, 0);
         long endMillis = endTime.getTimeInMillis();
 
 
@@ -552,7 +357,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             Log.i("Calendar", "Event:  " + title);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(beginVal);
-            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
             Log.i("Calendar", "Date: " + formatter.format(calendar.getTime()));
 
             events.add(String.format("Event ID: %d\nEvent: %s\nOrganizer: %s\nDate: %s", eventID, title, organizer, formatter.format(calendar.getTime())));
