@@ -21,6 +21,8 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,13 +43,14 @@ import java.util.TreeMap;
  * Main Activity for Calendar Manager Functions
  **********************************************************/
 
-public class MainActivityCalendarManager extends CalendarManagerAppActivity {
+public class MainActivityCalendarManager extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 1001;
     Context context;
     View parentView;
     //ArrayList<String> calendars;
     ArrayList<Date> dates;
+    ArrayList<DeleteCalendarEventsActivity.CalendarEntry> ids;
     ArrayList<CalendarManagerEvent> calendarManagerEvents;
     TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
     ExpandableListEventAdapter eveAdpt;
@@ -56,6 +59,9 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.cal_mgr_activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
         CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
@@ -72,6 +78,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        readEvents(listView);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -81,6 +88,8 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+                    removeEvent(parent);
+
 
                     // You now have everything that you would as if this was an OnChildClickListener()
                     // Add your logic here.
@@ -136,38 +145,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-    /*public ArrayList<String> getCalendars(){
-        ArrayList<String> content = new ArrayList<>();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR},0);
-        }
-        String[] projection =
-                new String[]{
-                        CalendarContract.Calendars._ID,
-                        CalendarContract.Calendars.NAME,
-                        CalendarContract.Calendars.ACCOUNT_NAME,
-                        CalendarContract.Calendars.ACCOUNT_TYPE,
-                        CalendarContract.Calendars.OWNER_ACCOUNT};
-        Cursor calCursor =
-                getContentResolver().
-                        query(CalendarContract.Calendars.CONTENT_URI,
-                                projection,
-                                CalendarContract.Calendars.VISIBLE + " = 1",
-                                null,
-                                CalendarContract.Calendars._ID + " ASC");
-        if (calCursor.moveToFirst()) {
-            do {
-                long id = calCursor.getLong(0);
-                String displayName = calCursor.getString(1);
-                String AccountName = calCursor.getString(2);
-                String AccountType = calCursor.getString(3);
-                String OwnerAccount = calCursor.getString(4);
-                content.add(displayName);
-                // ...
-            } while (calCursor.moveToNext());
-        }
-        return content;
-    }*/
+
     public void getDataFromCalendarTable() {
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
@@ -250,13 +228,14 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
                     cal.set(Calendar.SECOND,0);
                     Date inputDate = cal.getTime();
                     CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend);
-                    String uid = CalendarContract.Events._ID;
+                    int uid = id;
                     //String date = dateFormat.format(event.getStartDate());
                     if(dataSet.get(inputDate)== null)
                     {
                         ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();
                         calendarManagerEvents.add(calendarManagerEvent);
                         dataSet.put(inputDate, calendarManagerEvents);
+                        uid.put(ids, calendarManagerEvents);
                         dates.add(inputDate);
                     }
                     else
@@ -580,7 +559,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         }
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, events);
-        listView.setAdapter(stringArrayAdapter);
+        listView.setAdapter(eveAdpt);
     }
 
     private boolean isEventAlreadyExist(String eventTitle) {
@@ -672,7 +651,7 @@ public class MainActivityCalendarManager extends CalendarManagerAppActivity {
         }
 
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, events);
-        listView.setAdapter(stringArrayAdapter);
+        listView.setAdapter(eveAdpt);
     }
 
 

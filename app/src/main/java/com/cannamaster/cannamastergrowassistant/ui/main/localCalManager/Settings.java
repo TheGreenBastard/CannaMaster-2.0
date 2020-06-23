@@ -25,7 +25,7 @@ import java.util.ArrayList;
  * Settings page relating to Calendar Manager
  **********************************************/
 
-public class Settings extends CalendarManagerAppActivity {
+public class Settings extends MainActivityCalendarManager {
     static Context context;
 
     @Override
