@@ -84,6 +84,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    // This is just for the first parent expandable list view item
     @Override
     public View getGroupView(int listPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Date date = dates.get(listPosition);
@@ -94,13 +95,14 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         TextView dateView = (TextView) convertView.findViewById(R.id.tv_groupView_date);
 
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateView.setText(dateFormat.format(date.getTime()));
         //long shLen = date.getEndDate().getTime() - date.getStartDate().getTime();
         //shiftNumber.setText((getChildrenCount(listPosition)-1)+" shift(s)");
         return convertView;
     }
 
+    // this sets the child items on expandable list view item
     @Override
     public View getChildView(int listPosition, int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         TextView title, desc, uid;
@@ -118,7 +120,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
             // set the text in above views
             title.setText(currentCalendarManagerEvent.getTitle());
             desc.setText(currentCalendarManagerEvent.getDesc());
-           // uid.setText(currentCalendarManagerEvent.getUid());
+            uid.setText(currentCalendarManagerEvent.getUid());
 
         }
         if(expandedListPosition == getChildrenCount(listPosition)-1)
