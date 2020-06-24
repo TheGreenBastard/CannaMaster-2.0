@@ -214,6 +214,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     long dtstart = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTSTART)));
                     long dtend = Long.parseLong(cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                     String desc = cur.getString(cur.getColumnIndex(CalendarContract.Events.DESCRIPTION));
+                    String eventID = cur.getString(cur.getColumnIndex(CalendarContract.Events._ID));
 
                     // functions related to getting the date formatted correctly
                     Date testDate = new Date(dtstart);
@@ -224,7 +225,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     cal.set(Calendar.SECOND,0);
                     Date inputDate = cal.getTime();
                     // end date related code
-                    CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend);
+                    CalendarManagerEvent calendarManagerEvent = new CalendarManagerEvent(id, title, desc, dtstart, dtend, eventID);
                     if(dataSet.get(inputDate)== null)
                     {
                         ArrayList<CalendarManagerEvent> calendarManagerEvents = new ArrayList<>();

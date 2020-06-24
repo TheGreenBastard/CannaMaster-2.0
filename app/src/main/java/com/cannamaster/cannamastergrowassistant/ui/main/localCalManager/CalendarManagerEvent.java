@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class CalendarManagerEvent {
     private int id;
-    private long uid;
+    private String eventID;
     private String title;
     private String desc;
     private long dtstart;
@@ -20,14 +20,14 @@ public class CalendarManagerEvent {
     {
 
     }
-    public CalendarManagerEvent(int id, String title, String desc, long dtstart, long dtend)
+    public CalendarManagerEvent(int id, String title, String desc, long dtstart, long dtend, String eventID)
     {  // This is the model for the array that is made for listview items
         this.id = id;
         this.title = title;
         this.desc = desc;
         this.dtstart = dtstart;
         this.dtend = dtend;
-        this.uid = (dtstart) + (dtend);
+        this.eventID = eventID;
     }
 
     public Date getStartDate(){
@@ -59,7 +59,7 @@ public class CalendarManagerEvent {
 
     public String getUid()
     {
-        return uid + "";
+        return eventID;
     }
 
 }
