@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 import com.cannamaster.cannamastergrowassistant.R;
 import java.text.DateFormat;
@@ -33,6 +34,14 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
     private SparseBooleanArray mSelectedItemsIds;
     LayoutInflater inflater;
 
+    ListPopupWindow listPopupWindow;
+    String[] uid = {"Delete"};
+
+    ExpandableListEventAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
+        this.context = context;
+    }
+
 
 
     public ExpandableListEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events)
@@ -41,9 +50,6 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         this.dates = dates;
         this.dataSet = events;
     }
-
-
-
 
     @Override
     public int getGroupCount() {
@@ -94,11 +100,8 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         }
         TextView dateView = (TextView) convertView.findViewById(R.id.tv_groupView_date);
 
-
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateView.setText(dateFormat.format(date.getTime()));
-        //long shLen = date.getEndDate().getTime() - date.getStartDate().getTime();
-        //shiftNumber.setText((getChildrenCount(listPosition)-1)+" shift(s)");
         return convertView;
     }
 
@@ -136,7 +139,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
 
     public void toggleSelection(int position) {
         selectView(position, !mSelectedItemsIds.get(position));
-}
+    }
 
     public void removeSelection() {
         mSelectedItemsIds = new SparseBooleanArray();
@@ -157,12 +160,12 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-private class ViewHolder {
+    private class ViewHolder {
         TextView title;
         TextView date;
         TextView desc;
         TextView uid;
-}
+    }
 
     @Override
     public boolean isChildSelectable(int i, int i1) {

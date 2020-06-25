@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,7 +86,11 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
-                    removeEvent(parent);
+                    TextView tv = (TextView) view.findViewById(R.id.tv_uid);
+                    String uid = tv.getText().toString();
+                    long convertUid = Long.parseLong(uid);
+                    deleteEvent(convertUid);
+
 
 
                     // You now have everything that you would as if this was an OnChildClickListener()
@@ -97,6 +102,21 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+        listView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Log.i("TAG","I got clicked childPosition:["+childPosition+"] groupPosition:["+groupPosition+"] id:["+id+"]");
+                TextView tv = (TextView) v.findViewById(R.id.tv_uid);
+                String uid = tv.getText().toString();
+                long convertUid = Long.parseLong(uid);
+                deleteEvent(convertUid);
+
+
+                return true;
             }
         });
 
