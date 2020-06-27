@@ -22,6 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -60,8 +61,13 @@ public class MainActivityCalendarManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cal_mgr_activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //Set the drawer icon
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
         CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
@@ -75,23 +81,19 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         dataSet = getDataFromEventTable();
         eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
         listView.setAdapter(eveAdpt);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
 
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-                    final ExpandableListAdapter adapter = ((ExpandableListView) parent).getExpandableListAdapter();
-                    long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
-                    int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
-                    int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+
                     TextView tv = (TextView) view.findViewById(R.id.tv_uid);
                     String uid = tv.getText().toString();
                     long convertUid = Long.parseLong(uid);
                     deleteEvent(convertUid);
-
-
+                    updateListView();
 
                     // You now have everything that you would as if this was an OnChildClickListener()
                     // Add your logic here.
@@ -105,7 +107,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             }
         });
 
-        listView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+/*        listView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -114,11 +116,9 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 String uid = tv.getText().toString();
                 long convertUid = Long.parseLong(uid);
                 deleteEvent(convertUid);
-
-
                 return true;
             }
-        });
+        });*/
 
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -162,7 +162,6 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         swipeRefreshLayout.setRefreshing(false);
     }
 
-
     public void getDataFromCalendarTable() {
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
@@ -193,10 +192,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             String displayName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME));
             String accountName = cur.getString(cur.getColumnIndex(CalendarContract.Calendars.ACCOUNT_NAME));
             String ID = cur.getString(cur.getColumnIndex(CalendarContract.Calendars._ID));
-
-
         }
-
     }
 
     public TreeMap<Date,ArrayList<CalendarManagerEvent>> getDataFromEventTable() {
@@ -480,33 +476,24 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
             events.add(String.format("Event ID: %d\nEvent: %s\nOrganizer: %s\nDate: %s", eventID, title, organizer, formatter.format(calendar.getTime())));
         }
-
-       // ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this,
-        //       android.R.layout.simple_expandable_list_item_1, android.R.id.list, events);
-        //ArrayAdapter<String> stringArrayAdapter2 = new ArrayAdapter<>(this,
-         //       R.layout.cal_mgr_childview_footer, R.id.tv_uid, events);
-
-       // listView.setAdapter(stringArrayAdapter);
     }
 
 
-/*
-    private void updateEvent(long eventID) {
-        ContentResolver cr = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put(CalendarContract.Events.TITLE, "Kickboxing");
-        Uri updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
-        int rows = getContentResolver().update(updateUri, values, null, null);
-        Log.i("Calendar", "Rows updated: " + rows);
-    }
-*/
 
     private void deleteEvent(long eventID) {
         Uri deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
         int rows = getContentResolver().delete(deleteUri, null, null);
         Log.i("Calendar", "Rows deleted: " + rows);
+        updateListView();
+
     }
 
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 
 }
 
