@@ -26,16 +26,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.DatePickerFragment;
 import com.cannamaster.cannamastergrowassistant.ui.main.dialogs.TimePickerFragment;
-import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.CalendarManagerEvent;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
