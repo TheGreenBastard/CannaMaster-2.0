@@ -93,7 +93,9 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     String uid = tv.getText().toString();
                     long convertUid = Long.parseLong(uid);
                     deleteEvent(convertUid);
-                    updateListView();
+                    finish();
+                    Intent intent = new Intent(context, MainActivityCalendarManager.class);
+                    startActivity(intent);
 
                     // You now have everything that you would as if this was an OnChildClickListener()
                     // Add your logic here.
@@ -159,9 +161,10 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         dataSet = getDataFromEventTable();
         eveAdpt.update(dates,dataSet);
         eveAdpt.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(true);
     }
 
+    // this reads the data from the calendar table
     public void getDataFromCalendarTable() {
         Cursor cur = null;
         ContentResolver cr = getContentResolver();
@@ -195,6 +198,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         }
     }
 
+    // this is the main array for the information table contained in dataset
     public TreeMap<Date,ArrayList<CalendarManagerEvent>> getDataFromEventTable() {
         ArrayList<CalendarManagerEvent> content = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
