@@ -18,7 +18,6 @@
         />
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
@@ -42,7 +41,6 @@
 
                 <!-- blurb on how to setup -->
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
@@ -50,7 +48,6 @@
                     android:text="@string/take_a_few_minutes_to_set_some_variables_about_your_grow_operation_by_answering_a_handful_of_multiple_choice_questions_our_grow_assistant_will_look_over_your_data_and_set_reminders_for_important_events_so_you_can_give_your_girls_all_the_attention_they_deserve_never_miss_or_forget_a_crucial_cultivation_event_again" />
                 <!-- notify user that we do not collect data -->
                 <TextView
-                    android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -64,7 +61,6 @@
 
                 <!-- Select Your Grow Details -->
                 <TextView
-                    android:id="@+id/textView477"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -76,7 +72,6 @@
 
                 <!-- Grow Medium -->
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -127,7 +122,6 @@
 
                 <!-- Fertilizier  -->
                 <TextView
-                    android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -145,7 +139,6 @@
 
                     <!--  Chemical -->
                     <RadioButton
-                        android:id="@+id/radioChemical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -154,7 +147,6 @@
 
                     <!-- Organic -->
                     <RadioButton
-                        android:id="@+id/radioOrganic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
@@ -164,7 +156,6 @@
 
                 <!-- How Often Do You Water? -->
                 <TextView
-                    android:id="@+id/textView115"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -231,7 +222,6 @@
                 </RadioGroup>
                 <!-- Indica/Sativa Ratio TextView -->
                 <TextView
-                    android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="16dp"
@@ -360,7 +350,6 @@
                     />
 
                 <RelativeLayout
-                    android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
@@ -386,7 +375,6 @@
                         android:orientation="vertical">
                         <!-- Date TextView -->
                         <TextView
-                            android:id="@+id/date_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/flowering_date"
@@ -435,7 +423,6 @@
                         android:orientation="vertical">
                         <!-- Time TextView -->
                         <TextView
-                            android:id="@+id/time_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time"
@@ -474,7 +461,6 @@
                         android:inputType="number" />
 
                     <TextView
-                        android:id="@+id/recurrenceDateInfo"
                         android:layout_width="170dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -497,7 +483,6 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/click_button_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -505,7 +490,6 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/empty_space"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
                         android:layout_gravity="center_horizontal"
