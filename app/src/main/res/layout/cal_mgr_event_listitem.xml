@@ -4,26 +4,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
             android:paddingLeft="35dp">
 
-            <TextView
-                android:text="Order: 1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_groupView_title"
-                android:layout_weight="1"
-                android:textSize="18sp"
-                android:gravity="center_vertical" />
+
 
             <TextView
                 android:text="description goes here"
@@ -42,7 +31,18 @@
                 android:layout_weight="1"
                 android:paddingBottom="5dp"
                 android:gravity="bottom" />
+
+
         </LinearLayout>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/red_600"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:text="Delete This Event" />
+
 
     </LinearLayout>
-</LinearLayout>
