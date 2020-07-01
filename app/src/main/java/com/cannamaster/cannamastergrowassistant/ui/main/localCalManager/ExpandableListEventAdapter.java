@@ -30,6 +30,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
 
     private final Context context;
     private ArrayList<Date> dates;
+    private ArrayList<String> titles;
     private TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
     private SparseBooleanArray mSelectedItemsIds;
     LayoutInflater inflater;
@@ -44,11 +45,12 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
 
 
 
-    public ExpandableListEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events)
+    public ExpandableListEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events, ArrayList<String> titles)
     {
         this.context = context;
         this.dates = dates;
         this.dataSet = events;
+        this.titles = titles;
     }
 
     @Override
@@ -94,14 +96,18 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int listPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Date date = dates.get(listPosition);
+        String title = titles.get(listPosition);
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.cal_mgr_groupview_date,null);
         }
         TextView dateView = (TextView) convertView.findViewById(R.id.tv_groupView_date);
-
+        TextView titleView = (TextView) convertView.findViewById(R.id.tv_main_title);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
         dateView.setText(dateFormat.format(date.getTime()));
+        titleView.setText(title);
+
         return convertView;
     }
 
@@ -117,11 +123,11 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
             //set the item as longClickable
             convertView.setLongClickable(true);
             // declare the textviews
-            title = (TextView) convertView.findViewById(R.id.tv_groupView_title);
+            //title = (TextView) convertView.findViewById(R.id.tv_groupView_title);
             desc = (TextView) convertView.findViewById(R.id.tv_groupView_desc);
             uid = (TextView) convertView.findViewById(R.id.tv_uid);
             // set the text in above views
-            title.setText(currentCalendarManagerEvent.getTitle());
+            //title.setText(currentCalendarManagerEvent.getTitle());
             desc.setText(currentCalendarManagerEvent.getDesc());
             uid.setText(currentCalendarManagerEvent.getUid());
 

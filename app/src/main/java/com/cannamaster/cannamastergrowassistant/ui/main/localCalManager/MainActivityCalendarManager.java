@@ -42,7 +42,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 1001;
     Context context;
     View parentView;
-    //ArrayList<String> calendars;
+    ArrayList<String> titles;
     ArrayList<Date> dates;
     ArrayList<CalendarManagerEvent> calendarManagerEvents;
     TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
@@ -62,6 +62,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         parentView = findViewById(android.R.id.content);
         dates = new ArrayList<Date>();
+        titles = new ArrayList<String>();
         CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         getLayoutInflater().inflate(R.layout.cal_mgr_content_main, layout);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.cal_mgr_content_main);
@@ -71,7 +72,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         calendarManagerEvents = new ArrayList<>();
         dataSet = new TreeMap<Date,ArrayList<CalendarManagerEvent>>();
         dataSet = getDataFromEventTable();
-        eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet);
+        eveAdpt = new ExpandableListEventAdapter(context,dates, dataSet,titles);
         listView.setAdapter(eveAdpt);
 
 
@@ -244,12 +245,13 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                         calendarManagerEvents.add(calendarManagerEvent);
                         dataSet.put(inputDate, calendarManagerEvents);
                         dates.add(inputDate);
+                        titles.add(title);
                     }
                     else
                     {
-                        ArrayList<CalendarManagerEvent> calendarManagerEvents = dataSet.get(inputDate);
+                        ArrayList<CalendarManagerEvent> datesArrayList = dataSet.get(inputDate);
                         boolean unique = true;
-                        for(CalendarManagerEvent e : calendarManagerEvents)
+                        for(CalendarManagerEvent e : datesArrayList)
                         {
                             if(e.getUid() == calendarManagerEvent.getUid())
                             {
@@ -257,9 +259,11 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                             }
                         }
                         if(unique) {
-                            calendarManagerEvents.add(calendarManagerEvent);
+                            datesArrayList.add(calendarManagerEvent);
                             dataSet.remove(inputDate);
-                            dataSet.put(inputDate, calendarManagerEvents);
+                            titles.remove(title);
+                            dataSet.put(inputDate, datesArrayList);
+                            titles.add(title);
                         }
                     }
                 }
