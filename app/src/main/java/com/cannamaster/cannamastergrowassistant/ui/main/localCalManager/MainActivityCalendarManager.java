@@ -42,7 +42,7 @@ import java.util.TreeMap;
 
 public class MainActivityCalendarManager extends AppCompatActivity {
 
-    private static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 1001;
+
     Context context;
     View parentView;
     ArrayList<String> titles;
@@ -79,7 +79,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         listView.setAdapter(eveAdpt);
 
 
-
+/*
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -97,7 +97,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 }
                 return true;
             }
-        });
+        });*/
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -125,7 +125,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                 return true;
             }
         });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+/*        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
@@ -148,7 +148,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
                 return false;
             }
-        });
+        });*/
 
 /*        listView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

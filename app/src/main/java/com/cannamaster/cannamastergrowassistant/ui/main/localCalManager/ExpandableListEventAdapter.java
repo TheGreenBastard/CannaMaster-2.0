@@ -34,6 +34,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
     private TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
     private SparseBooleanArray mSelectedItemsIds;
     LayoutInflater inflater;
+    private boolean isLastChild = true;
 
     ListPopupWindow listPopupWindow;
     String[] uid = {"Delete"};
@@ -113,32 +114,35 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
 
     // this sets the child items on expandable list view item
     @Override
-    public View getChildView(int listPosition, int expandedListPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        TextView title, desc, uid;
-        //create the list item view
+    public View getChildView(int listPosition, int expandedListPosition, boolean isLastChild, View itemView, ViewGroup parent) {
+        TextView desc, uid;
+        //create the list item
+
+        if(itemView == null){
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            itemView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
+        }
+
         if(expandedListPosition<getChildrenCount(listPosition)-1) {
             final CalendarManagerEvent currentCalendarManagerEvent = (CalendarManagerEvent) getChild(listPosition,expandedListPosition);
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
+
             //set the item as longClickable
-            convertView.setLongClickable(true);
+            // convertView.setLongClickable(true);
             // declare the textviews
-            //title = (TextView) convertView.findViewById(R.id.tv_groupView_title);
-            desc = (TextView) convertView.findViewById(R.id.tv_groupView_desc);
-            uid = (TextView) convertView.findViewById(R.id.tv_uid);
+            desc = (TextView) itemView.findViewById(R.id.tv_groupView_desc);
+            uid = (TextView) itemView.findViewById(R.id.tv_uid);
             // set the text in above views
-            //title.setText(currentCalendarManagerEvent.getTitle());
             desc.setText(currentCalendarManagerEvent.getDesc());
             uid.setText(currentCalendarManagerEvent.getUid());
 
         }
-        if(expandedListPosition == getChildrenCount(listPosition)-1)
-        {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.cal_mgr_childview_footer,parent,false);
+        //if(expandedListPosition == getChildrenCount(listPosition)-1)
+       // {
+            //LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            //convertView = inflater.inflate(R.layout.cal_mgr_childview_footer,parent,false);
 
-        }
-        return convertView;
+       // }
+        return itemView;
     }
 
 
