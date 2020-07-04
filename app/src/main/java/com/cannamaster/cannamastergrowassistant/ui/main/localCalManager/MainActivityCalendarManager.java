@@ -26,6 +26,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.cannamaster.cannamastergrowassistant.R;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,6 +80,51 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
 
 
+        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                int pos = parent.getFlatListPosition(ExpandableListView
+                        .getPackedPositionForGroup(groupPosition));
+                if (!parent.isGroupExpanded(groupPosition) && !parent.isItemChecked(pos)) {
+                    parent.expandGroup(groupPosition, true);
+                    parent.setItemChecked(pos, true);
+                } else if (parent.isGroupExpanded(groupPosition) && parent.isItemChecked(pos)) {
+                    parent.collapseGroup(groupPosition);
+                    parent.setItemChecked(pos, false);
+                } else if (parent.isGroupExpanded(groupPosition) && !parent.isItemChecked(pos)) {
+                    parent.setItemChecked(pos, true);
+                }
+                return true;
+            }
+        });
+
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                                        int groupPosition, int childPosition, long id) {
+
+                int pos = parent.getFlatListPosition(ExpandableListView
+                        .getPackedPositionForGroup(groupPosition));
+                if (!parent.isGroupExpanded(groupPosition) && !parent.isItemChecked(pos)) {
+                    parent.expandGroup(groupPosition, true);
+                    parent.setItemChecked(pos, true);
+                } else if (parent.isGroupExpanded(groupPosition) && parent.isItemChecked(pos)) {
+                    parent.collapseGroup(groupPosition);
+                    parent.setItemChecked(pos, false);
+                } else if (parent.isGroupExpanded(groupPosition) && !parent.isItemChecked(pos)) {
+                    parent.setItemChecked(pos, true);
+                }
+
+
+
+                TextView uid = (TextView) v.findViewById(R.id.tv_uid);
+                String mUid = uid.getText().toString();
+                deleteEvent(Long.parseLong(mUid));
+                updateListView();
+                return true;
+            }
+        });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -152,7 +200,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
     public void updateListView()
     {
         dataSet = getDataFromEventTable();
-        eveAdpt.update(dates,dataSet);
+        // eveAdpt.update(dates,dataSet);
         eveAdpt.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(true);
     }
@@ -484,7 +532,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         Uri deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
         int rows = getContentResolver().delete(deleteUri, null, null);
         Log.i("Calendar", "Rows deleted: " + rows);
-        updateListView();
+        eveAdpt.notifyDataSetChanged();
 
     }
 
