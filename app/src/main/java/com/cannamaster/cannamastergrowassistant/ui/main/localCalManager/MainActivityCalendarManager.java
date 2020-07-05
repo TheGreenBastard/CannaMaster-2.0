@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -83,7 +85,11 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             TextView uid = (TextView) v.findViewById(R.id.tv_uid);
             String mUid = uid.getText().toString();
             deleteEvent(Long.parseLong(mUid));
-           // updateListView();
+
+            Toast.makeText(this, "Calendar Event # " + mUid + "Deleted", Toast.LENGTH_SHORT).show();
+            finish();
+            Intent intent = new Intent(context, MainActivityCalendarManager.class);
+            startActivity(intent);
             return true;
         });
 
@@ -104,8 +110,8 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
     public void updateListView()
     {
-         dataSet = getDataFromEventTable();
-         eveAdpt.update(dates,dataSet);
+        dataSet = getDataFromEventTable();
+        eveAdpt.update(dates,dataSet);
         eveAdpt.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(true);
     }
