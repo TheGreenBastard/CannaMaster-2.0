@@ -11,20 +11,6 @@
         <item name="backgroundColor">@color/white</item>
     </style>
 
-    <style name="NightTheme" parent="Theme.AppCompat.DayNight">
-        <item name="colorPrimary">@color/green_900</item>
-        <item name="colorPrimaryDark">@color/green_600</item>
-        <item name="colorAccent">@color/green_900</item>
-        <item name="backgroundColor">@color/black</item>
-    </style>
-
-    <style name="DayTheme" parent="Theme.AppCompat.DayNight">
-        <item name="colorPrimary">@color/green_900</item>
-        <item name="colorPrimaryDark">@color/green_600</item>
-        <item name="colorAccent">@color/green_900</item>
-        <item name="backgroundColor">@color/white</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

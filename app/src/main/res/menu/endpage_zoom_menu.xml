@@ -5,7 +5,7 @@ This is the menu in the top right corner of the endpage that controls text size 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/textSize"
+    <item
         android:title="@string/menu_font_size_title"
         app:showAsAction="never">
         <menu>
