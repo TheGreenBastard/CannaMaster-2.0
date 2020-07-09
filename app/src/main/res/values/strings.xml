@@ -119,5 +119,6 @@
     <string name="menu_refresh">Menu Refresh</string>
     <string name="action_settings">Action Settings</string>
     <string name="settings_frame_layout">Settings Frame Layout</string>
+    <string name="local_calender_number">Local Calendar Number</string>
     >
 </resources>

@@ -12,15 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.MainActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 
 /**********************************************
@@ -52,7 +47,7 @@ public class Settings extends MainActivity {
 
     public static class SettingsFragment extends PreferenceFragment implements AdapterView.OnItemLongClickListener {
         private ArrayList<Preference> mPreferences = new ArrayList<>();
-        private String[] mPreferenceKeys = new String[] {"account_name","account_type","owner_account", "version_Info"};
+        private String[] mPreferenceKeys = new String[] {"calendar_number_key","account_name_key", "account_type_key", "owner_account_key", "article_text_size_key", "day_night_key", "version_Info", "copyright" };
         private SharedPreferences.OnSharedPreferenceChangeListener mListener;
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -125,7 +120,7 @@ public class Settings extends MainActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+       // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
