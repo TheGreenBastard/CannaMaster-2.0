@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
-        <activity android:name=".ui.main.localcalmanager.Settings"
+        <activity android:name=".ui.main.Prefs.Settings"
             android:layout="@layout/settings_page_layout"
             android:label="@string/settings"/>
         <activity android:name=".ui.main.AboutPage"

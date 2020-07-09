@@ -1,19 +1,11 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
 
 import android.app.Activity;
-import android.content.ContentUris;
 import android.content.Context;
-import android.database.Cursor;
-import android.icu.util.Calendar;
-import android.net.Uri;
-import android.provider.CalendarContract;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ListPopupWindow;
 import android.widget.TextView;
 import com.cannamaster.cannamastergrowassistant.R;
 import java.text.DateFormat;
@@ -32,18 +24,6 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
     private ArrayList<Date> dates;
     private ArrayList<String> titles;
     private TreeMap<Date,ArrayList<CalendarManagerEvent>> dataSet;
-    private SparseBooleanArray mSelectedItemsIds;
-    LayoutInflater inflater;
-    private boolean isLastChild = true;
-
-    ListPopupWindow listPopupWindow;
-    String[] uid = {"Delete"};
-
-    ExpandableListEventAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
-        this.context = context;
-    }
-
 
 
     public ExpandableListEventAdapter(Context context, ArrayList<Date> dates, TreeMap<Date,ArrayList<CalendarManagerEvent>> events, ArrayList<String> titles)
@@ -63,7 +43,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int listPosition) {
         Date key = this.dates.get(listPosition);
-        return this.dataSet.get(key).size()+1;
+        return this.dataSet.get(key).size();
     }
 
     @Override
@@ -100,7 +80,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         String title = titles.get(listPosition);
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.cal_mgr_groupview_date,null);
+            convertView = layoutInflater.inflate(R.layout.cal_mgr_groupview_listitem,null);
         }
         TextView dateView = (TextView) convertView.findViewById(R.id.tv_groupView_date);
         TextView titleView = (TextView) convertView.findViewById(R.id.tv_main_title);
@@ -120,48 +100,17 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
 
         if(itemView == null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            itemView = inflater.inflate(R.layout.cal_mgr_event_listitem, parent, false);
-        }
+            itemView = inflater.inflate(R.layout.cal_mgr_childview_listitem, parent, false);
 
-        if(expandedListPosition<getChildrenCount(listPosition)-1) {
             final CalendarManagerEvent currentCalendarManagerEvent = (CalendarManagerEvent) getChild(listPosition,expandedListPosition);
-
-            //set the item as longClickable
-            // convertView.setLongClickable(true);
             // declare the textviews
             desc = (TextView) itemView.findViewById(R.id.tv_groupView_desc);
             uid = (TextView) itemView.findViewById(R.id.tv_uid);
             // set the text in above views
             desc.setText(currentCalendarManagerEvent.getDesc());
             uid.setText(currentCalendarManagerEvent.getUid());
-
-        }
-        //if(expandedListPosition == getChildrenCount(listPosition)-1)
-       // {
-            //LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            //convertView = inflater.inflate(R.layout.cal_mgr_childview_footer,parent,false);
-
-       // }
-        return itemView;
     }
-
-
-
-    public void toggleSelection(int position) {
-        selectView(position, !mSelectedItemsIds.get(position));
-    }
-
-    public void removeSelection() {
-        mSelectedItemsIds = new SparseBooleanArray();
-        notifyDataSetChanged();
-    }
-
-    public void selectView(int position, boolean value) {
-        if (value)
-            mSelectedItemsIds.put(position, value);
-        else
-            mSelectedItemsIds.delete(position);
-        notifyDataSetChanged();
+         return itemView;
     }
 
     public void update(ArrayList<Date> dates,TreeMap<Date,ArrayList<CalendarManagerEvent>> events){
@@ -170,7 +119,7 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView title;
         TextView date;
         TextView desc;

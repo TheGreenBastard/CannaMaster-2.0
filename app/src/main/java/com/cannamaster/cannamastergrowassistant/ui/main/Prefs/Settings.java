@@ -1,4 +1,4 @@
-package com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager;
+package com.cannamaster.cannamastergrowassistant.ui.main.Prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,24 +17,26 @@ import androidx.appcompat.app.ActionBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 /**********************************************
- * Settings page relating to Calendar Manager
+ * Settings page relating to the entire app
  **********************************************/
 
-public class Settings extends MainActivityCalendarManager {
+
+public class Settings extends MainActivity {
     static Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        getLayoutInflater().inflate(R.layout.settings_page_layout, layout);
+        getLayoutInflater().inflate(R.layout.settings_frame_layout, layout);
         context = this;
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         layout.removeView(fab);
@@ -116,7 +118,12 @@ public class Settings extends MainActivityCalendarManager {
             return false;
         }
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
 
 }

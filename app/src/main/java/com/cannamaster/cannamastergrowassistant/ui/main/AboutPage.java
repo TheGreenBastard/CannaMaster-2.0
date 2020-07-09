@@ -6,9 +6,7 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import com.cannamaster.cannamastergrowassistant.R;
-
 
 public class AboutPage extends AppCompatActivity {
 
