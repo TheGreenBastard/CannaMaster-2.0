@@ -240,6 +240,9 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         int rows = getContentResolver().delete(deleteUri, null, null);
         Log.i("Calendar", "Rows deleted: " + rows);
         eveAdpt.notifyDataSetChanged();
+        finish();
+        Intent intent = new Intent(context, MainActivityCalendarManager.class);
+        startActivity(intent);
     }
 
 

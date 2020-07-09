@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         class SectionsPagerAdapter extends FragmentPagerAdapter {
             private int NUM_ITEMS = 5;
 
-            public SectionsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            public SectionsPagerAdapter(FragmentManager fm, int behavior) {
                 super(fm, behavior);
             }
 

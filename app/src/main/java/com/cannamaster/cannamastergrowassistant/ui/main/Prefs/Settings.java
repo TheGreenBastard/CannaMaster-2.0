@@ -33,7 +33,7 @@ public class Settings extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.activity_main);
+        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         getLayoutInflater().inflate(R.layout.settings_frame_layout, layout);
