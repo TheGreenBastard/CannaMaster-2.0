@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.cannamaster.cannamastergrowassistant.R;
@@ -33,13 +34,16 @@ public class Settings extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CoordinatorLayout layout = (CoordinatorLayout) findViewById(R.id.cal_mgr_activity_main);
-        ActionBar actionBar = getSupportActionBar();
+        setContentView(R.layout.settings_frame_layout);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //Set the drawer icon
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        getLayoutInflater().inflate(R.layout.settings_frame_layout, layout);
+       // getLayoutInflater().inflate(R.layout.settings_frame_layout);
         context = this;
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        layout.removeView(fab);
         if(getFragmentManager().findFragmentById(android.R.id.content) == null) {
             getFragmentManager().beginTransaction().replace(R.id.settingsList, new SettingsFragment()).commit();
         }

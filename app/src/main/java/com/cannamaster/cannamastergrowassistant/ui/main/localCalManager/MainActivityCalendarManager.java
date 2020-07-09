@@ -228,7 +228,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                 }
             }
-        }
+        }   
         cur.close();
         // bundle everything up into the dataset
         return dataSet;

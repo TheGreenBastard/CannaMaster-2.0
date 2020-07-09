@@ -27,8 +27,8 @@
         </activity>
         <activity android:name=".ui.main.EndpageActivity" />
         <activity android:name=".ui.main.Prefs.Settings"
-            android:layout="@layout/settings_page_layout"
-            android:label="@string/settings"/>
+            android:layout="@layout/settings_frame_layout"
+            android:label="@string/settings_frame_layout"/>
         <activity android:name=".ui.main.AboutPage"
             android:layout="@layout/about_page_layout"
             android:label="@string/title_activity_about_page"/>

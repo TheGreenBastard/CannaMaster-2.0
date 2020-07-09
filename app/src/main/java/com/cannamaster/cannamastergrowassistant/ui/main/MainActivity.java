@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+ /*   @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (getDefaultNightMode()) {
             case AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY:
@@ -165,9 +165,11 @@ public class MainActivity extends AppCompatActivity {
             case AppCompatDelegate.MODE_NIGHT_NO:
                 menu.findItem(R.id.menu_night_mode_day).setChecked(true);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + getDefaultNightMode());
         }
         return true;
-    }
+    }*/
 
 
     @Override
