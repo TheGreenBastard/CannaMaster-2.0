@@ -1,9 +1,9 @@
 package com.cannamaster.cannamastergrowassistant.ui.main.Prefs;
+import android.preference.EditTextPreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
+
 import com.cannamaster.cannamastergrowassistant.R;
 import com.cannamaster.cannamastergrowassistant.ui.main.MainActivity;
 import java.util.ArrayList;
@@ -36,10 +38,9 @@ public class Settings extends MainActivity {
         //Set the drawer icon
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-       // getLayoutInflater().inflate(R.layout.settings_frame_layout);
+        // getLayoutInflater().inflate(R.layout.settings_frame_layout);
         context = this;
-        if(getFragmentManager().findFragmentById(android.R.id.content) == null) {
+        if (getFragmentManager().findFragmentById(android.R.id.content) == null) {
             getFragmentManager().beginTransaction().replace(R.id.settingsList, new SettingsFragment()).commit();
         }
 
@@ -47,8 +48,9 @@ public class Settings extends MainActivity {
 
     public static class SettingsFragment extends PreferenceFragment implements AdapterView.OnItemLongClickListener {
         private ArrayList<Preference> mPreferences = new ArrayList<>();
-        private String[] mPreferenceKeys = new String[] {"calendar_number_key","account_name_key", "account_type_key", "owner_account_key", "article_text_size_key", "day_night_key", "version_Info", "copyright" };
+        private String[] mPreferenceKeys = new String[]{"calendar_number_key", "account_name_key", "account_type_key", "owner_account_key", "article_text_size_key", "day_night_key", "version_Info", "copyright"};
         private SharedPreferences.OnSharedPreferenceChangeListener mListener;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -63,10 +65,8 @@ public class Settings extends MainActivity {
                             if (pref instanceof EditTextPreference) {
                                 pref.setSummary(sharedPreferences.getString(key, "The URL for the calendar used"));
                             }
-
-                            //break;
+                            break;
                         }
-
                     }
                 }
             };
@@ -80,18 +80,13 @@ public class Settings extends MainActivity {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View view = super.onCreateView(inflater, container, savedInstanceState);
-            if(view != null)
-            {
-                View lv = view.findViewById (android.R.id.list);
-                if (lv instanceof ListView)
-                {
-                    ((ListView)lv).setOnItemLongClickListener(this);
-                }
-                else
-                {
+            if (view != null) {
+                View lv = view.findViewById(android.R.id.list);
+                if (lv instanceof ListView) {
+                    ((ListView) lv).setOnItemLongClickListener(this);
+                } else {
                     //The view created is not a list view!
                 }
             }
@@ -100,8 +95,7 @@ public class Settings extends MainActivity {
         }
 
         @Override
-        public void onResume()
-        {
+        public void onResume() {
             super.onResume();
             SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
             prefs.registerOnSharedPreferenceChangeListener(mListener);
@@ -117,12 +111,19 @@ public class Settings extends MainActivity {
             return false;
         }
     }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.menu_main, menu);
+    public boolean onSupportNavigateUp() {
+        finish();
         return true;
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        // getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 }
+
+

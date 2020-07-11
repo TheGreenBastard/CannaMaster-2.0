@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
-
 import com.cannamaster.cannamastergrowassistant.R;
-
 
 /*********************
  * Settings Fragment
@@ -24,7 +22,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.application_preferences);
+        addPreferencesFromResource(R.xml.preferences);
     }
 
     @Override
@@ -55,10 +53,10 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
             listPref.setSummary(sharedPref.getString(key, ""));
         } else if (key.equals(KEY_PREF_DARKMODE)) {
             Preference darkPref = findPreference(key);
-            darkPref.setSummary(sharedPref.getString(key, ""));
+            darkPref.setSummary(sharedPref.getString(key, "AppCompatDelegate.MODE_NIGHT_NO"));
         } else if (key.equals(KEY_PREF_FONT_SIZE)) {
             Preference fontPref = findPreference(key);
-            fontPref.setSummary(sharedPref.getString(key, ""));
+            fontPref.setSummary(sharedPref.getString(key, "20dp"));
         }
 
 

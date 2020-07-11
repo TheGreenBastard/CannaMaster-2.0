@@ -77,9 +77,9 @@ public class EndpageActivity extends AppCompatActivity {
              * FAB Button click to add to favorites
              **************************************/
 
-            final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            final FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab);
 
-            fab.setOnClickListener(new View.OnClickListener() {
+            fab2 .setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

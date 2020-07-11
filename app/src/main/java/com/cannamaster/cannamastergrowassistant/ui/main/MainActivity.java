@@ -8,13 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.cannamaster.cannamastergrowassistant.R;
-import com.cannamaster.cannamastergrowassistant.ui.main.Prefs.Settings;
-import com.cannamaster.cannamastergrowassistant.ui.main.favorites.FavoritesListActivity;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,9 +19,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
-import static androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode;
+import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.Prefs.Settings;
+import com.cannamaster.cannamastergrowassistant.ui.main.favorites.FavoritesListActivity;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
