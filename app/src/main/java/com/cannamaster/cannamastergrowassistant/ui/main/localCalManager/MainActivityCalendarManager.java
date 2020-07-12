@@ -16,8 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -85,11 +83,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
             TextView uid = (TextView) v.findViewById(R.id.tv_uid);
             String mUid = uid.getText().toString();
             deleteEvent(Long.parseLong(mUid));
-
-            Toast.makeText(this, "Calendar Event # " + mUid + "Deleted", Toast.LENGTH_SHORT).show();
-            finish();
-            Intent intent = new Intent(context, MainActivityCalendarManager.class);
-            startActivity(intent);
+           // updateListView();
             return true;
         });
 
@@ -110,8 +104,8 @@ public class MainActivityCalendarManager extends AppCompatActivity {
 
     public void updateListView()
     {
-        dataSet = getDataFromEventTable();
-        eveAdpt.update(dates,dataSet);
+         dataSet = getDataFromEventTable();
+         eveAdpt.update(dates,dataSet);
         eveAdpt.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(true);
     }
@@ -234,7 +228,7 @@ public class MainActivityCalendarManager extends AppCompatActivity {
                     Log.e("end time",cur.getString(cur.getColumnIndex(CalendarContract.Events.DTEND)));
                 }
             }
-        }
+        }   
         cur.close();
         // bundle everything up into the dataset
         return dataSet;
@@ -246,6 +240,9 @@ public class MainActivityCalendarManager extends AppCompatActivity {
         int rows = getContentResolver().delete(deleteUri, null, null);
         Log.i("Calendar", "Rows deleted: " + rows);
         eveAdpt.notifyDataSetChanged();
+        finish();
+        Intent intent = new Intent(context, MainActivityCalendarManager.class);
+        startActivity(intent);
     }
 
 

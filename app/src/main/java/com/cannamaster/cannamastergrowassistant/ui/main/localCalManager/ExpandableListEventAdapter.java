@@ -119,6 +119,13 @@ public class ExpandableListEventAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
+    private static class ViewHolder {
+        TextView title;
+        TextView date;
+        TextView desc;
+        TextView uid;
+    }
+
     @Override
     public boolean isChildSelectable(int i, int i1) {
         return true;

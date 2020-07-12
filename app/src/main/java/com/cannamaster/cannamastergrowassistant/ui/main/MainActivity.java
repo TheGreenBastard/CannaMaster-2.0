@@ -8,33 +8,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-
-import com.cannamaster.cannamastergrowassistant.R;
-import com.cannamaster.cannamastergrowassistant.ui.main.localcalmanager.Settings;
-import com.cannamaster.cannamastergrowassistant.ui.main.favorites.FavoritesListActivity;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
-
-import static androidx.appcompat.app.AppCompatDelegate.getDefaultNightMode;
+import com.cannamaster.cannamastergrowassistant.R;
+import com.cannamaster.cannamastergrowassistant.ui.main.Prefs.Settings;
+import com.cannamaster.cannamastergrowassistant.ui.main.favorites.FavoritesListActivity;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    /***********************************************************************
+     *  this activity mainly takes care of the drawer and recycler views
+     *
+     *  content can be found on the "endpages"
+     **********************************************************************/
 
 
     private static String[] TAB_TITLE = {"Basics", "Grow Assistant", "Tips And Tricks", "Advanced Techniques", "Sick Plants/Problems"};
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         class SectionsPagerAdapter extends FragmentPagerAdapter {
             private int NUM_ITEMS = 5;
 
-            public SectionsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            public SectionsPagerAdapter(FragmentManager fm, int behavior) {
                 super(fm, behavior);
             }
 
@@ -109,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             /** Returns the fragment to display for that page */
-            @NonNull
             @Override
             public Fragment getItem(int position) {
                 // Create a new fragment and specify the planet to show based on
@@ -132,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                     case 4:
                         fragment = new GrowAssistantFragment();
                         break;
-
                 }
                 return fragment;
             }
@@ -156,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+ /*   @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         switch (getDefaultNightMode()) {
             case AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY:
@@ -168,9 +164,11 @@ public class MainActivity extends AppCompatActivity {
             case AppCompatDelegate.MODE_NIGHT_NO:
                 menu.findItem(R.id.menu_night_mode_day).setChecked(true);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + getDefaultNightMode());
         }
         return true;
-    }
+    }*/
 
 
     @Override
@@ -198,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         recreate();
     }
 
-    // This loads the main view header image that scrolls into oblivion "backdrop.jpg"
+    /** This loads the main view header image that scrolls into oblivion "backdrop.jpg" **/
     private void loadBackdrop() {
         final ImageView imageView = (ImageView) findViewById(R.id.backdrop);
         Glide.with(this).load(HeaderImage.getRandomHeaderImage()).centerCrop().into(imageView);
@@ -212,21 +210,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
     }
 
-   /** @Override
-    protected void onSaveInstanceState(Bundle outstate) {
-        super.onSaveInstanceState(outstate);
-        (AppCompatDelegate.setDefaultNightMode();
-        );
 
-
-
-
-
-
-
-
-    }
-**/
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -286,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_about:
                 Intent aboutIntent = new Intent(this, AboutPage.class);
                 startActivity(aboutIntent);
-
             default:
                 return;
         }

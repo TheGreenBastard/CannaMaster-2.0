@@ -3,56 +3,61 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="Application Settings">
+        android:title="Local Calendar Settings">
 
         <EditTextPreference
-            android:key="account_name"
+            android:key="calendar_number_key"
+            android:title="@string/local_calender_number"
+            android:dialogTitle="@string/local_calender_number"
+            android:defaultValue="16"
+            android:inputType="number"/>
+
+        <EditTextPreference
+            android:key="account_name_key"
             android:title="@string/calendar_account_title"
+            android:defaultValue="CannaMaster Grow Assistant"
             android:summary="%s"
             android:dialogTitle="@string/calendar_account_title"
             android:inputType="textNoSuggestions|textUri"/>
+
         <EditTextPreference
-            android:key="account_type"
+            android:key="account_type_key"
             android:title="@string/calendar_account_type"
+            android:defaultValue="LOCAL"
             android:summary="%s"
             android:dialogTitle="@string/calendar_account_type"
             android:inputType="textNoSuggestions|textUri"/>
-        <EditTextPreference
-            android:key="owner_account"
+
+    <EditTextPreference
+            android:key="owner_account_key"
             android:title="@string/calendar_owner_account"
             android:summary="%s"
             android:dialogTitle="@string/calendar_owner_account"
+            android:defaultValue="accountOwner"
             android:inputType="textNoSuggestions|textUri"/>
-
-        <CheckBoxPreference
-            android:key="haptic_feedback"
-            android:title="@string/haptic_feedback_preference_title"
-            android:summary="@string/haptic_feedback_preference_summary" />
-
-        <ListPreference
-            android:dialogTitle="Select first day of week"
-            android:entries="@array/settings_list_preference_titles"
-            android:entryValues="@array/settings_list_preference_values"
-            android:key="list"
-            android:summary="Click to select the first day of the week"
-            android:title="Select first day of week" />
 
     </PreferenceCategory>
 
-
     <PreferenceCategory
-        android:title="Dropbox Settings">
-        <Preference
-            android:key="dropbox_login"
-            android:title="Login">
-            <intent android:action="com.example.mss.mobilesalessystem.DropboxLogin"/>
-        </Preference>
-        <Preference
-            android:key="dropbox_details"
-            android:selectable="false"
-            android:persistent="false"
-            android:title="Dropbox Details"
-            android:summary="Name: n/a\nEmail: n/a"/>
+        android:title="Display Settings">
+
+        <ListPreference
+            android:dialogTitle="Article Text Size"
+            android:entries="@array/article_text_size_titles"
+            android:entryValues="@array/article_text_size_values"
+            android:key="article_text_size_key"
+            android:summary="%s"
+            android:title="InApp Article Text Size" />
+
+
+        <ListPreference
+            android:dialogTitle="Dark/Light Theme Options"
+            android:entries="@array/day_night_preference_titles"
+            android:entryValues="@array/day_night_preference_values"
+            android:key="day_night_key"
+            android:summary="%s"
+            android:title="Dark/Light Theme Options" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

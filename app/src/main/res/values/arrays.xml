@@ -1,24 +1,30 @@
 <resources>
     <!-- Reply Preference -->
 
-    <string-array name="settings_list_preference_titles">
-        <item>Sunday</item>
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
+    <string-array name="day_night_preference_titles">
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+        <item>Auto Light/Dark</item>
+        <item>Follow System Settings</item>
     </string-array>
-    <string-array name="settings_list_preference_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
+    <string-array name="day_night_preference_values">
+        <!-- TODO : change these to the correct day/night values -->
+        <item>AppCompatDelegate.MODE_NIGHT_NO</item>
+        <item>AppCompatDelegate.MODE_NIGHT_YES</item>
+        <item>AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY</item>
+        <item>SYSTEM_MODE</item>
     </string-array>
 
+    <string-array name="article_text_size_titles">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="article_text_size_values">
+        <item>14dp</item>
+        <item>20dp</item>
+        <item>24dp</item>
+    </string-array>
 
 </resources>

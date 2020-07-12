@@ -329,26 +329,6 @@
 
                 </RadioGroup>
 
-                <EditText
-                    android:id="@+id/titleText"
-                    android:layout_width="197dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:ems="10"
-                    android:hint="Calendar Event Title"
-                    android:inputType="textPersonName" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Name Your Grow"
-                    android:textColor="@color/green_700"
-                    android:layout_marginBottom="5dp"
-                    />
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

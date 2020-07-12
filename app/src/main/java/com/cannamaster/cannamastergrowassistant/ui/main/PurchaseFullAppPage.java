@@ -1,22 +1,20 @@
 package com.cannamaster.cannamastergrowassistant.ui.main;
 
 import android.os.Bundle;
-
 import android.view.MenuItem;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.cannamaster.cannamastergrowassistant.R;
 
-public class AboutPage extends AppCompatActivity {
+class PurchaseFullAppPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about_page_layout);
+        setContentView(R.layout.purchase_full_version_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("About CannaMaster");
+        getSupportActionBar().setTitle("Purchase Full Version");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -33,3 +31,4 @@ public class AboutPage extends AppCompatActivity {
     }
 
 }
+
